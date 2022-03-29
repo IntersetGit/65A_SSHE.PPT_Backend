@@ -3,12 +3,11 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/64B",
-    "dev": "nodemon ./bin/64B",
-    "server": "nodemon ./bin/ptt",
+    "start": "node ./bin/65A",
+    "dev": "nodemon ./bin/65A",
+    "server": "",
     "openpm2": "pm2 start ./bin/ptt -i max",
-    "up-models": "sequelize-auto -o './models' -d pttlandmap_db -h 10.224.166.39 -u postgres -p 5432 -x Interset@1234 -e postgres",
-    "up-models-product": "sequelize-auto -o './models' -d pttlandmap_db -h 10.224.165.28 -u postgres -p 5432 -x Interset@1234 -e postgres"
+    "up-models": "sequelize-auto -o './models' -d pttlandmap_db -h 10.224.166.39 -u postgres -p 5432 -x Interset@1234 -e postgres"
   },
   "dependencies": {
     "alasql": "^1.7.3",
