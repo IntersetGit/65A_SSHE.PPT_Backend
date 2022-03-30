@@ -5,42 +5,28 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
-      comment: "รหัสกำหนดสิทธิ์ผู้ใช้งานระบบ",
       primaryKey: true
     },
     roles_name: {
       type: DataTypes.STRING(255),
-      allowNull: true,
-      comment: "ชื่อสิทธิ์ผู้ใช้งานระบบ"
+      allowNull: true
     },
     note: {
       type: DataTypes.TEXT,
-      allowNull: true,
-      comment: "หมายเหตุ"
+      allowNull: true
     },
     isuse: {
       type: DataTypes.SMALLINT,
-      allowNull: true,
-      comment: "สถานะข้อมูล 0 = ไม่ใช้ 1 = ใช้ 2 = ลบ"
+      allowNull: true
     },
     order_by: {
       type: DataTypes.SMALLINT,
-      allowNull: true,
-      comment: "ใช้สำหรับจัดเรียงข้อมูล"
+      allowNull: true
     }
   }, {
     sequelize,
     tableName: 'sysm_roles',
     schema: 'system',
-    timestamps: false,
-    indexes: [
-      {
-        name: "sysm_roles_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
+    timestamps: false
   });
 };

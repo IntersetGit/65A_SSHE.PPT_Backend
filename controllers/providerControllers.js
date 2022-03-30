@@ -66,7 +66,6 @@ exports.loginControllers = async (req, res, next) => {
                 error.statusCode = 400;
                 throw error;
             }
-        
 
         const model = {
             sysm_id: _res.id,

@@ -33,6 +33,8 @@ exports.filterUsernameSysmUsersService = async (user_name) => {
     
     WHERE a.isuse = 1 AND UPPER(user_name)  = UPPER($1) `
 
+    console.log(sql);
+
     return await sequelizeStringFindOne(sql, [user_name])
 }
 
