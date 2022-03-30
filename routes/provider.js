@@ -4,7 +4,7 @@ const { authenticateToken } = require('../middleware/authenticateToken');
 
 
 /* GET users listing. */
-router.get('/login', loginControllers);
+router.post('/login', loginControllers);
 router.post('/editpassword',[authenticateToken], updatePassWordUser);
 router.get('/refreshToken', refreshTokenControllers);
 router.post('/getSearchUser', [authenticateToken], getSearchUserController);
