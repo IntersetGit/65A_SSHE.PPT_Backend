@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "restart": true,
-            "program": "${workspaceFolder}/bin/64B"
+            "program": "${workspaceFolder}/bin/65A"
         }
     ]
 }
