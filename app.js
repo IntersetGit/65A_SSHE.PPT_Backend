@@ -13,9 +13,6 @@ const { swagger, options } = require("./swagger/index");
 require('./socket')
 require('./cron')
 
-const indexRouter = require('./routes/index');
-const authenticationRouter = require('./routes/authen');
-
 app.use(cors());
 // app.use(helmet());
 app.use(paginate.middleware(10, 50));
@@ -29,8 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/auth', authenticationRouter);
+app.use(require("./routes"));
 
 swagger.serveSwagger(app, "/api", options, {
   routePath: "./routes/",
