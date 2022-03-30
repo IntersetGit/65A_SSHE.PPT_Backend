@@ -10,6 +10,7 @@
     "up-models": "sequelize-auto -o './models' -d pttlandmap_db -h 10.224.166.39 -u postgres -p 5432 -x Interset@1234 -e postgres"
   },
   "dependencies": {
+    "activedirectory": "^0.7.2",
     "alasql": "^1.7.3",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
@@ -27,6 +28,7 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
+    "ldapjs": "^2.3.2",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
