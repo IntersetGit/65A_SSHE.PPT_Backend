@@ -1,0 +1,55 @@
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('ptt_mitigation', {
+    id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      comment: "รหัสตารางรายการ mitigation",
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      comment: "ชื่อรายการ mitigation"
+    },
+    impact_id: {
+      type: DataTypes.ARRAY(DataTypes.UUID),
+      allowNull: true,
+      comment: "ความสัมพันธ์กับตาราง impact"
+    },
+    create_by: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      comment: "สร้างข้อมูลโดย"
+    },
+    update_by: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      comment: "แก้ไขข้อมูลโดย"
+    },
+    create_date: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      comment: "วันที่สร้างข้อมูล"
+    },
+    update_date: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      comment: "วันที่แก้ไขข้อมูล"
+    }
+  }, {
+    sequelize,
+    tableName: 'ptt_mitigation',
+    schema: 'ptt_data',
+    timestamps: false,
+    indexes: [
+      {
+        name: "ptt_mitigation_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
+};
