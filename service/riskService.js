@@ -38,4 +38,62 @@ exports.risksearch = async(activities_id) => {
 } ;
 
 // เพื่อข้อมูล Risk Identification //
+// ตาราง ativities //
+exports.addDataActivities = async(name, user) => {
+    const addAcitivities = await models.ptt_activities.create({
+        name: name,
+        created_by: user ,
+        created_date: new Date()
+      })
+      return addAcitivities
+}
+
+exports.addDataImpact = async( data ,user) => {
+  if(data.activities_id !== "" && data.activities_id !== "null" ){
+    const _addImpact = await sequelizeString ( `INSERT INTO ptt_data.ptt_impact ( name , activities_id , created_by , created_date ) 
+    VALUES ('${data.name}','{"${data.activities_id}"}','${user}', CURRENT_TIMESTAMP ) `)
+    return _addImpact
+  }else{
+  const addImpact = await models.ptt_impact.create({
+    name : data.name,
+    created_by : user,
+    created_date : new Date()
+    
+  })
+  return addImpact
+}
+}
+
+exports.addDataMitigation = async( data ,user) => {
+  if(data.activities_id !== "" && data.activities_id !== "null" ){
+    const _addMitigation = await sequelizeString ( `INSERT INTO ptt_data.ptt_mitigation ( name , activities_id , created_by , created_date ) 
+    VALUES ('${data.name}','{"${data.activities_id}"}','${user}', CURRENT_TIMESTAMP ) `)
+    return _addMitigation
+  }else{
+  const addMitigation = await models.ptt_mitigation.create({
+    name : data.name,
+    created_by : user,
+    created_date : new Date()
+    
+  })
+  return addMitigation
+}
+}
+
+
+exports.addDataProcedures = async( data ,user) => {
+  if(data.activities_id !== "" && data.activities_id !== "null" ){
+    const _addProcedures = await sequelizeString ( `INSERT INTO ptt_data.ptt_procedures ( name , activities_id , created_by , created_date ) 
+    VALUES ('${data.name}','{"${data.activities_id}"}','${user}', CURRENT_TIMESTAMP ) `)
+    return _addProcedures
+  }else{
+  const addProcedures = await models.ptt_procedures.create({
+    name : data.name,
+    created_by : user,
+    created_date : new Date()
+    
+  })
+  return addProcedures
+}
+}
 

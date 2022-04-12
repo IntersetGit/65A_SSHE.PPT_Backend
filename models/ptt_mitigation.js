@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.UUID,
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
       comment: "รหัสตารางรายการ mitigation",
       primaryKey: true
     },
@@ -12,27 +13,27 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "ชื่อรายการ mitigation"
     },
-    impact_id: {
+    activities_id: {
       type: DataTypes.ARRAY(DataTypes.UUID),
       allowNull: true,
-      comment: "ความสัมพันธ์กับตาราง impact"
+      comment: "ความสัมพันธ์กับตาราง activities_id"
     },
-    create_by: {
+    created_by: {
       type: DataTypes.UUID,
       allowNull: true,
       comment: "สร้างข้อมูลโดย"
     },
-    update_by: {
+    updated_by: {
       type: DataTypes.UUID,
       allowNull: true,
       comment: "แก้ไขข้อมูลโดย"
     },
-    create_date: {
+    created_date: {
       type: DataTypes.DATE,
       allowNull: true,
       comment: "วันที่สร้างข้อมูล"
     },
-    update_date: {
+    updated_date: {
       type: DataTypes.DATE,
       allowNull: true,
       comment: "วันที่แก้ไขข้อมูล"

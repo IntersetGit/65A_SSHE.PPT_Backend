@@ -13,22 +13,22 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "ชื่อ activities"
     },
-    create_by: {
+    created_by: {
       type: DataTypes.UUID,
       allowNull: true,
       comment: "สร้างข้อมูลโดย"
     },
-    update_by: {
+    updated_by: {
       type: DataTypes.UUID,
       allowNull: true,
       comment: "แก้ไขข้อมูลโดย"
     },
-    create_date: {
+    created_date: {
       type: DataTypes.DATE,
       allowNull: true,
       comment: "สร้างข้อมูลวันที่"
     },
-    update_date: {
+    updated_date: {
       type: DataTypes.DATE,
       allowNull: true,
       comment: "แก้ไขข้อมูลวันที่"
