@@ -3,7 +3,7 @@ const models = require('../models')
 const messages = require('../messages/index')
 const result = require('../middleware/result')
 const { sequelize } = require('../models/index')
-const {risksearch,addDataActivities,addDataImpact,addDataMitigation,addDataProcedures} = require('../service/riskService')
+const {risksearch,addDataActivities,addDataImpact,addDataMitigation,addDataProcedures,updateDataActivities} = require('../service/riskService')
 
 
 
@@ -61,6 +61,19 @@ exports.addProcedures = async(req,res,next) => {
         const _addProcedures = await addDataProcedures( data , req.user.sysm_id)
 
         result(res, _addProcedures)
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+
+exports.updateActivities = async( req,res,next) => {
+    try {
+        const  data  = req.body;
+        const _updateActivities = await updateDataActivities( data , req.user.sysm_id)
+
+        result(res, _updateActivities )
     } catch (error) {
         next(error)
     }

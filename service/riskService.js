@@ -97,3 +97,14 @@ exports.addDataProcedures = async( data ,user) => {
 }
 }
 
+exports.updateDataActivities = async( data , user) => {
+  
+  const updateRiskActivities = await models.ptt_activities.update({
+      name: data.name,
+      updated__by: user ,
+      updated_date: new Date()
+    },{
+      where: { id : data.id }
+    })
+    return data.id
+}
