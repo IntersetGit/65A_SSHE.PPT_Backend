@@ -504,6 +504,10 @@ module.exports = function(sequelize, DataTypes) {
     updated_date: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    incident_No: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
