@@ -108,3 +108,4 @@ exports.updateDataActivities = async( data , user) => {
     })
     return data.id
 }
+
