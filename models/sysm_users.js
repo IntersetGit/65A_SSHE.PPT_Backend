@@ -75,6 +75,15 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'sysm_users',
     schema: 'system',
-    timestamps: false
+    timestamps: false,
+    indexes: [
+      {
+        name: "sysm_users_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
   });
 };

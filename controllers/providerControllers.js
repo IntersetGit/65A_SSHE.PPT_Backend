@@ -33,7 +33,7 @@ exports.updatePassWordUser = async (req, res, next) => {
             error.statusCode = 400;
             throw error;
         }
-        result(res, true)
+        result(res, req, 'เปลี่ยนรหัสผ่าน', true)
     } catch (error) {
         next(error)
     }
@@ -79,15 +79,7 @@ exports.loginControllers = async (req, res, next) => {
             first_name: _res.first_name,
             last_name: _res.last_name,
             initials: _res.initials,
-            is_ad: _res.is_ad
-            // company: _res.company,
-            // department: _res.department,
-            // job_title: _res.job_title,
-            // office: _res.office,
-            // web_page: _res.web_page,
-            // phone: _res.phone,
-            // address: _res.address,
-            // description: _res.description
+            is_ad: _res.is_ad,
         }
         //สร้าง token
         const _token = await generateAccessToken(model)
@@ -101,7 +93,7 @@ exports.loginControllers = async (req, res, next) => {
             last_login: new Date(),
             update_by: _res.id,
         })
-        result(res, {
+        result(res, req, '-', {
             access_token: _token,
             refresh_token: refreshToken,
             expires_in: expires_in.exp
@@ -146,7 +138,7 @@ exports.refreshTokenControllers = async (req, res, next) => {
                 // description: _res.description,
             }
             const token = await generateAccessToken(_model)
-            result(res, token)
+            result(res, req, '-', token)
         })
     } catch (error) {
         next(error);
@@ -163,7 +155,7 @@ const generateAccessToken = async (model) => {
 exports.getSearchUserController = async (req, res, next) => {
     try {
         const { search } = req.body;
-        result(res, await getSearchUserService(search));
+        result(res, req, 'ค้นหาผู้ใช้งานและเรียกชื่อผู้ใช้งาน', await getSearchUserService(search));
     } catch (error) {
         next(error);
     }

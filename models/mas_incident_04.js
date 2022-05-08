@@ -1,39 +1,35 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('sysm_roles', {
-    id: {
+  return sequelize.define('mas_incident_04', {
+    'id ': {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    roles_name: {
-      type: DataTypes.STRING(255),
+    data: {
+      type: DataTypes.ARRAY(DataTypes.JSON),
       allowNull: true
     },
-    note: {
-      type: DataTypes.TEXT,
+    incident_id: {
+      type: DataTypes.UUID,
       allowNull: true
     },
-    isuse: {
+    issue: {
       type: DataTypes.SMALLINT,
-      allowNull: true
-    },
-    order_by: {
-      type: DataTypes.SMALLINT,
-      allowNull: true
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'sysm_roles',
-    schema: 'system',
+    tableName: 'mas_incident_04',
+    schema: 'master',
     timestamps: false,
     indexes: [
       {
-        name: "sysm_roles_pkey",
+        name: "mas_incident_04_pkey",
         unique: true,
         fields: [
-          { name: "id" },
+          { name: "id " },
         ]
       },
     ]
