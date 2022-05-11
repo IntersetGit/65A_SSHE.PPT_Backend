@@ -104,7 +104,7 @@ exports.createUserAD = async (req, res, next) => {
     }
 
     await transaction.commit();
-    result(res, id);
+    result(res, req, '-', id);
   } catch (error) {
     if (transaction) await transaction.rollback();
     next(error);
@@ -130,7 +130,7 @@ exports.editUser = async (req, res, next) => {
     }
 
     await transaction.commit();
-    result(res, model.id);
+    result(res, req, '=', model.id);
 
   } catch (error) {
     if (transaction) await transaction.rollback();
@@ -151,7 +151,7 @@ exports.updateRoleUser = async (req, res, next) => {
 
     await updateSysmUsersService({ id, roles_id, update_by: req.user.sysm_id })
 
-    result(res, id, 201)
+    result(res, req, '-', id, 201)
 
   } catch (error) {
     next(error);
@@ -196,7 +196,7 @@ exports.findUserAd = async (req, res, next) => {
       displayName: _res.displayName,
       isUsers: true
     }
-    result(res, _model);
+    result(res, req, '-', _model);
 
   } catch (error) {
     next(error);
@@ -215,7 +215,7 @@ exports.delUserAd = async (req, res, next) => {
 
     await updateSysmUsersService({ id, isuse: 2 })
 
-    result(res, true)
+    result(res, req, '-', true)
 
   } catch (error) {
     next(error);
@@ -226,8 +226,8 @@ exports.updateConfigAd = async (req, res, next) => {
   try {
     const model = req.body;
 
-    if (model.id) result(res, await updateConfigAdService(model));
-    else result(res, await createConfigAdService(model));
+    if (model.id) result(res, req, '-', await updateConfigAdService(model));
+    else result(res, req, '-', await createConfigAdService(model));
 
 
   } catch (error) {

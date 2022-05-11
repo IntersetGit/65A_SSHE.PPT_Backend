@@ -12,7 +12,7 @@ exports.getriskIdentification = async(req,res,next) => {
         const { activities_id } = req.body;
         const getDataRisk = await risksearch(activities_id)
 
-        result(res, getDataRisk)
+        result(res, req, '-', getDataRisk)
     } catch (error) {
         next(error)
     }
@@ -24,7 +24,7 @@ exports.addActivitie = async(req,res,next) => {
         const { name } = req.body;
         const _addActivities = await addDataActivities(name , req.user.sysm_id)
 
-        result(res, _addActivities)
+        result(res, req, '-', _addActivities)
     } catch (error) {
         next(error)
     }
@@ -36,7 +36,7 @@ exports.addImpact = async(req,res,next) => {
         const  data  = req.body;
         const _addImpact = await addDataImpact( data , req.user.sysm_id)
 
-        result(res, _addImpact)
+        result(res, req, '-', _addImpact)
     } catch (error) {
         next(error)
     }
@@ -48,7 +48,7 @@ exports.addMitigation = async(req,res,next) => {
         const  data  = req.body;
         const _addMitigation = await addDataMitigation( data , req.user.sysm_id)
 
-        result(res, _addMitigation)
+        result(res, req, '-',  _addMitigation)
     } catch (error) {
         next(error)
     }
@@ -60,7 +60,7 @@ exports.addProcedures = async(req,res,next) => {
         const  data  = req.body;
         const _addProcedures = await addDataProcedures( data , req.user.sysm_id)
 
-        result(res, _addProcedures)
+        result(res, req, '-', _addProcedures)
     } catch (error) {
         next(error)
     }
@@ -73,7 +73,7 @@ exports.updateActivities = async( req,res,next) => {
         const  data  = req.body;
         const _updateActivities = await updateDataActivities( data , req.user.sysm_id)
 
-        result(res, _updateActivities )
+        result(res, req, '-', _updateActivities )
     } catch (error) {
         next(error)
     }

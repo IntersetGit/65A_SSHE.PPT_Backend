@@ -10,8 +10,5 @@ router.post('/editpassword',[authenticateToken], updatePassWordUser);
 router.get('/refreshToken', refreshTokenControllers);
 router.post('/getSearchUser', [authenticateToken], getSearchUserController);
 
-router.get('/motion', [authenticateToken] , async (req, res, next) => {
-    result(res, req, "test logs", {motion: true})
-})
 
 module.exports = router;

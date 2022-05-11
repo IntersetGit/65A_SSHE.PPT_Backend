@@ -12,7 +12,7 @@ exports.demoLdap = async (req, res, next) => {
 
     const _res = await ldap({ user_name: username, password }, transaction)
 
-    result(res, _res);
+    result(res, req, '-', _res);
 
   } catch (error) {
     if (transaction) await transaction.rollback();
