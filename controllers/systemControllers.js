@@ -1,8 +1,7 @@
 const ActiveDirectory = require("activedirectory");
 const config = require("../config");
-const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, createConfigAdService } = require("../service/sysmUsersService");
-const { createSysmUsersService } = require("../service/sysmUsersService");
-const { createDatProfileUsersService, updateDatProfileUsersService } = require("../service/datProfileUsersService");
+const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, createConfigAdService, createSysmUsersService } = require("../service/sysm_users");
+const { createDatProfileUsersService, updateDatProfileUsersService } = require("../service/ptt_profile_users");
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
 const result = require("../middleware/result");

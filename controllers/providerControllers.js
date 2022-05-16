@@ -4,7 +4,7 @@ const config = require('../config');
 const jwt = require('jsonwebtoken');
 const result = require('../middleware/result');
 const { ldap } = require("../service/ldapService");
-const { updateSysmUsersService, filterUsernameSysmUsersService, getUserService, getSearchUserService } = require("../service/sysmUsersService");
+const { updateSysmUsersService, filterUsernameSysmUsersService, getUserService, getSearchUserService } = require("../service/sysm_users");
 const { EncryptCryptoJS, DecryptCryptoJS, checkPassword, sequelizeString, encryptPassword } = require('../util');
 const ActiveDirectory = require('activedirectory');
 
@@ -43,13 +43,8 @@ exports.updatePassWordUser = async (req, res, next) => {
 /* เข้าสู่ระบบ */
 exports.loginControllers = async (req, res, next) => {
     try {
-        let { username, password, token } = req.body;
+        let { username, password } = req.body;
 
-        if (token) {
-            const _decrypt = DecryptCryptoJS(token)
-            username = _decrypt.username
-            password = _decrypt.password
-        }
         let _res = await filterUsernameSysmUsersService(username);
         if (!_res) {
             const error = new Error("ไม่พบชื่อผู้ใช้ในระบบหรือรหัสผ่านผิด");
@@ -83,7 +78,7 @@ exports.loginControllers = async (req, res, next) => {
         }
         //สร้าง token
         const _token = await generateAccessToken(model)
-        const refreshToken = await jwt.sign({ token: EncryptCryptoJS(model) }, config.JWT_SECRET_REFRESH);
+        const refreshToken = await jwt.sign({ token: model }, config.JWT_SECRET_REFRESH);
         //decode วันหมดอายุ
         const expires_in = jwt.decode(_token);
 
@@ -128,14 +123,6 @@ exports.refreshTokenControllers = async (req, res, next) => {
                 last_name: _res.last_name,
                 initials: _res.initials,
                 is_ad: _res.is_ad
-                // company: _res.company,
-                // department: _res.department,
-                // job_title: _res.job_title,
-                // office: _res.office,
-                // web_page: _res.web_page,
-                // phone: _res.phone,
-                // address: _res.address,
-                // description: _res.description,
             }
             const token = await generateAccessToken(_model)
             result(res, req, '-', token)
@@ -146,8 +133,7 @@ exports.refreshTokenControllers = async (req, res, next) => {
 };
 
 const generateAccessToken = async (model) => {
-    const _encode = EncryptCryptoJS(model)
-    return await jwt.sign({ token: _encode }, config.JWT_SECRET, { expiresIn: config.EXPIRES_IN });
+    return await jwt.sign({ token: model }, config.JWT_SECRET, { expiresIn: config.EXPIRES_IN });
 }
 
 

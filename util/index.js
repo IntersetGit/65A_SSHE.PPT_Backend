@@ -5,6 +5,7 @@ const jwt_decode = require("jwt-decode");
 const CryptoJS = require("crypto-js");
 const config = require('../config');
 const _path = require('path')
+const dayjs = require('dayjs');
 const fs = require('fs')
 
 exports.sequelizeString = async (sql, bind) => {
@@ -44,7 +45,7 @@ exports.decodeToken = async (auth) => {
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) {
         const error = new Error(messages.errorUserNot);
-        error.statusCode = 402;
+        error.statusCode = 403;
         throw error;
     }
     return jwt_decode(token);
@@ -53,7 +54,7 @@ exports.decodeToken = async (auth) => {
 
 exports.getListDateBetween = (date_start, date_end) => {
     const dates = [];
-    let startDate = moment(date_start, 'YYYY-MM-DD');
+    let startDate = dayjs(date_start, 'YYYY-MM-DD');
 
     dates.push({ date: startDate.format('YYYY-MM-DD') });
     while (!startDate.isSame(date_end)) {
@@ -66,7 +67,7 @@ exports.getListDateBetween = (date_start, date_end) => {
 
 exports.getAmount = (arr, amm) => {
     arr.forEach(e => {
-        const daymoment = moment(e.date, "YYYY-MM").daysInMonth();
+        const daymoment = dayjs(e.date, "YYYY-MM").daysInMonth();
         e.amount = Number((amm / daymoment))
     });
     return arr
@@ -110,7 +111,7 @@ exports.getDateString = ({ date = new Date(), local = "th", tpye = "initial", fo
             const Month = month[tpye][local][_date.getMonth()]
 
             // const Year = year_thai ? _date.getFullYear() + 543 : _date.getFullYear();
-            const Year = moment().add(year_thai ? 543 : 0, 'year').format(type_year == 'initial' ? 'YY' : 'YYYY')
+            const Year = dayjs().add(year_thai ? 543 : 0, 'year').format(type_year == 'initial' ? 'YY' : 'YYYY')
             if (format == "DayMonthYear") return day + ' ' + Month + ' ' + Year
             else if (format == "DayMonth") return day + ' ' + Month
             else if (format == "Day") return day

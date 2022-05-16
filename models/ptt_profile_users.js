@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('dat_profile_users', {
+  return sequelize.define('ptt_profile_users', {
     id: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -81,7 +81,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'dat_profile_users',
+    tableName: 'ptt_profile_users',
     schema: 'ptt_data',
     timestamps: false
   });

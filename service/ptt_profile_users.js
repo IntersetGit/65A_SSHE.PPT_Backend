@@ -24,7 +24,7 @@ exports.createDatProfileUsersService = async (model, transaction) => {
     if (model.address) _model.address = model.address
     if (model.description) _model.description = model.description
 
-    await models.dat_profile_users.create(_model, { transaction });
+    await models.ptt_profile_users.create(_model, { transaction });
     return id
 }
 
@@ -48,6 +48,6 @@ exports.updateDatProfileUsersService = async (model, transaction) => {
     if (model.description) _model.description = model.description
     if (model.update_by) _model.update_by = model.update_by
 
-    await models.dat_profile_users.update(_model, { where: { user_id: model.user_id }, transaction });
+    await models.ptt_profile_users.update(_model, { where: { user_id: model.user_id }, transaction });
     return model.user_id;
 }

@@ -28,12 +28,10 @@ exports.filterUsernameSysmUsersService = async (user_name) => {
     b.address,
     b.description
     FROM system.sysm_users AS a
-    INNER JOIN ptt_data.dat_profile_users AS b ON b.user_id = a.id 
+    INNER JOIN ptt_data.ptt_profile_users AS b ON b.user_id = a.id 
     INNER JOIN system.sysm_roles AS c ON a.roles_id = c.id
     
     WHERE a.isuse = 1 AND UPPER(user_name)  = UPPER($1) `
-
-    console.log(sql);
 
     return await sequelizeStringFindOne(sql, [user_name])
 }

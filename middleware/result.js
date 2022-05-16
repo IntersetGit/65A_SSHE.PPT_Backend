@@ -30,13 +30,13 @@ module.exports = async (res, req, action, data, status = 200) => {
                 })
             }
         }
+        
+        return res.status(status).json({
+            items: data,
+            status_code: status,
+        });
+
     } catch (error) {
         throw error
     }
-    
-
-    return res.status(status).json({
-        items: data,
-        status_code: status,
-    });
 }
