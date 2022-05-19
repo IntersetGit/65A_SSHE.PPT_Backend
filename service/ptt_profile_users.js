@@ -8,8 +8,6 @@ exports.createDatProfileUsersService = async (model, transaction) => {
     const _model = {
         id,
         user_id: model.user_id,
-        created_by: model.created_by,
-        created_date: new Date(),
     }
     if (model.first_name) _model.first_name = model.first_name
     if (model.last_name) _model.last_name = model.last_name
@@ -23,6 +21,8 @@ exports.createDatProfileUsersService = async (model, transaction) => {
     if (model.phone) _model.phone = model.phone
     if (model.address) _model.address = model.address
     if (model.description) _model.description = model.description
+    if (model.updated_by) _model.updated_by = model.updated_by
+    if (model.updated_date) _model.updated_date = new Date()
 
     await models.ptt_profile_users.create(_model, { transaction });
     return id

@@ -76,7 +76,7 @@ exports.loginControllers = async (req, res, next) => {
         } else {
             if (_res.is_ad) _res = await ldap({ user_name: username, password })
             const macthData = await GetMachCompany(_res.id)
-            if(!macthData){
+            if (macthData.length === 0) {
                 const err = new Error(messages.roleAccess);
                 err.statusCode = 403
                 throw err

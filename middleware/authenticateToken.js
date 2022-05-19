@@ -8,7 +8,6 @@ exports.authenticateToken = async (req, res, next) => {
     jwt.verify(token, config.JWT_SECRET ?? "", async (err, model) => {
         if (err) res.sendStatus(403)
         req.model = model
-        req.user = DecryptCryptoJS(model.token)
         next()
     })
 

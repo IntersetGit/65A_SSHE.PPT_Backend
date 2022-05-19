@@ -1,11 +1,12 @@
 const address = require('address');
 const { CreateMotionApi } = require('../service/logs');
 const util = require('../util')
+const config = require('../config')
 
 module.exports = async (res, req, action, data, status = 200) => {
     try {
         const authorization = req.headers["authorization"]
-        if (authorization) {
+        if (authorization && config.NODE_ENV == 'production') {
             const decode = await util.decodeToken(authorization);
             const user = decode.token
             let mac_id

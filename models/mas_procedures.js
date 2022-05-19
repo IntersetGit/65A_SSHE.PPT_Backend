@@ -31,11 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     mitigation_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      comment: "รหัสจากผลกระทบที่ได้",
-      references: {
-        model: 'ptt_mitigation',
-        key: 'id'
-      }
+      comment: "รหัสจากผลกระทบที่ได้"
     },
     mitigation_code: {
       type: DataTypes.STRING(5),

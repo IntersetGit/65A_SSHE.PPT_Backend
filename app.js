@@ -30,7 +30,7 @@ app.use(device.capture());
 
 app.use(require("./routes"));
 
-swagger.serveSwagger(app, "/api", options, {
+swagger.serveSwagger(app, "/api-docs", options, {
   routePath: "./routes/",
   requestModelPath: "./swagger/",
 });

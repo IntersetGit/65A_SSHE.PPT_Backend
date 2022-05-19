@@ -63,19 +63,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    created_by: {
-      type: DataTypes.UUID,
-      allowNull: false
-    },
-    created_date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    update_by: {
+    updated_by: {
       type: DataTypes.UUID,
       allowNull: true
     },
-    update_date: {
+    updated_date: {
       type: DataTypes.DATE,
       allowNull: true
     }

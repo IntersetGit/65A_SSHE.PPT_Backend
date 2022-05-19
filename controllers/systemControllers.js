@@ -5,9 +5,8 @@ const { createDatProfileUsersService, updateDatProfileUsersService } = require("
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
 const result = require("../middleware/result");
-const { DecryptCryptoJS, encryptPassword, EncryptCryptoJS } = require("../util");
+const { DecryptCryptoJS, encryptPassword, EncryptCryptoJS, decodeToken } = require("../util");
 const models = require("../models/index");
-// const { getSysmRoleService } = require("../service/masterDataService");
 const { connectPttAD } = require("../service/ldapService");
 
 const connect = {
@@ -229,6 +228,31 @@ exports.updateConfigAd = async (req, res, next) => {
     else result(res, req, '-', await createConfigAdService(model));
 
 
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.SystemAddUser = async (req, res, next) => {
+  try {
+    const authorization = await decodeToken(req.headers.authorization)
+    const user_information = authorization.token
+    const model = req.body;
+    
+    model.password = await EncryptCryptoJS(model.password);
+    model.user_id = await createSysmUsersService(model);
+    await createDatProfileUsersService(model);
+
+    if (model.roles_id != 'cec6617f-b593-4ebc-9604-3059dfee0ac4') {
+      if( model.is_ad ) {
+        
+      }
+    }
+
+    console.log('user_information', user_information)
+    
+    result(res, req, '-', true)
+    
   } catch (error) {
     next(error);
   }
