@@ -7,10 +7,7 @@ const { ldap } = require("../service/ldapService");
 const { updateSysmUsersService, filterUsernameSysmUsersService, getUserService, getSearchUserService } = require("../service/sysm_users");
 const { EncryptCryptoJS, DecryptCryptoJS, checkPassword, sequelizeString, encryptPassword } = require('../util');
 const ActiveDirectory = require('activedirectory');
-
-
-const refreshTokens = []
-
+const { GetMachCompany } = require("../service/macth_company");
 
 
 exports.updatePassWordUser = async (req, res, next) => {
@@ -44,45 +41,68 @@ exports.updatePassWordUser = async (req, res, next) => {
 exports.loginControllers = async (req, res, next) => {
     try {
         let { username, password } = req.body;
-
+        var model = null
         let _res = await filterUsernameSysmUsersService(username);
         if (!_res) {
-            const error = new Error("ไม่พบชื่อผู้ใช้ในระบบหรือรหัสผ่านผิด");
+            const error = new Error(messages.errorUserNot);
             error.statusCode = 400;
             throw error;
         }
-
-        if (_res.is_ad) _res = await ldap({ user_name: username, password })
-        if(!_res.password) _res.password = password
-            const passwordecrypt = await DecryptCryptoJS(_res.password); //เช็ค password ตรงไหม
-            // console.log(passwordecrypt);
-            if (passwordecrypt != password) {
-                const error = new Error("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง !");
-                error.statusCode = 400;
-                throw error;
+        
+        if (_res.roles_name == 'Superadmin') {
+            if(!_res.password) _res.password = password
+                const passwordecrypt = await DecryptCryptoJS(_res.password); //เช็ค password ตรงไหม
+                // console.log(passwordecrypt);
+                if (passwordecrypt != password) {
+                    const error = new Error("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง !");
+                    error.statusCode = 400;
+                    throw error;
+                }
+    
+                model = {
+                sysm_id: _res.id,
+                roles_id: _res.roles_id,
+                code_ldap: _res.code_ldap,
+                roles_name: _res.roles_name,
+                note: _res.note,
+                user_name: _res.user_name,
+                e_mail: _res.email,
+                note: _res.note,
+                first_name: _res.first_name,
+                last_name: _res.last_name,
+                initials: _res.initials,
+                is_ad: _res.is_ad,
             }
-
-        const model = {
-            sysm_id: _res.id,
-            roles_id: _res.roles_id,
-            code_ldap: _res.code_ldap,
-            roles_name: _res.roles_name,
-            note: _res.note,
-            user_name: _res.user_name,
-            e_mail: _res.email,
-            note: _res.note,
-            first_name: _res.first_name,
-            last_name: _res.last_name,
-            initials: _res.initials,
-            is_ad: _res.is_ad,
+        } else {
+            if (_res.is_ad) _res = await ldap({ user_name: username, password })
+            const macthData = await GetMachCompany(_res.id)
+            if(!macthData){
+                const err = new Error(messages.roleAccess);
+                err.statusCode = 403
+                throw err
+            }
+            
+            model = {
+                sysm_id: _res.id,
+                roles_id: _res.roles_id,
+                code_ldap: _res.code_ldap,
+                roles_name: _res.roles_name,
+                note: _res.note,
+                user_name: _res.user_name,
+                e_mail: _res.email,
+                note: _res.note,
+                first_name: _res.first_name,
+                last_name: _res.last_name,
+                initials: _res.initials,
+                is_ad: _res.is_ad,
+            }
         }
+
         //สร้าง token
         const _token = await generateAccessToken(model)
         const refreshToken = await jwt.sign({ token: model }, config.JWT_SECRET_REFRESH);
         //decode วันหมดอายุ
         const expires_in = jwt.decode(_token);
-
-        refreshTokens.push(refreshToken)
         await updateSysmUsersService({
             id: _res.id,
             last_login: new Date(),
@@ -109,7 +129,7 @@ exports.refreshTokenControllers = async (req, res, next) => {
 
         jwt.verify(token, config.JWT_SECRET_REFRESH, async (err, __res) => {
             if (err) res.sendStatus(403)
-            const _res = DecryptCryptoJS(__res.token)
+            const _res = __res.token
             const _model = {
                 sysm_id: _res.sysm_id,
                 roles_id: _res.roles_id,
@@ -125,7 +145,7 @@ exports.refreshTokenControllers = async (req, res, next) => {
                 is_ad: _res.is_ad
             }
             const token = await generateAccessToken(_model)
-            result(res, req, '-', token)
+            result(res, req, 'รีเฟรชข้อมูลโทเค็น', {access_token: token})
         })
     } catch (error) {
         next(error);

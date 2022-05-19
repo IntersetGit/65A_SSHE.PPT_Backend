@@ -7,7 +7,7 @@ module.exports = async (res, req, action, data, status = 200) => {
         const authorization = req.headers["authorization"]
         if (authorization) {
             const decode = await util.decodeToken(authorization);
-            const user = await util.DecryptCryptoJS(decode.token);
+            const user = decode.token
             let mac_id
             req.method
             address.mac((err, addr) => {
