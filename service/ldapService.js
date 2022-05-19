@@ -242,13 +242,6 @@ exports.connectPttAD = async ({ username, password, usernameDB, isDB }) => {
         }
 
         const ad = new ActiveDirectory(config_ad);
-        // passport.use(new ActiveDirectoryStrategy({
-        //     integrated: false,
-        //     ldap: ad
-        // }, function (profile, ad, done) {
-        //     console.log(profile);
-        // }))
-
         ad.findUser(username, (err, user) => {
             if (err) {
                 console.log("err", err);
@@ -263,22 +256,6 @@ exports.connectPttAD = async ({ username, password, usernameDB, isDB }) => {
             }
             resolve(user);
         });
-        
-
-        // ad.authenticate('580054@ptt.corp', password, function (err, auth) {
-        //     if (err) {
-        //         console.log('ERROR: ' + JSON.stringify(err));
-        //         return;
-        //     }
-
-        //     if (auth) {
-        //         console.log(auth);
-        //         console.log('Authenticated!');
-        //     }
-        //     else {
-        //         console.log('Authentication failed!');
-        //     }
-        // });
     })
 
     return await myPromise
