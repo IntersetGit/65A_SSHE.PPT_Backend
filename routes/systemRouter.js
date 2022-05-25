@@ -18,6 +18,6 @@ router.post('updateConfig', [authenticateToken], systemControllers.updateConfigA
 router.get('/getUser',[authenticateToken], systemControllers.getSysmRoleController);
 /* */
 router.put('/editUser', [authenticateToken], systemControllers.editUser);
-router.get('/user/info', [authenticateToken], systemControllers.GetUserController)
+router.get('/users/info', [authenticateToken], systemControllers.GetUserController)
 
 module.exports = router;
