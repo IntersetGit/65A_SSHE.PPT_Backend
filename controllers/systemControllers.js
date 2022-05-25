@@ -1,13 +1,14 @@
 const ActiveDirectory = require("activedirectory");
 const config = require("../config");
-const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, createConfigAdService, createSysmUsersService } = require("../service/sysm_users");
+const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, createConfigAdService, createSysmUsersService, GetUserService } = require("../service/sysm_users");
 const { createDatProfileUsersService, updateDatProfileUsersService } = require("../service/ptt_profile_users");
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
 const result = require("../middleware/result");
 const { DecryptCryptoJS, encryptPassword, EncryptCryptoJS, decodeToken } = require("../util");
 const models = require("../models/index");
-const { connectPttAD } = require("../service/ldapService");
+const { connectPttAD } = require("../libs/ldapConnect");
+const util = require('../util')
 
 const connect = {
   development: {
@@ -31,8 +32,9 @@ const connect = {
 exports.createUserAD = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
+    const decode = await util.decodeToken(req.headers.authorization);
     let { username, password, token, roles_id, first_name, last_name, e_mail, is_ad } = req.body;
-    const { user_name } = req.user //มาจาก login
+    const user = decode.token //มาจาก login
     const id = uuidv4.v4();
 
     if (token) {
@@ -42,7 +44,7 @@ exports.createUserAD = async (req, res, next) => {
     }
 
     if (is_ad) {
-      const searchname = await filterUsernameSysmUsersService(user_name);
+      const searchname = await filterUsernameSysmUsersService(user.user_name);
       const setUser = await filterUsernameSysmUsersService(username);
       if (setUser) {
         const err = new Error(`มีผู้ใช้ ${username} ในฐานข้อมูล`);
@@ -51,8 +53,8 @@ exports.createUserAD = async (req, res, next) => {
       }
       const __res = await connectPttAD({
         username, 
-        password: user_name == 'superadmin' ? config.PASSWORD_AD : await DecryptCryptoJS(searchname.password), 
-        usernameDB: user_name == 'superadmin' ? config.USER_NAME_AD : user_name, 
+        password: user.user_name == 'superadmin' ? config.PASSWORD_AD : await DecryptCryptoJS(searchname.password), 
+        usernameDB: user.user_name == 'superadmin' ? config.USER_NAME_AD : user.user_name, 
         isDB: true 
       });
       if (__res) {
@@ -233,26 +235,13 @@ exports.updateConfigAd = async (req, res, next) => {
   }
 }
 
-exports.SystemAddUser = async (req, res, next) => {
+exports.GetUserController = async (req, res, next) => {
   try {
-    const authorization = await decodeToken(req.headers.authorization)
-    const user_information = authorization.token
-    const model = req.body;
-    
-    model.password = await EncryptCryptoJS(model.password);
-    model.user_id = await createSysmUsersService(model);
-    await createDatProfileUsersService(model);
+    const decode = await util.decodeToken(req.headers.authorization);
+    const { search } = req.query;
+    const user = decode.token
 
-    if (model.roles_id != 'cec6617f-b593-4ebc-9604-3059dfee0ac4') {
-      if( model.is_ad ) {
-        
-      }
-    }
-
-    console.log('user_information', user_information)
-    
-    result(res, req, '-', true)
-    
+    result(res, req, 'ค้นหาผู้ใช้งานและเรียกชื่อผู้ใช้งาน', {users: await GetUserService(search)});
   } catch (error) {
     next(error);
   }

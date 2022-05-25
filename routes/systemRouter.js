@@ -3,8 +3,6 @@ const { authenticateToken } = require('../middleware/authenticateToken');
 
 const router = require('express').Router();
 
-router.post('/addUser', systemControllers.SystemAddUser)
-
 /* เพิ่มผู้ใช้งานใน ad */
 router.post('/addUserAD', [authenticateToken], systemControllers.createUserAD);
 /* แก้ไขสิทธิ์ ผู้ใช้งาน */
@@ -20,5 +18,6 @@ router.post('updateConfig', [authenticateToken], systemControllers.updateConfigA
 router.get('/getUser',[authenticateToken], systemControllers.getSysmRoleController);
 /* */
 router.put('/editUser', [authenticateToken], systemControllers.editUser);
+router.get('/user/info', [authenticateToken], systemControllers.GetUserController)
 
 module.exports = router;

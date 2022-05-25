@@ -3,7 +3,7 @@ const messages = require('../messages/index');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
 const result = require('../middleware/result');
-const { ldap } = require("../service/ldapService");
+const { ldap } = require("../libs/ldapConnect");
 const { updateSysmUsersService, filterUsernameSysmUsersService, getUserService, getSearchUserService } = require("../service/sysm_users");
 const { EncryptCryptoJS, DecryptCryptoJS, checkPassword, sequelizeString, encryptPassword } = require('../util');
 const ActiveDirectory = require('activedirectory');
@@ -154,19 +154,6 @@ exports.refreshTokenControllers = async (req, res, next) => {
 
 const generateAccessToken = async (model) => {
     return await jwt.sign({ token: model }, config.JWT_SECRET, { expiresIn: config.EXPIRES_IN });
-}
-
-
-//---------- ค้นหาผู้ใช้งาน -------------------------// 
-exports.getSearchUserController = async (req, res, next) => {
-    try {
-        const { search } = req.body;
-        result(res, req, 'ค้นหาผู้ใช้งานและเรียกชื่อผู้ใช้งาน', await getSearchUserService(search));
-    } catch (error) {
-        next(error);
-    }
-
-
 }
 
 
