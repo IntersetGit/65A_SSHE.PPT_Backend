@@ -1,6 +1,6 @@
 const ActiveDirectory = require("activedirectory");
 const config = require("../config");
-const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, createConfigAdService, createSysmUsersService, GetUserService } = require("../service/sysm_users");
+const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, createConfigAdService, createSysmUsersService, GetUserService, GetRolesService } = require("../service/sysm_users");
 const { createDatProfileUsersService, updateDatProfileUsersService } = require("../service/ptt_profile_users");
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
@@ -158,15 +158,6 @@ exports.updateRoleUser = async (req, res, next) => {
   }
 };
 
-/** เรียกสิทธิผู้ใช้งาน */
-exports.getSysmRoleController = async (req, res, next) => {
-  try {
-    result(res, await getSysmRoleService());
-  } catch (error) {
-    next(error);
-  }
-};
-
 /** ค้นหา AD  */
 exports.findUserAd = async (req, res, next) => {
   try {
@@ -246,3 +237,11 @@ exports.GetUserController = async (req, res, next) => {
     next(error);
   }
 }
+
+exports.GetRolesController = async (req, res, next) => {
+  try {
+    result(res, req, 'เรียกข้อมูลควบคุมสิทธิ์', {roles: await GetRolesService()});
+  } catch (error) {
+    next(error);
+  }
+};

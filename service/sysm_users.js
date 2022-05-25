@@ -130,3 +130,10 @@ exports.GetUserService = async (search) => {
 
     return await sequelizeStringLike(sql, {search});
 }
+
+exports.GetRolesService = async () => {
+    return await models.sysm_roles.findAll({ 
+        order: [
+        ['order_by', 'ASC'],
+    ],})
+}

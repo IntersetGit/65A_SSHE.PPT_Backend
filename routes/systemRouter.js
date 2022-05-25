@@ -13,11 +13,10 @@ router.get('/findUserAD', [authenticateToken], systemControllers.findUserAd);
 router.post('/delUserAD/:id', [authenticateToken], systemControllers.delUserAd);
 /* อัพข้อมูลการตั้งค่า ad */ 
 router.post('updateConfig', [authenticateToken], systemControllers.updateConfigAd);
-
-// เรียกข้อมูลสิทธ์ผู้ใช้งาน
-router.get('/getUser',[authenticateToken], systemControllers.getSysmRoleController);
-/* */
 router.put('/editUser', [authenticateToken], systemControllers.editUser);
-router.get('/users/info', [authenticateToken], systemControllers.GetUserController)
+
+
+router.get('/roles', [authenticateToken], systemControllers.GetRolesController);
+router.get('/users/info', [authenticateToken], systemControllers.GetUserController);
 
 module.exports = router;
