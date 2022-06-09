@@ -6,4 +6,5 @@ const { authenticateToken } = require('../middleware/authenticateToken');
 router.post('/addActivity', masterController.AddActivityController);
 
 
+
 module.exports = router;

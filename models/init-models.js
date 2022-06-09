@@ -11,8 +11,9 @@ var _mas_mitigations = require("./mas_mitigations");
 var _mas_procedures = require("./mas_procedures");
 var _match_assessment = require("./match_assessment");
 var _match_projects = require("./match_projects");
-var _ptt_Incident = require("./ptt_Incident");
+var _ptt_Incident_old = require("./ptt_Incident_old");
 var _ptt_company = require("./ptt_company");
+var _ptt_incidents = require("./ptt_incidents");
 var _ptt_profile_users = require("./ptt_profile_users");
 var _ptt_projects = require("./ptt_projects");
 var _sysm_roles = require("./sysm_roles");
@@ -31,8 +32,9 @@ function initModels(sequelize) {
   var mas_procedures = _mas_procedures(sequelize, DataTypes);
   var match_assessment = _match_assessment(sequelize, DataTypes);
   var match_projects = _match_projects(sequelize, DataTypes);
-  var ptt_Incident = _ptt_Incident(sequelize, DataTypes);
+  var ptt_Incident_old = _ptt_Incident_old(sequelize, DataTypes);
   var ptt_company = _ptt_company(sequelize, DataTypes);
+  var ptt_incidents = _ptt_incidents(sequelize, DataTypes);
   var ptt_profile_users = _ptt_profile_users(sequelize, DataTypes);
   var ptt_projects = _ptt_projects(sequelize, DataTypes);
   var sysm_roles = _sysm_roles(sequelize, DataTypes);
@@ -96,8 +98,9 @@ function initModels(sequelize) {
     mas_procedures,
     match_assessment,
     match_projects,
-    ptt_Incident,
+    ptt_Incident_old,
     ptt_company,
+    ptt_incidents,
     ptt_profile_users,
     ptt_projects,
     sysm_roles,

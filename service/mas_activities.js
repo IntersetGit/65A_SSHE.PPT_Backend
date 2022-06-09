@@ -1,15 +1,15 @@
 const models = require('../models/index');
 const uuid = require('uuid');
 
-exports.AddActivityService = async (model) => {
+exports.AddActivityService = async (data) => {
     const id = uuid.v4();
     await models.master_activities.create({
         id,
-        code_id: model.code_id,
-        name: model.name,
-        description: model.description,
+        code_id: data.code_id,
+        name: data.name,
+        description: data.description,
         isuse: 1,
-        created_by: model.created_by,
+        created_by: user.sysm_id,
         created_date: new Date(),
     })
     return id
