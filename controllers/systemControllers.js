@@ -1,6 +1,6 @@
 const ActiveDirectory = require("activedirectory");
 const config = require("../config");
-const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, createConfigAdService, createSysmUsersService, GetUserService, GetRolesService } = require("../service/sysm_users");
+const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, matchCompanyUser, createConfigAdService, createSysmUsersService, GetUserService, GetRolesService } = require("../service/sysm_users");
 const { createDatProfileUsersService, updateDatProfileUsersService } = require("../service/ptt_profile_users");
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
@@ -33,7 +33,7 @@ exports.createUserAD = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
     const decode = await util.decodeToken(req.headers.authorization);
-    let { username, password, token, roles_id, first_name, last_name, e_mail, is_ad } = req.body;
+    let { username, password, token, roles_id, first_name, last_name, e_mail, is_ad , company_id } = req.body;
     const user = decode.token //มาจาก login
     const id = uuidv4.v4();
 
@@ -94,7 +94,12 @@ exports.createUserAD = async (req, res, next) => {
           created_by: id,
           first_name,
           last_name,
-          e_mail
+          e_mail,
+          company_id
+        }, transaction);
+        await matchCompanyUser({
+          user_id: id,
+          company_id
         }, transaction);
       } else {
         const err = new Error(`มีผู้ใช้ ${username} ในฐานข้อมูล`);
@@ -102,6 +107,8 @@ exports.createUserAD = async (req, res, next) => {
         throw err;
       }
     }
+
+
 
     await transaction.commit();
     result(res, req, '-', id);

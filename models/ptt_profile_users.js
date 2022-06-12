@@ -31,10 +31,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    company: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
     department: {
       type: DataTypes.STRING(255),
       allowNull: true
@@ -70,6 +66,11 @@ module.exports = function(sequelize, DataTypes) {
     updated_date: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    company_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      comment: "รหัสเชื่อมตารางบริษัท"
     }
   }, {
     sequelize,

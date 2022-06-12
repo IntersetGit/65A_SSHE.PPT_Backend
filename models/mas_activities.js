@@ -8,11 +8,6 @@ module.exports = function(sequelize, DataTypes) {
       comment: "รหัสหลักกิจกรรมงาน",
       primaryKey: true
     },
-    code_id: {
-      type: DataTypes.STRING(5),
-      allowNull: true,
-      comment: "รหัสกลุ่มของกิจกรรมงาน"
-    },
     name: {
       type: DataTypes.STRING(100),
       allowNull: false,

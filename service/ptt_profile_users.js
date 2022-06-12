@@ -2,6 +2,10 @@ const models = require('../models/index')
 const { sequelizeStringFindOne } = require('../util')
 const uuidv4 = require("uuid");
 
+
+
+
+
 /* เพิ่ม ตารางข้อมูลส่วนตัวผู้ใช้งานระบบ */
 exports.createDatProfileUsersService = async (model, transaction) => {
     const id = model.id ?? uuidv4.v4();
@@ -27,6 +31,15 @@ exports.createDatProfileUsersService = async (model, transaction) => {
     await models.ptt_profile_users.create(_model, { transaction });
     return id
 }
+
+exports.matchCompanyUser = async (company_id, user_id) => {
+    const match = await models.macth_company.create({
+        company_id : company_id,
+        user_id : user_id
+},{ transaction });
+    return id  
+}
+
 
 /* แก้ไข ตารางข้อมูลส่วนตัวผู้ใช้งานระบบ */
 exports.updateDatProfileUsersService = async (model, transaction) => {

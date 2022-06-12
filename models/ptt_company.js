@@ -37,6 +37,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(10),
       allowNull: true,
       comment: "เบอร์ติดต่อ"
+    },
+    company_type: {
+      type: DataTypes.SMALLINT,
+      allowNull: true,
+      comment: "ประเภทของบริษัท   สำนักงานใหญ่เป็น 1 สำนักงานสาขาเป็น 0"
     }
   }, {
     sequelize,
