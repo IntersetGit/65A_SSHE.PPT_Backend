@@ -1,7 +1,7 @@
 const ActiveDirectory = require("activedirectory");
 const config = require("../config");
-const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService, matchCompanyUser, createConfigAdService, createSysmUsersService, GetUserService, GetRolesService } = require("../service/sysm_users");
-const { createDatProfileUsersService, updateDatProfileUsersService } = require("../service/ptt_profile_users");
+const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService , createConfigAdService, createSysmUsersService, GetUserService, GetRolesService } = require("../service/sysm_users");
+const { createProfileUser , updateDatProfileUsersService,matchCompanyUser,editMatchCompanyUser } = require("../service/ptt_profile_users");
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
 const result = require("../middleware/result");
@@ -37,13 +37,13 @@ exports.createUserAD = async (req, res, next) => {
     const user = decode.token //มาจาก login
     const id = uuidv4.v4();
 
-    if (token) {
+     if (token) {
       const _decrypt = DecryptCryptoJS(token);
       username = _decrypt.username;
       password = _decrypt.password;
     }
 
-    if (is_ad) {
+    if (is_ad == 'true') {
       const searchname = await filterUsernameSysmUsersService(user.user_name);
       const setUser = await filterUsernameSysmUsersService(username);
       if (setUser) {
@@ -67,7 +67,7 @@ exports.createUserAD = async (req, res, next) => {
           created_by: id,
           is_ad: true
         }, transaction);
-        await createDatProfileUsersService({
+        await createProfileUser({
           user_id: id,
           created_by: id,
           first_name: __res.givenName,
@@ -89,7 +89,7 @@ exports.createUserAD = async (req, res, next) => {
           is_ad: false
         }, transaction);
 
-        await createDatProfileUsersService({
+        await createProfileUser({
           user_id: id,
           created_by: id,
           first_name,
@@ -107,9 +107,6 @@ exports.createUserAD = async (req, res, next) => {
         throw err;
       }
     }
-
-
-
     await transaction.commit();
     result(res, req, '-', id);
   } catch (error) {
@@ -117,6 +114,7 @@ exports.createUserAD = async (req, res, next) => {
     next(error);
   }
 };
+
 
 exports.editUser = async (req, res, next) => {
   const transaction = await sequelize.transaction();
@@ -128,12 +126,14 @@ exports.editUser = async (req, res, next) => {
       first_name: model.first_name,
       last_name: model.last_name,
       user_id: model.id,
-      e_mail: model.e_mail
+      e_mail: model.e_mail,
+      company_id: model.company_id
     }
 
     if (model.id) {
       await updateSysmUsersService(model, transaction)
       await updateDatProfileUsersService(dataUser, transaction);
+      await editMatchCompanyUser(model, transaction);
     }
 
     await transaction.commit();

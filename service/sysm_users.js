@@ -18,11 +18,8 @@ exports.filterUsernameSysmUsersService = async (user_name) => {
     a.is_ad,
     b.first_name,
     b.last_name,
-    b.initials,
-    b.company,
+    b.company_id,
     b.department,
-    b.job_title,
-    b.office,
     b.web_page,
     b.phone,
     b.address,
@@ -136,4 +133,24 @@ exports.GetRolesService = async () => {
         order: [
         ['order_by', 'ASC'],
     ],})
+}
+
+exports.getSearchUserService = async (search) => {
+    let sql = `select Suser.id,Suser.user_name,Suser.e_mail,roles.roles_name,Puser.first_name||' '||Puser.last_name firstLast , is_ad
+    ,Suser.roles_id as roles_id , Puser.first_name, Puser.last_name
+    from system.sysm_users Suser
+    inner join ptt_data.ptt_profile_users Puser on Suser.id=Puser.user_id
+    inner join system.sysm_roles roles on roles.id=Suser.roles_id 
+    WHERE Suser.isuse = 1 `
+
+    if (search) {
+        sql += `
+        AND (Suser.user_name ILIKE :search_name
+        or Puser.first_name ILIKE :search_name
+        or Puser.last_name ILIKE :search_name    ) `
+    } 
+
+    sql += ` order by Suser.created_date asc `
+
+    return await sequelizeStringLike(sql, {search});
 }

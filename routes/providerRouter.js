@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { loginControllers, refreshTokenControllers, updatePassWordUser} = require("../controllers/providerControllers");
+const { loginControllers, refreshTokenControllers, updatePassWordUser,getSearchUserController} = require("../controllers/providerControllers");
 const { authenticateToken } = require('../middleware/authenticateToken');
 
 
@@ -7,6 +7,7 @@ const { authenticateToken } = require('../middleware/authenticateToken');
 router.post('/login', loginControllers);
 router.post('/editpassword',[authenticateToken], updatePassWordUser);
 router.get('/refreshToken', refreshTokenControllers);
+router.get('/getSearchUser', getSearchUserController);
 
 
 module.exports = router;

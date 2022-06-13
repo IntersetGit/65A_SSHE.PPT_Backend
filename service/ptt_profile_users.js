@@ -7,7 +7,7 @@ const uuidv4 = require("uuid");
 
 
 /* เพิ่ม ตารางข้อมูลส่วนตัวผู้ใช้งานระบบ */
-exports.createDatProfileUsersService = async (model, transaction) => {
+exports.createProfileUser = async (model, transaction) => {
     const id = model.id ?? uuidv4.v4();
     const _model = {
         id,
@@ -19,11 +19,10 @@ exports.createDatProfileUsersService = async (model, transaction) => {
     if (model.e_mail) _model.e_mail = model.e_mail
     if (model.company) _model.company = model.company
     if (model.department) _model.department = model.department
-    if (model.job_title) _model.job_title = model.job_title
     if (model.office) _model.office = model.office
-    if (model.web_page) _model.web_page = model.web_page
     if (model.phone) _model.phone = model.phone
     if (model.address) _model.address = model.address
+    if (model.company_id) _model.company_id = model.company_id
     if (model.description) _model.description = model.description
     if (model.updated_by) _model.updated_by = model.updated_by
     if (model.updated_date) _model.updated_date = new Date()
@@ -32,12 +31,14 @@ exports.createDatProfileUsersService = async (model, transaction) => {
     return id
 }
 
-exports.matchCompanyUser = async (company_id, user_id) => {
-    const match = await models.macth_company.create({
-        company_id : company_id,
-        user_id : user_id
-},{ transaction });
-    return id  
+exports.matchCompanyUser = async (model, transaction) => {
+    const match = {
+          company_id : model.company_id,
+          user_id : model.user_id
+    }
+   
+    await models.macth_company.create( match ,{ transaction });
+    return match  
 }
 
 
@@ -53,14 +54,23 @@ exports.updateDatProfileUsersService = async (model, transaction) => {
     if (model.e_mail) _model.e_mail = model.e_mail
     if (model.company) _model.company = model.company
     if (model.department) _model.department = model.department
-    if (model.job_title) _model.job_title = model.job_title
     if (model.office) _model.office = model.office
-    if (model.web_page) _model.web_page = model.web_page
     if (model.phone) _model.phone = model.phone
     if (model.address) _model.address = model.address
+    if (model.company_id) _model.company_id = model.company_id
     if (model.description) _model.description = model.description
     if (model.update_by) _model.update_by = model.update_by
 
     await models.ptt_profile_users.update(_model, { where: { user_id: model.user_id }, transaction });
     return model.user_id;
 }
+
+exports.editMatchCompanyUser = async (model, transaction) => {
+    const match = {
+          company_id : model.company_id,
+          user_id : model.user_id
+    }
+    await models.macth_company.create( match ,{ where: { user_id: model.user_id }, transaction });
+    return model.user_id;  
+}
+

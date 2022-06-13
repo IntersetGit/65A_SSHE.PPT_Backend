@@ -121,7 +121,7 @@ exports.loginControllers = async (req, res, next) => {
 
 exports.refreshTokenControllers = async (req, res, next) => {
     try {
-        const authHeader = req.headers['authorization']
+        const authHeader = req.headers['Authorization']
         if (!authHeader) res.sendStatus(401)
 
         const token = authHeader && authHeader.split(" ")[1];
@@ -156,6 +156,17 @@ const generateAccessToken = async (model) => {
     return await jwt.sign({ token: model }, config.JWT_SECRET, { expiresIn: config.EXPIRES_IN });
 }
 
+//---------- ค้นหาผู้ใช้งาน -------------------------// 
+exports.getSearchUserController = async (req, res, next) => {
+    try {
+        const { search } = req.query ;
+        result(res, await getSearchUserService(search));
+    } catch (error) {
+        next(error);
+    }
+
+
+}
 
 
 
