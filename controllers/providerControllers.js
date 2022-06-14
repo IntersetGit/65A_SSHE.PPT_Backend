@@ -121,7 +121,7 @@ exports.loginControllers = async (req, res, next) => {
 
 exports.refreshTokenControllers = async (req, res, next) => {
     try {
-        const authHeader = req.headers['Authorization']
+        const authHeader = req.headers['authorization']
         if (!authHeader) res.sendStatus(401)
 
         const token = authHeader && authHeader.split(" ")[1];

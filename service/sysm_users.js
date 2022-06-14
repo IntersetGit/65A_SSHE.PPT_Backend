@@ -18,7 +18,6 @@ exports.filterUsernameSysmUsersService = async (user_name) => {
     a.is_ad,
     b.first_name,
     b.last_name,
-    b.company_id,
     b.department,
     b.web_page,
     b.phone,
