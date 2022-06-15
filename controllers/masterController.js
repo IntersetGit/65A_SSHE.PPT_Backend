@@ -1,5 +1,5 @@
 const util = require('../util')
-const { AddActivityService, BulkCreateActivityService, GetDataActivityService,GetAllDataCompany,GetSearchDataCompany,createCompany,updateCompany,deleteCompany} = require('../service/mas_activities');
+const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService } = require('../service/ptt_company');
 const result = require('../middleware/result');
 
 // exports.AddActivityController = async (req, res, next) => {
@@ -16,19 +16,10 @@ const result = require('../middleware/result');
 
 exports.getDataCompany = async (req, res, next) => {
     try {
-          const  _getDataCompany = await GetAllDataCompany( )
-          result(res, req, 'แสดงข้อมูลบริษัท', _getDataCompany )
-
-    } catch (error) {
-        next(error);
-    }
-}
-//---------- ค้นหาด้วยชื่อ--------//
-exports.getSearchCompany = async (req, res, next) => {
-    try {
-          const {search } = req.query
-          const  _getSearchCompany = await GetSearchDataCompany(search)
-          result(res, req, 'ค้นหาด้วยชื่อบริษัท', _getSearchCompany  )
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { search } = req.query
+        result(res, req, 'ค้นหาด้วยชื่อบริษัทและเรียกข้อมูลบริษัท', await GetAllDataCompanyService(search))
 
     } catch (error) {
         next(error);
@@ -37,31 +28,29 @@ exports.getSearchCompany = async (req, res, next) => {
 
 exports.addCompany = async (req, res, next) => {
     try {
-          const  data  = req.body
-          const  addDataCompany = await createCompany(data)
-          result(res, req, 'เพิ่มข้อมูลบริษัท', addDataCompany  )
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const model = req.body
+
+        if (model.id) {
+            await CompanyEditService(model)
+            result(res, req, 'แก้ไขข้อมูลบริษัท', true, 204)
+        } else {
+            result(res, req, 'เพิ่มข้อมูลบริษัท', await CompanyAddService(model), 201)
+        }
 
     } catch (error) {
-        next(error);
-    }
-}
-
-exports.editDataCompany = async (req, res, next) => {
-    try {
-          const  data  = req.body
-          const  editCompany = await updateCompany(data)
-          result(res, req, 'แก้ไขข้อมูลบริษัท', editCompany  )
-
-    } catch (error) {
-        next(error);
+        next(error)
     }
 }
 
 exports.deleteDataCompany = async (req, res, next) => {
     try {
-          const  data  = req.body
-          const  _deleteCompany = await deleteCompany(data)
-          result(res, req, 'ลบข้อมูลบริษัท', _deleteCompany  )
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { id } = req.params
+        await deleteCompanyService(id)
+        result(res, req, 'ลบข้อมูลบริษัท', true)
 
     } catch (error) {
         next(error);
