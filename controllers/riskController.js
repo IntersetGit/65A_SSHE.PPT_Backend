@@ -136,6 +136,7 @@ exports.importXlxsRiskIdentificationController = async (req, res, next) => {
                 id: uuid.v4(),
                 name: row[0],
                 description: row[1],
+                code_id: row[2],
                 isuse: 1,
                 created_date: new Date()
             })
