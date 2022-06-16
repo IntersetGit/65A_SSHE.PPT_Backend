@@ -11,10 +11,13 @@ exports.getriskIdentificationController = async (req, res, next) => {
     try {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
-        const { activities_id } = req.body;
-        const getDataRisk = await risksearch(activities_id)
-
-        result(res, req, 'เรียกข้อมูล Master Risk Identification', getDataRisk)
+       
+        result(res, req, 'เรียกข้อมูล Master Risk Identification', {
+            activity: await masActivities.GetDataActivityService() ?? [],
+            impacts: await masImpacts.GetDataImpactService() ?? [],
+            mitigations: await masMitigations.GetDataMitigationsService() ?? [],
+            procedures: await masProcedures.GetDataProceduresService() ?? []
+        })
     } catch (error) {
         next(error)
     }
