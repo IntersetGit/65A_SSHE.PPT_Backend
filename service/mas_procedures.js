@@ -20,3 +20,7 @@ exports.AddProceduresService = async (model) => {
 exports.GetDataProceduresService = async () => {
     return await models.mas_procedures.findAll()
 }
+
+exports.BulkCreateProceduresService = async (model) => {
+    await models.mas_procedures.bulkCreate(model)
+}

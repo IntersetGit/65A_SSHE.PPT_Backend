@@ -20,3 +20,7 @@ exports.AddMitigationsService = async (model) => {
 exports.GetDataMitigationsService = async () => {
     return await models.mas_mitigations.findAll()
 }
+
+exports.BulkCreateMitigationsService = async (model) => {
+    await await models.mas_mitigations.bulkCreate(model)
+}

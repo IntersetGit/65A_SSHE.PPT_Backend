@@ -20,3 +20,7 @@ exports.AddImpactService = async (model) => {
 exports.GetDataImpactService = async () => {
     return await models.mas_impacts.findAll()
 }
+
+exports.BulkCreateImpactService = async (model) => {
+    await  models.mas_impacts.bulkCreate(model)
+}

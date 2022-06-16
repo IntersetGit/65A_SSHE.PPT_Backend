@@ -149,19 +149,19 @@ exports.importXlxsRiskIdentificationController = async (req, res, next) => {
 
         if (field[0].name.toLowerCase() === 'impacts' || field[0].name.toLowerCase() === 'impact') {
             field.shift()
-            await masActivities.BulkCreateActivityService(field)
+            await masImpacts.BulkCreateImpactService(field)
             result(res, req, 'import impacts', true, 201)
         }
 
         if (field[0].name.toLowerCase() === 'mitigations' || field[0].name.toLowerCase() === 'mitigation') {
             field.shift()
-            await masActivities.BulkCreateActivityService(field)
+            await masMitigations.BulkCreateMitigationsService(field)
             result(res, req, 'import mitigations', true, 201)
         }
 
         if (field[0].name.toLowerCase() === 'procedures' || field[0].name.toLowerCase() === 'procedure') {
             field.shift()
-            await masActivities.BulkCreateActivityService(field)
+            await masProcedures.BulkCreateProceduresService(field)
             result(res, req, 'import procedures', true, 201)
         }
 
