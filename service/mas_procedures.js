@@ -1,9 +1,9 @@
 const models = require('../models/index');
 const uuid = require('uuid');
 
-exports.AddProceduresService = (model) => {
+exports.AddProceduresService = async (model) => {
     const id = uuid.v4();
-    await models.master_procedures.create({
+    await models.mas_procedures.create({
         id,
         code_id: model.code_id,
         name: model.name,
@@ -17,6 +17,6 @@ exports.AddProceduresService = (model) => {
     return id
 }
 
-exports.GetDataProceduresService = () => {
-    return await models.master_procedures.findAll()
+exports.GetDataProceduresService = async () => {
+    return await models.mas_procedures.findAll()
 }

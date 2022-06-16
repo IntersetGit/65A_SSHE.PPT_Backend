@@ -15,11 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.UUID,
       allowNull: false,
       comment: "รหัสกิจกรรมของงาน",
-      primaryKey: true,
-      references: {
-        model: 'mas_activities',
-        key: 'id'
-      }
+      primaryKey: true
     }
   }, {
     sequelize,

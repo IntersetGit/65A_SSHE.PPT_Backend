@@ -1,4 +1,4 @@
-const systemControllers = require('../controllers/systemControllers');
+const systemControllers = require('../controllers/systemController');
 const { authenticateToken } = require('../middleware/authenticateToken');
 
 const router = require('express').Router();

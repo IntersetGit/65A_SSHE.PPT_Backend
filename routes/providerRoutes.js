@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { loginControllers, refreshTokenControllers, updatePassWordUser,getSearchUserController} = require("../controllers/providerControllers");
+const { loginControllers, refreshTokenControllers, updatePassWordUser,getSearchUserController} = require("../controllers/providerController");
 const { authenticateToken } = require('../middleware/authenticateToken');
 
 

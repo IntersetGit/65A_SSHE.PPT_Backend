@@ -31,11 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     activity_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      comment: "รหัสกิจกรรมของงาน",
-      references: {
-        model: 'mas_activities',
-        key: 'id'
-      }
+      comment: "รหัสกิจกรรมของงาน"
     },
     activity_code: {
       type: DataTypes.STRING(5),

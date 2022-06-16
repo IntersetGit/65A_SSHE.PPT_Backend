@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     project_name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(256),
       allowNull: false,
       comment: "ชื่อโครงการบริษัท"
     },
@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     user_id: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       comment: "รหัสผู้สร้างโครงการของบริษัทนั้นๆ",
       references: {
         model: 'sysm_users',
@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     created_by: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       comment: "สร้างข้อมูลโดย",
       references: {
         model: 'sysm_users',
@@ -38,8 +38,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     created_date: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       comment: "สร้างข้อมูลวันที่"
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      comment: "คำอธิบาย"
     }
   }, {
     sequelize,

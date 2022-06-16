@@ -1,9 +1,9 @@
 const models = require('../models/index');
 const uuid = require('uuid');
 
-exports.AddMitigationsService = (model) => {
+exports.AddMitigationsService = async (model) => {
     const id = uuid.v4();
-    await models.master_mitigations.create({
+    await models.mas_mitigations.create({
         id,
         code_id: model.code_id,
         name: model.name,
@@ -17,6 +17,6 @@ exports.AddMitigationsService = (model) => {
     return id
 }
 
-exports.GetDataMitigationsService = () => {
-    return await models.master_mitigations.findAll()
+exports.GetDataMitigationsService = async () => {
+    return await models.mas_mitigations.findAll()
 }

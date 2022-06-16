@@ -3,7 +3,7 @@ const uuid = require('uuid');
 
 exports.AddImpactService = async (model) => {
     const id = uuid.v4();
-    await models.master_impacts.create({
+    await models.mas_impacts.create({
         id,
         code_id: model.code_id,
         name: model.name,
@@ -18,5 +18,5 @@ exports.AddImpactService = async (model) => {
 }
 
 exports.GetDataImpactService = async () => {
-    return await models.master_impacts.findAll()
+    return await models.mas_impacts.findAll()
 }

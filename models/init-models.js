@@ -40,16 +40,8 @@ function initModels(sequelize) {
   var sysm_roles = _sysm_roles(sequelize, DataTypes);
   var sysm_users = _sysm_users(sequelize, DataTypes);
 
-  mas_activities.belongsToMany(ptt_company, { through: match_assessment, foreignKey: "activity_id", otherKey: "company_id" });
-  ptt_company.belongsToMany(mas_activities, { through: match_assessment, foreignKey: "company_id", otherKey: "activity_id" });
-  ptt_company.belongsToMany(ptt_projects, { through: match_projects, foreignKey: "company_id", otherKey: "project_id" });
   ptt_company.belongsToMany(sysm_users, { through: macth_company, foreignKey: "company_id", otherKey: "user_id" });
-  ptt_projects.belongsToMany(ptt_company, { through: match_projects, foreignKey: "project_id", otherKey: "company_id" });
   sysm_users.belongsToMany(ptt_company, { through: macth_company, foreignKey: "user_id", otherKey: "company_id" });
-  mas_impacts.belongsTo(mas_activities, { as: "activity", foreignKey: "activity_id"});
-  mas_activities.hasMany(mas_impacts, { as: "mas_impacts", foreignKey: "activity_id"});
-  match_assessment.belongsTo(mas_activities, { as: "activity", foreignKey: "activity_id"});
-  mas_activities.hasMany(match_assessment, { as: "match_assessments", foreignKey: "activity_id"});
   mas_mitigations.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
   mas_impacts.hasMany(mas_mitigations, { as: "mas_mitigations", foreignKey: "impact_id"});
   match_assessment.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
@@ -72,10 +64,6 @@ function initModels(sequelize) {
   sysm_users.hasMany(mas_procedures, { as: "updated_by_mas_procedures", foreignKey: "updated_by"});
   macth_company.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
   ptt_company.hasMany(macth_company, { as: "macth_companies", foreignKey: "company_id"});
-  match_projects.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
-  ptt_company.hasMany(match_projects, { as: "match_projects", foreignKey: "company_id"});
-  match_projects.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
-  ptt_projects.hasMany(match_projects, { as: "match_projects", foreignKey: "project_id"});
   macth_company.belongsTo(sysm_users, { as: "user", foreignKey: "user_id"});
   sysm_users.hasMany(macth_company, { as: "macth_companies", foreignKey: "user_id"});
   ptt_projects.belongsTo(sysm_users, { as: "created_by_sysm_user", foreignKey: "created_by"});
