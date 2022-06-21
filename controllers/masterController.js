@@ -1,5 +1,6 @@
 const util = require('../util')
 const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService } = require('../service/ptt_company');
+const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService} = require('../service/ptt_project');
 const result = require('../middleware/result');
 
 // exports.AddActivityController = async (req, res, next) => {
@@ -51,6 +52,59 @@ exports.deleteDataCompany = async (req, res, next) => {
         const { id } = req.params
         await deleteCompanyService(id)
         result(res, req, 'ลบข้อมูลบริษัท', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+
+
+//--------- projeect------
+
+
+exports.getDataProject = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { search } = req.query
+        result(res, req, 'ค้นหาด้วยชื่อโครงการและเรียกข้อมูลโครงการ', await GetAllDataProjectService(search))
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.addProject = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const model = req.body
+
+        if (model.id) {
+            await projectEditService(model)
+            await projecctMatchUserEditService(model) 
+            result(res, req, 'แก้ไขข้อมูลโครงการ', true, 204)
+        } else {
+            await projectAddService(model)
+            await projecctMatchUserService(model)
+
+            result(res, req, 'เพิ่มข้อมูลโครงการ',  201)
+        }
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+exports.deleteDataproject = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { id } = req.params
+        await deleteProjectService(id)
+        result(res, req, 'ลบข้อมูลโครงการ', true)
 
     } catch (error) {
         next(error);

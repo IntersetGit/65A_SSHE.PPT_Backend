@@ -11,5 +11,10 @@ router.post('/manageCompany', [authenticateToken], masterController.addCompany)
 router.delete('/updateCompany/:id',  [authenticateToken], masterController.deleteDataCompany)
 
 
+router.get('/getProject',  [authenticateToken], masterController.getDataProject)
+router.post('/manageProject', [authenticateToken], masterController.addProject)
+router.delete('/updateProject/:id',  [authenticateToken], masterController.deleteDataproject)
+
+
 
 module.exports = router;
