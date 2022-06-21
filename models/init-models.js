@@ -9,6 +9,7 @@ var _mas_incident_03 = require("./mas_incident_03");
 var _mas_incident_04 = require("./mas_incident_04");
 var _mas_mitigations = require("./mas_mitigations");
 var _mas_procedures = require("./mas_procedures");
+var _mas_project_type = require("./mas_project_type");
 var _match_assessment = require("./match_assessment");
 var _match_projects = require("./match_projects");
 var _ptt_Incident_old = require("./ptt_Incident_old");
@@ -30,6 +31,7 @@ function initModels(sequelize) {
   var mas_incident_04 = _mas_incident_04(sequelize, DataTypes);
   var mas_mitigations = _mas_mitigations(sequelize, DataTypes);
   var mas_procedures = _mas_procedures(sequelize, DataTypes);
+  var mas_project_type = _mas_project_type(sequelize, DataTypes);
   var match_assessment = _match_assessment(sequelize, DataTypes);
   var match_projects = _match_projects(sequelize, DataTypes);
   var ptt_Incident_old = _ptt_Incident_old(sequelize, DataTypes);
@@ -84,6 +86,7 @@ function initModels(sequelize) {
     mas_incident_04,
     mas_mitigations,
     mas_procedures,
+    mas_project_type,
     match_assessment,
     match_projects,
     ptt_Incident_old,
