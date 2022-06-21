@@ -48,10 +48,6 @@ function initModels(sequelize) {
   mas_impacts.hasMany(mas_mitigations, { as: "mas_mitigations", foreignKey: "impact_id"});
   match_assessment.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
   ptt_company.hasMany(match_assessment, { as: "match_assessments", foreignKey: "company_id"});
-  mas_activities.belongsTo(sysm_users, { as: "created_by_sysm_user", foreignKey: "created_by"});
-  sysm_users.hasMany(mas_activities, { as: "mas_activities", foreignKey: "created_by"});
-  mas_activities.belongsTo(sysm_users, { as: "updated_by_sysm_user", foreignKey: "updated_by"});
-  sysm_users.hasMany(mas_activities, { as: "updated_by_mas_activities", foreignKey: "updated_by"});
   mas_impacts.belongsTo(sysm_users, { as: "created_by_sysm_user", foreignKey: "created_by"});
   sysm_users.hasMany(mas_impacts, { as: "mas_impacts", foreignKey: "created_by"});
   mas_impacts.belongsTo(sysm_users, { as: "updated_by_sysm_user", foreignKey: "updated_by"});

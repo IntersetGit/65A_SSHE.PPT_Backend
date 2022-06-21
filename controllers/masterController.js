@@ -1,6 +1,6 @@
 const util = require('../util')
 const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService } = require('../service/ptt_company');
-const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService} = require('../service/ptt_project');
+const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService} = require('../service/ptt_project');
 const result = require('../middleware/result');
 
 // exports.AddActivityController = async (req, res, next) => {
@@ -35,7 +35,7 @@ exports.addCompany = async (req, res, next) => {
 
         if (model.id) {
             await CompanyEditService(model)
-            result(res, req, 'แก้ไขข้อมูลบริษัท', true, 204)
+            result(res, req, 'แก้ไขข้อมูลบริษัท', true, 201)
         } else {
             result(res, req, 'เพิ่มข้อมูลบริษัท', await CompanyAddService(model), 201)
         }
@@ -83,15 +83,15 @@ exports.addProject = async (req, res, next) => {
         const model = req.body
 
         if (model.id) {
-            await projectEditService(model)
-            await projecctMatchUserEditService(model) 
-            result(res, req, 'แก้ไขข้อมูลโครงการ', true, 204)
+              await projectEditService(model)
+              await projecctMatchUserEditService(model) 
+            result(res, req, 'แก้ไขข้อมูลโครงการ',true, 201)
         } else {
-            await projectAddService(model)
-            await projecctMatchUserService(model)
+           const c =  await projectAddService(model)
+           const d =  await projecctMatchUserService( c , model)
 
-            result(res, req, 'เพิ่มข้อมูลโครงการ',  201)
-        }
+            result(res, req, 'เพิ่มข้อมูลโครงการ', c ,  201)
+        } 
 
     } catch (error) {
         next(error)
@@ -104,6 +104,7 @@ exports.deleteDataproject = async (req, res, next) => {
         const user = decode.token
         const { id } = req.params
         await deleteProjectService(id)
+        await projecctMatchUserDeleteService(id)
         result(res, req, 'ลบข้อมูลโครงการ', true)
 
     } catch (error) {

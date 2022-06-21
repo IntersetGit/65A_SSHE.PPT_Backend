@@ -56,6 +56,7 @@ exports.addDataImpact = async( data ,user) => {
   }else{
   const addImpact = await models.ptt_impact.create({
     name : data.name,
+    description : data.description,
     created_by : user,
     created_date : new Date()
     
@@ -72,6 +73,7 @@ exports.addDataMitigation = async( data ,user) => {
   }else{
   const addMitigation = await models.ptt_mitigation.create({
     name : data.name,
+    description : data.description,
     created_by : user,
     created_date : new Date()
     
@@ -89,6 +91,7 @@ exports.addDataProcedures = async( data ,user) => {
   }else{
   const addProcedures = await models.ptt_procedures.create({
     name : data.name,
+    description : data.description,
     created_by : user,
     created_date : new Date()
     
@@ -101,7 +104,8 @@ exports.updateDataActivities = async( data , user) => {
   
   const updateRiskActivities = await models.ptt_activities.update({
       name: data.name,
-      updated__by: user ,
+      description : data.description,
+      updated__by: user.sysm_id,
       updated_date: new Date()
     },{
       where: { id : data.id }
@@ -109,3 +113,56 @@ exports.updateDataActivities = async( data , user) => {
     return data.id
 }
 
+
+exports.updateDataImpact = async( data , user) => {
+  
+  const updateRiskImpact = await models.mas_impacts.update({
+      name: data.name,
+      description: data.description,
+      updated__by: user.sysm_id ,
+      updated_date: new Date()
+    },{
+      where: { id : data.id }
+    })
+    return data.id
+}
+
+
+exports.updateDataMitigation = async( data , user) => {
+  
+  const updateRiskMitigation = await models.mas_mitigations.update({
+      name: data.name,
+      description: data.description,
+      updated__by: user.sysm_id ,
+      updated_date: new Date()
+    },{
+      where: { id : data.id }
+    })
+    return data.id
+}
+
+exports.updateDataProcedures = async( data , user) => {
+  
+  const updateRiskProcedures = await models.mas_procedures.update({
+      name: data.name,
+      description: data.description,
+      updated__by: user.sysm_id ,
+      updated_date: new Date()
+    },{
+      where: { id : data.id }
+    })
+    return data.id
+}
+
+exports.deleteActivityService = async (id) => {
+  await models.ptt_activities.destroy({ where: { id} })
+};
+exports.deleteImpactService = async (id) => {
+  await models.ptt_impact.destroy({ where: { id} })
+};
+exports.deleteMitigationService = async (id) => {
+  await models.ptt_mitigation.destroy({ where: { id} })
+};
+exports.deleteProceduresService = async (id) => {
+  await models.ptt_procedures.destroy({ where: { id} })
+};

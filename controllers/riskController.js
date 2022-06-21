@@ -9,7 +9,9 @@ const masActivities = require('../service/mas_activities')
 const masImpacts = require('../service/mas_impacts')
 const masMitigations = require('../service/mas_mitigations')
 const masProcedures = require('../service/mas_procedures')
-const { risksearch, addDataActivities, addDataImpact, addDataMitigation, addDataProcedures, updateDataActivities } = require('../service/riskService')
+const { risksearch, addDataActivities, addDataImpact, addDataMitigation, addDataProcedures,deleteProceduresService,
+    deleteMitigationService,deleteImpactService,deleteActivityService,updateDataProcedures, updateDataActivities,
+    updateDataImpact,updateDataMitigation } = require('../service/riskService')
 
 exports.getriskIdentificationController = async (req, res, next) => {
     try {
@@ -174,10 +176,25 @@ exports.importXlxsRiskIdentificationController = async (req, res, next) => {
 
 exports.updateActivities = async (req, res, next) => {
     try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
         const data = req.body;
-        const _updateActivities = await updateDataActivities(data, req.user.sysm_id)
+        const _updateActivities = await updateDataActivities(data, user.sysm_id)
 
         result(res, req, '-', _updateActivities)
+    } catch (error) {
+        next(error)
+    }
+}
+
+exports.updateImpact = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const data = req.body;
+        const _updateImpact = await updateDataImpact(data, user.sysm_id)
+
+        result(res, req, '-', _updateImpact)
     } catch (error) {
         next(error)
     }
@@ -185,5 +202,74 @@ exports.updateActivities = async (req, res, next) => {
 }
 
 
+exports.updateMitigation = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const data = req.body;
+        const _updateMitigation = await updateDataMitigation(data, user.sysm_id)
 
+        result(res, req, '-', _updateMitigation)
+    } catch (error) {
+        next(error)
+    }
 
+}
+
+exports.updateProcedures = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const data = req.body;
+        const _updateProcedures = await updateDataProcedures(data, user.sysm_id)
+
+        result(res, req, '-', _updateProcedures)
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+exports.deleteDataActivity = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        await deleteActivityService(id)
+        result(res, req, '-', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.deleteDataImpact = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        await deleteImpactService(id)
+        result(res, req, '-', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.deleteDataMitigation = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        await deleteMitigationService(id)
+        result(res, req, '-', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.deleteDataProcedures = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        await deleteProceduresService(id)
+        result(res, req, '-', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
