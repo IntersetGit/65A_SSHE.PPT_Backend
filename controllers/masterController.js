@@ -1,6 +1,7 @@
 const util = require('../util')
 const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService } = require('../service/ptt_company');
 const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService} = require('../service/ptt_project');
+const { GetAllDataProjectTypeService,projectTypeAddService,projectTypeEditService,deleteProjectTypeService} = require('../service/mas_project_type');
 const result = require('../middleware/result');
 
 // exports.AddActivityController = async (req, res, next) => {
@@ -106,6 +107,50 @@ exports.deleteDataproject = async (req, res, next) => {
         await deleteProjectService(id)
         await projecctMatchUserDeleteService(id)
         result(res, req, 'ลบข้อมูลโครงการ', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+//-------------- project type 
+exports.getDataProjecttype = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { search } = req.query
+        result(res, req, 'ค้นหาประเภทของโครงการด้วยชื่อและค้นหาประเภทโครงการทั้งหมด', await GetAllDataProjectTypeService(search))
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.addProjectType = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const model = req.body
+
+        if (model.id ) {
+            await projectTypeEditService( user ,model)
+            result(res, req, 'แก้ไขข้อมูลประเภทโครงการ',true, 201)
+        } else {
+            result(res, req, 'เพิ่มข้อมูลประเภทโครงการ',await projectTypeAddService(user,model),  201)
+        } 
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+exports.deleteDataProjectType = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { id } = req.params
+        await deleteProjectTypeService(id)
+        result(res, req, 'ลบข้อมูลประเภทโครงการ', true)
 
     } catch (error) {
         next(error);

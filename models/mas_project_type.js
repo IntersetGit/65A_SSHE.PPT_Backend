@@ -10,6 +10,26 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    active: {
+      type: DataTypes.SMALLINT,
+      allowNull: true
+    },
+    created_by: {
+      type: DataTypes.UUID,
+      allowNull: true
+    },
+    created_date: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_by: {
+      type: DataTypes.UUID,
+      allowNull: true
+    },
+    update_date: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     sequelize,

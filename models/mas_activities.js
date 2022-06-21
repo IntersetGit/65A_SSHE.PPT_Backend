@@ -31,7 +31,11 @@ module.exports = function(sequelize, DataTypes) {
     created_by: {
       type: DataTypes.UUID,
       allowNull: true,
-      comment: "สร้างข้อมูลโดย"
+      comment: "สร้างข้อมูลโดย",
+      references: {
+        model: 'sysm_users',
+        key: 'id'
+      }
     },
     created_date: {
       type: DataTypes.DATE,
@@ -41,7 +45,11 @@ module.exports = function(sequelize, DataTypes) {
     updated_by: {
       type: DataTypes.UUID,
       allowNull: true,
-      comment: "ปรับปรุงข้อมูลโดย"
+      comment: "ปรับปรุงข้อมูลโดย",
+      references: {
+        model: 'sysm_users',
+        key: 'id'
+      }
     },
     updated_date: {
       type: DataTypes.DATE,
