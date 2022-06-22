@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     mitigation_id: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       comment: "รหัสจากผลกระทบที่ได้"
     },
     mitigation_code: {

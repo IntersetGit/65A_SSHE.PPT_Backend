@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     impact_id: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       comment: "รหัสผลกระทบของกิจกรรมงาน",
       references: {
         model: 'mas_impacts',

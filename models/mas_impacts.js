@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     activity_id: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       comment: "รหัสกิจกรรมของงาน"
     },
     activity_code: {

@@ -48,7 +48,9 @@ function initModels(sequelize) {
   var sysm_roles = _sysm_roles(sequelize, DataTypes);
   var sysm_users = _sysm_users(sequelize, DataTypes);
 
+  ptt_company.belongsToMany(ptt_projects, { through: match_projects, foreignKey: "company_id", otherKey: "project_id" });
   ptt_company.belongsToMany(sysm_users, { through: macth_company, foreignKey: "company_id", otherKey: "user_id" });
+  ptt_projects.belongsToMany(ptt_company, { through: match_projects, foreignKey: "project_id", otherKey: "company_id" });
   sysm_users.belongsToMany(ptt_company, { through: macth_company, foreignKey: "user_id", otherKey: "company_id" });
   mas_mitigations.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
   mas_impacts.hasMany(mas_mitigations, { as: "mas_mitigations", foreignKey: "impact_id"});
@@ -78,6 +80,10 @@ function initModels(sequelize) {
   mas_sshe_issue.hasMany(ptt_hazard_issue, { as: "ptt_hazard_issues", foreignKey: "issue_type_id"});
   macth_company.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
   ptt_company.hasMany(macth_company, { as: "macth_companies", foreignKey: "company_id"});
+  match_projects.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
+  ptt_company.hasMany(match_projects, { as: "match_projects", foreignKey: "company_id"});
+  match_projects.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
+  ptt_projects.hasMany(match_projects, { as: "match_projects", foreignKey: "project_id"});
   macth_company.belongsTo(sysm_users, { as: "user", foreignKey: "user_id"});
   sysm_users.hasMany(macth_company, { as: "macth_companies", foreignKey: "user_id"});
   ptt_hazard_issue.belongsTo(sysm_users, { as: "created_by_sysm_user", foreignKey: "created_by"});
