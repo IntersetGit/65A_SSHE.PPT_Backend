@@ -59,8 +59,8 @@ exports.addImpactController = async (req, res, next) => {
             name,
             description,
             code_id,
-            activity_id,
-            activity_code,
+            // activity_id,
+            // activity_code,
             created_by: user.sysm_id
         }), 201)
 
@@ -80,8 +80,8 @@ exports.addMitigationController = async (req, res, next) => {
             code_id,
             name,
             description,
-            impact_id,
-            impact_code,
+            // impact_id,
+            // impact_code,
             created_by: user.sysm_id
         }), 201)
 
@@ -95,10 +95,10 @@ exports.addProceduresController = async (req, res, next) => {
     try {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
-        const { code_id, name, description, mitigation_id, mitigation_code } = req.body;
+        const { code_id, name, description } = req.body;
 
         result(res, req, 'เพิ่มข้อมูลการปฏิบัติงาน', await masProcedures.AddProceduresService({
-            code_id, name, description, mitigation_id, mitigation_code, created_by: user.sysm_id
+            code_id, name, description,  created_by: user.sysm_id
         }), 201)
 
     } catch (error) {

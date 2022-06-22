@@ -9,8 +9,6 @@ exports.AddProceduresService = async (model) => {
         name: model.name,
         description: model.description,
         isuse: 1,
-        mitigation_id: model.mitigation_id,
-        mitigation_code: model.mitigation_code,
         created_by: model.created_by,
         created_date: new Date(),
     })

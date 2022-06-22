@@ -9,8 +9,8 @@ exports.AddMitigationsService = async (model) => {
         name: model.name,
         description: model.description,
         isuse: 1,
-        impact_id: model.impact_id,
-        impact_code: model.impact_code,
+        // impact_id: model.impact_id,
+        // impact_code: model.impact_code,
         created_by: model.created_by,
         created_date: new Date(),
     })
