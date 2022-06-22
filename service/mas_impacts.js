@@ -9,8 +9,8 @@ exports.AddImpactService = async (model) => {
         name: model.name,
         description: model.description,
         isuse: 1,
-        activity_id: model.activity_id,
-        activity_code: model.activity_code,
+        // activity_id: model.activity_id,
+        // activity_code: model.activity_code,
         created_by: model.created_by,
         created_date: new Date(),
     })

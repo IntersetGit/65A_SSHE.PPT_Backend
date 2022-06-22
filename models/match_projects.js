@@ -5,13 +5,21 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.UUID,
       allowNull: false,
       comment: "รหัสบริษัทของผู้รับเหมา",
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'ptt_company',
+        key: 'id'
+      }
     },
     project_id: {
       type: DataTypes.UUID,
       allowNull: false,
       comment: "รหัสโครงการที่บริษัทรับผิดชอบ",
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'ptt_projects',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
