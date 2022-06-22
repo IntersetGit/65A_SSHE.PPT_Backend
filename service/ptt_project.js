@@ -21,9 +21,9 @@ exports.projectAddService = async (model, transaction) => {
 }
 
 
-exports.projecctMatchUserService = async (c,model) => {
+exports.projecctMatchUserService = async (c,company_id) => {
     await models.match_projects.create({
-        company_id: model.company_id,
+        company_id: company_id,
         project_id: c
     })
 }
@@ -42,10 +42,11 @@ exports.projectEditService = async (model) => {
 
 
 
-exports.projecctMatchUserEditService = async (model) => {
+exports.projecctMatchUserEditService = async (id, company_id) => {
+
     await models.match_projects.update({
-        company_id: model.company_id     
-    },{ where: { project_id: model.id }})
+        company_id: company_id     
+    },{ where: { project_id: id }})
 }
 
 
