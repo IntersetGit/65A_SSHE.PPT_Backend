@@ -52,7 +52,7 @@ exports.projecctMatchUserEditService = async (id, company_id) => {
 
 exports.GetAllDataProjectService = async (search) => {
     let sql = ` select a.id, a.project_name, a.favorite_status, a.user_id,
-     a.created_by, a.created_date, a.description, a.active, a.project_type_id, b.company_name from ptt_data.ptt_projects as a
+     a.created_by, a.created_date, a.description, a.active, a.project_type_id, c.company_name from ptt_data.ptt_projects as a
      INNER JOIN ptt_data.match_projects as b ON b.project_id = a.id
      INNER JOIN ptt_data.ptt_company as c ON c.id = b.company_id`
     if (search) sql += ` WHERE project_name ILIKE :search_name `

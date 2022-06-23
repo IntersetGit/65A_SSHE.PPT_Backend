@@ -4,3 +4,6 @@ const incidentController = require('../controllers/incidentController')
 const { authenticateToken } = require('../middleware/authenticateToken')
 
 router.get('/getIncident',  [authenticateToken], incidentController.getDataIncident)
+
+
+module.exports = router;
