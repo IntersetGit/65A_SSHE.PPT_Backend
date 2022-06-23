@@ -18,7 +18,7 @@ exports.hazardIssueAddService = async ( user , model, transaction) => {
       await models.ptt_hazard_issue.create({
         id,
         hazard_name : model.hazard_name ,
-        active : model.active ?? 1 ,
+        active :  1 ,
         hazard_id : model.hazard_id,
         issue_type_id : model.issue_type_id,
         created_by: user.sysm_id ,
@@ -31,7 +31,7 @@ exports.hazardIssueAddService = async ( user , model, transaction) => {
 exports.hazardIssueEditService = async (user,model) => {
     await models.ptt_hazard_issue.update({
         hazard_name : model.hazard_name ,
-        active : model.active ?? 1 ,
+        active : model.active ,
         hazard_id : model.hazard_id,
         issue_type_id : model.issue_type_id,
         updated_by: user.sysm_id ,

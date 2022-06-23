@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
       comment: "รหัสกลุ่มกิจกรรมลกระทบที่ได้"
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(256),
       allowNull: false,
       comment: "ชื่อของผลกระทบที่ได้"
     },

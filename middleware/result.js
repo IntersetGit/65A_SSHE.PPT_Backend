@@ -38,6 +38,8 @@ module.exports = async (res, req, action, data, status = 200) => {
         });
 
     } catch (error) {
-        throw error
+        console.error('error ->', error.code)
+        if(error.code !=='ERR_HTTP_HEADERS_SENT') throw error
+        else res.status(401)
     }
 }
