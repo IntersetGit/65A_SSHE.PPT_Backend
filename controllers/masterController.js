@@ -113,8 +113,8 @@ exports.deleteDataproject = async (req, res, next) => {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
         const { id } = req.params
-        await deleteProjectService(id)
         await projecctMatchUserDeleteService(id)
+        await deleteProjectService(id)
         result(res, req, 'ลบข้อมูลโครงการ', true)
 
     } catch (error) {
