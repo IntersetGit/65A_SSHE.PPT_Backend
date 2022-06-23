@@ -88,18 +88,18 @@ exports.addProject = async (req, res, next) => {
 
         if (model.id) {
             await projectEditService(model)
+            if (model.company_id){
             for (let i = 0; i < model.company_id.length; i++ ) {
-                if(model.company_id[i]){
-                    await projecctMatchUserEditService(model.id,model.company_id[i])}
-                }
+                    await projecctMatchUserEditService(model.id,model.company_id[i])
+                }}
             
             result(res, req, 'แก้ไขข้อมูลโครงการ',true, 201)
         } else {
            const c =  await projectAddService(model)
+           if(model.company_id){
            for (let i = 0; i < model.company_id.length; i++ ) {
-            if(model.company_id[i]){
-                await projecctMatchUserService(c,model.company_id[i])}
-            }
+                await projecctMatchUserService(c,model.company_id[i])
+            }}
             result(res, req, 'เพิ่มข้อมูลโครงการ', c ,  201)
         } 
 
