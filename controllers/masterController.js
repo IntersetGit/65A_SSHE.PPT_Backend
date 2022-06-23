@@ -1,5 +1,5 @@
 const util = require('../util')
-const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService } = require('../service/ptt_company');
+const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService,deleteMatchProjectService } = require('../service/ptt_company');
 const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService} = require('../service/ptt_project');
 const { GetAllDataProjectTypeService,projectTypeAddService,projectTypeEditService,deleteProjectTypeService} = require('../service/mas_project_type');
 const { GetAllDataIssueTypeService,deleteIssueTypeService,issueTypeAddService,issueTypeEditService } = require('../service/mas_issue_type');
@@ -54,6 +54,7 @@ exports.deleteDataCompany = async (req, res, next) => {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
         const { id } = req.params
+        await deleteMatchProjectService(id)
         await deleteCompanyService(id)
         result(res, req, 'ลบข้อมูลบริษัท', true)
 
