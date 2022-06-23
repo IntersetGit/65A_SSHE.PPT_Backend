@@ -7,7 +7,7 @@ const { ldap } = require("../libs/ldapConnect");
 const {GetAllDataIncidentService} = require("../service/incident");
 const { EncryptCryptoJS, DecryptCryptoJS, checkPassword, sequelizeString, encryptPassword } = require('../util');
 const ActiveDirectory = require('activedirectory');
-const { GetMachCompany } = require("../service/macth_company");
+
 
 
 
