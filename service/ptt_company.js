@@ -49,3 +49,6 @@ exports.GetAllDataCompanyService = async (search) => {
 exports.deleteCompanyService = async (id) => {
     await models.ptt_company.destroy({ where: { id} })
 };
+exports.deleteMatchProjectService = async (id) => {
+    await models.match_projects.destroy({where: { company_id: id }})
+};

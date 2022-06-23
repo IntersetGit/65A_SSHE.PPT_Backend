@@ -4,12 +4,22 @@ module.exports = function(sequelize, DataTypes) {
     company_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      comment: "รหัสบริษัทของผู้รับเหมา"
+      comment: "รหัสบริษัทของผู้รับเหมา",
+      primaryKey: true,
+      references: {
+        model: 'ptt_company',
+        key: 'id'
+      }
     },
     project_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      comment: "รหัสโครงการที่บริษัทรับผิดชอบ"
+      comment: "รหัสโครงการที่บริษัทรับผิดชอบ",
+      primaryKey: true,
+      references: {
+        model: 'ptt_projects',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
@@ -26,6 +36,14 @@ module.exports = function(sequelize, DataTypes) {
       {
         name: "fki_fk_mpjt_project_id",
         fields: [
+          { name: "project_id" },
+        ]
+      },
+      {
+        name: "match_projects_pkey",
+        unique: true,
+        fields: [
+          { name: "company_id" },
           { name: "project_id" },
         ]
       },

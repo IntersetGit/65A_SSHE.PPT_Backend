@@ -45,6 +45,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true,
       comment: "คำอธิบาย"
+    },
+    active: {
+      type: DataTypes.SMALLINT,
+      allowNull: true,
+      comment: "สถานะโครงการ 1 ใช้งาน 0 ไม่ใช้งาน"
+    },
+    project_type_id: {
+      type: DataTypes.UUID,
+      allowNull: true
     }
   }, {
     sequelize,
