@@ -18,8 +18,8 @@ exports.AddActivityService = async (data) => {
 }
 
 exports.GetDataActivityService = async () => {
-    let sql = ` select * from master.mas_activities order by created_by asc  `
-    return util.sequelizeStringLike(sql)
+    let sql_1 = ` select * from master.mas_activities order by created_by asc  `
+    return util.sequelizeStringLike(sql_1)
 }
 
 

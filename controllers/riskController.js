@@ -9,7 +9,7 @@ const masActivities = require('../service/mas_activities')
 const masImpacts = require('../service/mas_impacts')
 const masMitigations = require('../service/mas_mitigations')
 const masProcedures = require('../service/mas_procedures')
-const { risksearch, addDataActivities, addDataImpact, addDataMitigation, addDataProcedures,deleteProceduresService,
+const { addDataActivities, addDataImpact, addDataMitigation, addDataProcedures,deleteProceduresService,
     deleteMitigationService,deleteImpactService,deleteActivityService,updateDataProcedures, updateDataActivities,
     updateDataImpact,updateDataMitigation } = require('../service/riskService')
 
