@@ -19,6 +19,6 @@ exports.AddImpactService = async (model) => {
 }
 
 exports.GetDataImpactService = async () => {
-    let sql_2 = ` select * from master.mas_impacts order by created_by asc   `
+    let sql_2 = ` select * from master.mas_impacts order by created_date  asc   `
     return util.sequelizeStringLike(sql_2)
 }

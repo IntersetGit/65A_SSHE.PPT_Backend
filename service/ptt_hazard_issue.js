@@ -10,7 +10,7 @@ exports.GetAllDataHazardIssueService = async (search) => {
       FROM ptt_data.ptt_hazard_issue as a
       inner join master.mas_sshe_issue as b on b.id = a.issue_type_id `
     if (search) sql += ` WHERE hazard_name ILIKE :search_name `
-    sql += ` order by a.created_by asc `
+    sql += ` order by a.created_date  asc `
     return util.sequelizeStringLike(sql, { search })
 }
 
