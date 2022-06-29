@@ -1,5 +1,6 @@
 const models = require('../models/index');
 const uuid = require('uuid');
+const util = require('../util')
 
 exports.AddImpactService = async (model) => {
     const id = uuid.v4();

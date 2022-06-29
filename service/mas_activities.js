@@ -1,6 +1,7 @@
 const models = require('../models/index');
 const uuid = require('uuid');
 const { sequelizeString, sequelizeStringFindOne, sequelizeStringLike } = require("../util/index")
+const util = require('../util')
 
 exports.AddActivityService = async (data) => {
     const id = uuid.v4();
