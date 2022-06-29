@@ -36,6 +36,10 @@ module.exports = function(sequelize, DataTypes) {
     updated_date: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     sequelize,
