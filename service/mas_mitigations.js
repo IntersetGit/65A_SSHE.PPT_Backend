@@ -21,5 +21,5 @@ exports.AddMitigationsService = async (model) => {
 exports.GetDataMitigationsService = async () => {
     let sql = ` select * from master.mas_mitigations `
     sql += ` order by created_by asc `
-    return util.sequelizeStringLike(sql, { search })
+    return util.sequelizeStringLike(sql)
 }
