@@ -1,5 +1,5 @@
 const util = require('../util')
-const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService,deleteMatchProjectService } = require('../service/ptt_company');
+const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService,deleteMatchProjectService } = require('../service/ptt_company.js');
 const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService} = require('../service/ptt_project');
 const { GetAllDataProjectTypeService,projectTypeAddService,projectTypeEditService,deleteProjectTypeService} = require('../service/mas_project_type');
 const { GetAllDataIssueTypeService,deleteIssueTypeService,issueTypeAddService,issueTypeEditService } = require('../service/mas_issue_type');
