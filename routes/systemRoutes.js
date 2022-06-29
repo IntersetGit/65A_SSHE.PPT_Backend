@@ -13,7 +13,7 @@ router.get('/findUserAD', [authenticateToken], systemControllers.findUserAd);
 router.post('/delUserAD/:id', [authenticateToken], systemControllers.delUserAd);
 /* อัพข้อมูลการตั้งค่า ad */ 
 router.post('updateConfig', [authenticateToken], systemControllers.updateConfigAd);
-router.put('/editUser', systemControllers.editUser);
+router.put('/editUser', [authenticateToken],systemControllers.editUser);
 
 
 

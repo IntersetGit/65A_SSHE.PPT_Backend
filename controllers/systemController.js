@@ -120,7 +120,7 @@ exports.editUser = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
     const model = req.body;
-
+   
     const dataUser = {
       user_name: model.username,
       first_name: model.first_name,
@@ -133,7 +133,7 @@ exports.editUser = async (req, res, next) => {
     if (model.id) {
       await updateSysmUsersService(model, transaction)
       await updateDatProfileUsersService(dataUser, transaction);
-      await editMatchCompanyUser(model, transaction);
+      await editMatchCompanyUser(dataUser,transaction);
     }
 
     await transaction.commit();

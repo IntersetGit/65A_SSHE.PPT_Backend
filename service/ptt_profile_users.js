@@ -65,12 +65,12 @@ exports.updateDatProfileUsersService = async (model, transaction) => {
     return model.user_id;
 }
 
-exports.editMatchCompanyUser = async (model, transaction) => {
+exports.editMatchCompanyUser = async (dataUser, transaction) => {
     const match = {
-          company_id : model.company_id,
-          user_id : model.user_id
+          company_id : dataUser.company_id,
+          user_id : dataUser.user_id
     }
-    await models.macth_company.create( match ,{ where: { user_id: model.user_id }, transaction });
-    return model.user_id;  
+    await models.macth_company.update( match ,{ where: { user_id: dataUser.user_id }, transaction });
+    return dataUser.user_id;  
 }
 
