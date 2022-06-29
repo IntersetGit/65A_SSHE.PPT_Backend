@@ -60,7 +60,7 @@ exports.updateSysmUsersService = async (model) => {
         update_date: new Date(),
     }
     if (model.roles_id) _model.roles_id = model.roles_id
-    if (model.user_name) _model.user_name = model.user_name
+    if (model.username) _model.user_name = model.username
     if (model.password) _model.password = model.password
     if (model.isuse) _model.isuse = model.isuse
     if (model.e_mail) _model.e_mail = model.e_mail
