@@ -90,8 +90,9 @@ exports.addProject = async (req, res, next) => {
         if (model.id) {
             await projectEditService(model)
             if (model.company_id){
+            await projecctMatchUserDeleteService(model.id)
             for (let i = 0; i < model.company_id.length; i++ ) {
-                    await projecctMatchUserEditService(model.id,model.company_id[i])
+                await projecctMatchUserEditService (model.id,model.company_id[i])
                 }}
             
             result(res, req, 'แก้ไขข้อมูลโครงการ',true, 201)

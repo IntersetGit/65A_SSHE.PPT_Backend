@@ -43,10 +43,10 @@ exports.projectEditService = async (model) => {
 
 
 exports.projecctMatchUserEditService = async (id, company_id) => {
-
-    await models.match_projects.update({
-        company_id: company_id     
-    },{ where: { project_id: id }})
+    await models.match_projects.create({
+        company_id: company_id,
+        project_id: id
+    })
 }
 
 
