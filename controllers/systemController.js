@@ -205,12 +205,6 @@ exports.delUserAd = async (req, res, next) => {
   try {
     const { id } = req.params
 
-    if (req.user.roles_id != '8a97ac7b-01dc-4e06-81c2-8422dffa0ca2') {
-      const err = new Error('คุณไม่ใช่ Administrator ไม่สามารถเพิ่มข้อมูลได้')
-      err.statusCode = 403
-      throw err
-    }
-
     await updateSysmUsersService({ id, isuse: 2 })
 
     result(res, req, '-', true)
