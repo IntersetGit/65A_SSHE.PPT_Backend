@@ -17,8 +17,11 @@ exports.AddActivityService = async (data) => {
 }
 
 exports.GetDataActivityService = async () => {
-    return await models.mas_activities.findAll()
+    let sql = ` select * from master.mas_activities  `
+    sql += ` order by created_by asc `
+    return util.sequelizeStringLike(sql, { search })
 }
+
 
 exports.BulkCreateActivityService = async (model) => {
     await models.mas_activities.bulkCreate(model)

@@ -7,6 +7,7 @@ const util = require('../util')
 exports.GetAllDataIncidentTypeService = async (search) => {
     let sql = ` select * from master.mas_incident_type `
     if (search) sql += ` WHERE incident_type_name ILIKE :search_name `
+    sql += ` order by created_by asc `
     return util.sequelizeStringLike(sql, { search })
 }
 

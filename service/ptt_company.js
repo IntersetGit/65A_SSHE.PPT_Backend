@@ -43,6 +43,7 @@ exports.CompanyMatchUserService = async (model) => {
 exports.GetAllDataCompanyService = async (search) => {
     let sql = ` select * from ptt_data.ptt_company `
     if (search) sql += ` WHERE company_name ILIKE :search_name `
+    sql += ` order by company_name asc `
     return util.sequelizeStringLike(sql, { search })
 }
 

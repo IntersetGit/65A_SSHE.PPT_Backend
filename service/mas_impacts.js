@@ -18,5 +18,7 @@ exports.AddImpactService = async (model) => {
 }
 
 exports.GetDataImpactService = async () => {
-    return await models.mas_impacts.findAll()
+    let sql = ` select * from master.mas_impacts  `
+    sql += ` order by created_by asc `
+    return util.sequelizeStringLike(sql, { search })
 }

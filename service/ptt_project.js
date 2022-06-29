@@ -60,6 +60,8 @@ exports.GetAllDataProjectService = async (search) => {
         WHERE project_id = a.id  )) as company from ptt_data.ptt_projects as a  
      `
     if (search) sql += ` WHERE project_name ILIKE :search_name `
+    sql += ` order by a.created_by asc `
+    
     return util.sequelizeStringLike(sql, { search })
 }
 
