@@ -13,12 +13,12 @@ const {
     deleteDataActivity,
     deleteDataImpact,
     deleteDataMitigation,
-    deleteDataProcedures} = require("../controllers/riskController");
+    deleteDataProcedures,
+    addTemplate} = require("../controllers/riskController");
 const { authenticateToken } = require('../middleware/authenticateToken');
 
 
 router.get('/getdata/risk', [authenticateToken], getriskIdentificationController);
-
 router.post('/addActivitice', [authenticateToken], addActivityController);
 router.post('/addImpact', [authenticateToken], addImpactController);
 router.post('/addMitigation', [authenticateToken], addMitigationController);
@@ -34,6 +34,9 @@ router.delete('/deleteActivites/:id', [authenticateToken], deleteDataActivity);
 router.delete('/deleteImpact/:id', [authenticateToken], deleteDataImpact);
 router.delete('/deleteMitigation/:id', [authenticateToken], deleteDataMitigation);
 router.delete('/deleteProcedures/:id', [authenticateToken], deleteDataProcedures);
+//--------------------------- หน้า template -----------------------//
+router.post('/addTemplate', [authenticateToken], addTemplate);
+
 
 
 

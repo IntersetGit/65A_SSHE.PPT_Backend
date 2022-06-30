@@ -273,3 +273,15 @@ exports.deleteDataProcedures = async (req, res, next) => {
         next(error);
     }
 }
+
+exports.addTemplate = async (req, res, next) => {
+    try {
+        const data  = req.body
+        await deleteProceduresService(data)
+        result(res, req, '-', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
