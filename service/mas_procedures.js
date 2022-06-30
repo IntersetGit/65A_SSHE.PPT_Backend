@@ -17,6 +17,5 @@ exports.AddProceduresService = async (model) => {
 }
 
 exports.GetDataProceduresService = async () => {
-    let sql_4 = ` select * from master.mas_procedures order by created_date  asc `
-    return util.sequelizeStringLike(sql_4)
+  await models.mas_procedures.findAll()
 }

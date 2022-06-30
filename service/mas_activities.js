@@ -18,8 +18,7 @@ exports.AddActivityService = async (data) => {
 }
 
 exports.GetDataActivityService = async () => {
-    let sql_1 = ` select * from master.mas_activities order by created_date  asc  `
-    return util.sequelizeStringLike(sql_1)
+   await models.mas_activities.findAll()
 }
 
 
