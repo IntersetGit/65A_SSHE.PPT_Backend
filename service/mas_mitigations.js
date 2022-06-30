@@ -19,5 +19,10 @@ exports.AddMitigationsService = async (model) => {
 }
 
 exports.GetDataMitigationsService = async () => {
-   await models.mas_mitigations.findAll()
+  return  await models.mas_mitigations.findAll(
+    { 
+        order: [
+        ['created_date', 'ASC'],
+    ],}
+  )
 }

@@ -18,7 +18,10 @@ exports.AddActivityService = async (data) => {
 }
 
 exports.GetDataActivityService = async () => {
-   await models.mas_activities.findAll()
+   return await models.mas_activities.findAll({ 
+    order: [
+    ['created_date', 'ASC'],
+],})  
 }
 
 

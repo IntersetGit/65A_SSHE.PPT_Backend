@@ -17,5 +17,10 @@ exports.AddProceduresService = async (model) => {
 }
 
 exports.GetDataProceduresService = async () => {
-  await models.mas_procedures.findAll()
+    return  await models.mas_procedures.findAll(
+      { 
+        order: [
+        ['created_date', 'ASC'],
+    ],}
+    )
 }
