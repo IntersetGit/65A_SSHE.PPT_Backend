@@ -105,7 +105,7 @@ exports.updateDataActivities = async( data , user) => {
   const updateRiskActivities = await models.mas_activities.update({
       name: data.name,
       description : data.description,
-      issue : data.issue,
+      isuse: data.isuse,
       updated__by: user.sysm_id,
       updated_date: new Date()
     },{
@@ -120,7 +120,7 @@ exports.updateDataImpact = async( data , user) => {
   const updateRiskImpact = await models.mas_impacts.update({
       name: data.name,
       description: data.description,
-      issue : data.issue,
+      isuse: data.isuse,
       updated__by: user.sysm_id ,
       updated_date: new Date()
     },{
@@ -135,8 +135,8 @@ exports.updateDataMitigation = async( data , user) => {
   const updateRiskMitigation = await models.mas_mitigations.update({
       name: data.name,
       description: data.description,
+      isuse: data.isuse,
       updated__by: user.sysm_id ,
-      issue : data.issue,
       updated_date: new Date()
     },{
       where: { id : data.id }
@@ -149,8 +149,8 @@ exports.updateDataProcedures = async( data , user) => {
   const updateRiskProcedures = await models.mas_procedures.update({
       name: data.name,
       description: data.description,
+      isuse: data.isuse,
       updated__by: user.sysm_id ,
-      issue : data.issue,
       updated_date: new Date()
     },{
       where: { id : data.id }
