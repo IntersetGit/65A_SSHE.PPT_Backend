@@ -54,6 +54,11 @@ module.exports = function(sequelize, DataTypes) {
     project_type_id: {
       type: DataTypes.UUID,
       allowNull: true
+    },
+    favorite: {
+      type: DataTypes.SMALLINT,
+      allowNull: true,
+      comment: "0 = nonfavorite ,1 =favorite"
     }
   }, {
     sequelize,

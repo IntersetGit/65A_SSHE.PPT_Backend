@@ -13,6 +13,8 @@ var _mas_procedures = require("./mas_procedures");
 var _mas_project_type = require("./mas_project_type");
 var _mas_sshe_issue = require("./mas_sshe_issue");
 var _match_assessment = require("./match_assessment");
+var _match_impact = require("./match_impact");
+var _match_mitigation = require("./match_mitigation");
 var _match_projects = require("./match_projects");
 var _ptt_Incident_old = require("./ptt_Incident_old");
 var _ptt_company = require("./ptt_company");
@@ -38,6 +40,8 @@ function initModels(sequelize) {
   var mas_project_type = _mas_project_type(sequelize, DataTypes);
   var mas_sshe_issue = _mas_sshe_issue(sequelize, DataTypes);
   var match_assessment = _match_assessment(sequelize, DataTypes);
+  var match_impact = _match_impact(sequelize, DataTypes);
+  var match_mitigation = _match_mitigation(sequelize, DataTypes);
   var match_projects = _match_projects(sequelize, DataTypes);
   var ptt_Incident_old = _ptt_Incident_old(sequelize, DataTypes);
   var ptt_company = _ptt_company(sequelize, DataTypes);
@@ -76,8 +80,18 @@ function initModels(sequelize) {
   sysm_users.hasMany(mas_procedures, { as: "mas_procedures", foreignKey: "created_by"});
   mas_procedures.belongsTo(sysm_users, { as: "updated_by_sysm_user", foreignKey: "updated_by"});
   sysm_users.hasMany(mas_procedures, { as: "updated_by_mas_procedures", foreignKey: "updated_by"});
+  match_impact.belongsTo(mas_activities, { as: "activity", foreignKey: "activity_id"});
+  mas_activities.hasMany(match_impact, { as: "match_impacts", foreignKey: "activity_id"});
+  match_impact.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
+  mas_impacts.hasMany(match_impact, { as: "match_impacts", foreignKey: "impact_id"});
+  match_mitigation.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
+  mas_impacts.hasMany(match_mitigation, { as: "match_mitigations", foreignKey: "impact_id"});
+  match_mitigation.belongsTo(mas_mitigations, { as: "mitigation", foreignKey: "mitigation_id"});
+  mas_mitigations.hasMany(match_mitigation, { as: "match_mitigations", foreignKey: "mitigation_id"});
   ptt_hazard_issue.belongsTo(mas_sshe_issue, { as: "issue_type", foreignKey: "issue_type_id"});
   mas_sshe_issue.hasMany(ptt_hazard_issue, { as: "ptt_hazard_issues", foreignKey: "issue_type_id"});
+  match_mitigation.belongsTo(match_impact, { as: "match_impact", foreignKey: "match_impact_id"});
+  match_impact.hasMany(match_mitigation, { as: "match_mitigations", foreignKey: "match_impact_id"});
   macth_company.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
   ptt_company.hasMany(macth_company, { as: "macth_companies", foreignKey: "company_id"});
   match_projects.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
@@ -112,6 +126,8 @@ function initModels(sequelize) {
     mas_project_type,
     mas_sshe_issue,
     match_assessment,
+    match_impact,
+    match_mitigation,
     match_projects,
     ptt_Incident_old,
     ptt_company,

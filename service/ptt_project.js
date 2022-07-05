@@ -52,7 +52,7 @@ exports.projecctMatchUserEditService = async (id, company_id) => {
 
 exports.GetAllDataProjectService = async (search) => {
     let sql = ` select a.id, a.project_name, a.favorite_status, a.user_id,
-     a.created_by, a.created_date, a.description, a.active, a.project_type_id, Z.name,
+     a.created_by, a.created_date, a.description, a.active, a.project_type_id , a.favorite, Z.name,
      (select array(select json_build_object(
         'company_id', company_id,
         'company_name', ptt_data.ptt_company.company_name
