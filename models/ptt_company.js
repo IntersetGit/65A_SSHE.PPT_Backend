@@ -42,6 +42,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.SMALLINT,
       allowNull: true,
       comment: "ประเภทของบริษัท   สำนักงานใหญ่เป็น 1 สำนักงานสาขาเป็น 0"
+    },
+    subcontract_com: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      comment: "subcontract ของบริษัทอะไร"
+    },
+    active: {
+      type: DataTypes.SMALLINT,
+      allowNull: true,
+      comment: "0 = non active 1= active"
     }
   }, {
     sequelize,

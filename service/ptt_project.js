@@ -35,6 +35,7 @@ exports.projectEditService = async (model) => {
         favorite_status: model.favorite_status?? 0 ,
         description: model.description,
         active: model.active,
+        favorite : model.favorite,
         project_type_id:model.project_type_id
     }, { where: {id: model.id}})
 
