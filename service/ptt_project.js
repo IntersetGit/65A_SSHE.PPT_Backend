@@ -52,12 +52,13 @@ exports.projecctMatchUserEditService = async (id, company_id) => {
 
 exports.GetAllDataProjectService = async (search) => {
     let sql = ` select a.id, a.project_name, a.favorite_status, a.user_id,
-     a.created_by, a.created_date, a.description, a.active, a.project_type_id,
+     a.created_by, a.created_date, a.description, a.active, a.project_type_id, Z.name,
      (select array(select json_build_object(
         'company_id', company_id,
         'company_name', ptt_data.ptt_company.company_name
     )  from ptt_data.match_projects as b INNER JOIN ptt_data.ptt_company ON  ptt_data.ptt_company.id = b.company_id 
-        WHERE project_id = a.id  )) as company from ptt_data.ptt_projects as a  
+        WHERE project_id = a.id  )) as company from ptt_data.ptt_projects as a
+        INNER JOIN master.mas_project_type as Z ON  Z.id = a.project_type_id
      `
     if (search) sql += ` WHERE project_name ILIKE :search_name `
     sql += ` order by a.created_date  asc `
