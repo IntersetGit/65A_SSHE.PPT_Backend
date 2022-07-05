@@ -15,7 +15,7 @@ exports.CompanyAddService = async (model, user , transaction) => {
         email: model.email,
         tel_no: model.tel_no,
         company_type: model.company_type,
-        created_date: new Date(),
+        created_date: new Date()
     },
     transaction)
     return id
@@ -54,7 +54,6 @@ exports.CompanyEditService = async (model,user) => {
         email: model.email,
         tel_no: model.tel_no,
         company_type: model.company_type,
-        created_date : new date()
         
     }, { where: {id: model.id}})
 
@@ -85,7 +84,7 @@ exports.CompanyMatchUserService = async (model) => {
 
 
 exports.GetAllDataCompanyService = async (search) => {
-    let sql = ` select a.id, a.company_reg_id, a.company_name, a.website, a.address, a.email, a.tel_no, a.company_type, a.active, c.subcontract_name , b.subcontract_id
+    let sql = ` select a.id, a.company_reg_id, a.company_name, a.website, a.address, a.email, a.tel_no, a.company_type, a.active, c.subcontract_name , b.subcontract_id,
     a.created_date  from ptt_data.ptt_company as a 
      LEFT JOIN ptt_data.ptt_sub_company as b ON  b.company_id = a.id
      LEFT JOIN master.mas_subcontract as c ON  c.id = b.subcontract_id`
@@ -111,7 +110,7 @@ exports.deleteMatchCompanyService = async (id) => {
     await models.macth_company.destroy({where: { company_id: id }})
 };
 exports.deleteSubComService = async (id) => {
-    await models.ptt_sub_company.destroy({where: { subcontract_id : id }})
+    await models.ptt_sub_company.destroy({where: { company_id : id }})
 };
 
 exports.deleteSubcontractService = async (id) => {
