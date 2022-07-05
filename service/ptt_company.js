@@ -54,6 +54,7 @@ exports.CompanyEditService = async (model,user) => {
         email: model.email,
         tel_no: model.tel_no,
         company_type: model.company_type,
+        created_date : new date()
         
     }, { where: {id: model.id}})
 
