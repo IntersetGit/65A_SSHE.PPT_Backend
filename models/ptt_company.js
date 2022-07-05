@@ -48,27 +48,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "0 = non active 1= active"
     },
-    created_by: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: 'sysm_users',
-        key: 'id'
-      }
-    },
     created_date: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    updated_by: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: 'sysm_users',
-        key: 'id'
-      }
-    },
-    updated_date: {
       type: DataTypes.DATE,
       allowNull: true
     }

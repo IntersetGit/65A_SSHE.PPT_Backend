@@ -110,10 +110,6 @@ function initModels(sequelize) {
   ptt_projects.hasMany(match_projects, { as: "match_projects", foreignKey: "project_id"});
   macth_company.belongsTo(sysm_users, { as: "user", foreignKey: "user_id"});
   sysm_users.hasMany(macth_company, { as: "macth_companies", foreignKey: "user_id"});
-  ptt_company.belongsTo(sysm_users, { as: "created_by_sysm_user", foreignKey: "created_by"});
-  sysm_users.hasMany(ptt_company, { as: "ptt_companies", foreignKey: "created_by"});
-  ptt_company.belongsTo(sysm_users, { as: "updated_by_sysm_user", foreignKey: "updated_by"});
-  sysm_users.hasMany(ptt_company, { as: "updated_by_ptt_companies", foreignKey: "updated_by"});
   ptt_hazard_issue.belongsTo(sysm_users, { as: "created_by_sysm_user", foreignKey: "created_by"});
   sysm_users.hasMany(ptt_hazard_issue, { as: "ptt_hazard_issues", foreignKey: "created_by"});
   ptt_hazard_issue.belongsTo(sysm_users, { as: "updated_by_sysm_user", foreignKey: "updated_by"});

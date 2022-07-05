@@ -38,7 +38,7 @@ exports.addCompany = async (req, res, next) => {
         const model = req.body
 
         if (model.id) {
-            await CompanyEditService(model)
+            await CompanyEditService(model,user)
             await _CompanyEditService(model)
             if(model.subcontract){
             await companySubEditService(model)

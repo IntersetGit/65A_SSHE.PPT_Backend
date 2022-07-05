@@ -4,7 +4,7 @@ const models = require('../models')
 const util = require('../util')
 
 
-exports.CompanyAddService = async (model, transaction) => {
+exports.CompanyAddService = async (model, user , transaction) => {
     const id = uuid.v4()
     await models.ptt_company.create({
         id,
@@ -15,8 +15,7 @@ exports.CompanyAddService = async (model, transaction) => {
         email: model.email,
         tel_no: model.tel_no,
         company_type: model.company_type,
-        created_by: model.created_by,
-        created_date: new Date()
+        created_date: new Date(),
     },
     transaction)
     return id
@@ -46,7 +45,7 @@ exports.companySubComService = async (company,subcontract,transaction) => {
 
 
 
-exports.CompanyEditService = async (model) => {
+exports.CompanyEditService = async (model,user) => {
     await models.ptt_company.update({
         company_reg_id: model.company_reg_id,
         company_name: model.company_name,
@@ -55,8 +54,7 @@ exports.CompanyEditService = async (model) => {
         email: model.email,
         tel_no: model.tel_no,
         company_type: model.company_type,
-        updated_by: model.created_by,
-        updated_date: new Date()
+        
     }, { where: {id: model.id}})
 
     return model.id
@@ -84,16 +82,23 @@ exports.CompanyMatchUserService = async (model) => {
     })
 }
 
+
 exports.GetAllDataCompanyService = async (search) => {
     let sql = ` select a.id, a.company_reg_id, a.company_name, a.website, a.address, a.email, a.tel_no, a.company_type, a.active, c.subcontract_name , b.subcontract_id
-     from ptt_data.ptt_company as a 
+    a.created_date  from ptt_data.ptt_company as a 
      LEFT JOIN ptt_data.ptt_sub_company as b ON  b.company_id = a.id
      LEFT JOIN master.mas_subcontract as c ON  c.id = b.subcontract_id`
-    if (search) sql += ` WHERE a.company_name ILIKE :search_name
- `
-    sql += ` order by a.created_date asc `
-    return util.sequelizeStringLike(sql, { search })
+
+    if (search) sql += ` WHERE a.company_name ILIKE :search_name `
+
+    sql += ` order by a.created_date  asc `
+
+    return util.sequelizeStringLike(sql,{search})
 }
+
+
+
+
 
 exports.deleteCompanyService = async (id) => {
     await models.ptt_company.destroy({ where: { id} })
