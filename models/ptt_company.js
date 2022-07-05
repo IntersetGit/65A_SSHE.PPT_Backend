@@ -43,15 +43,34 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "ประเภทของบริษัท   สำนักงานใหญ่เป็น 1 สำนักงานสาขาเป็น 0"
     },
-    subcontract_com: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      comment: "subcontract ของบริษัทอะไร"
-    },
     active: {
       type: DataTypes.SMALLINT,
       allowNull: true,
       comment: "0 = non active 1= active"
+    },
+    created_by: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: 'sysm_users',
+        key: 'id'
+      }
+    },
+    created_date: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updated_by: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: 'sysm_users',
+        key: 'id'
+      }
+    },
+    updated_date: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     sequelize,

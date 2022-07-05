@@ -1,5 +1,5 @@
 const util = require('../util')
-const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService,deleteMatchProjectService } = require('../service/ptt_company.js');
+const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService, _CompanyEditService,deleteSubcontractService,deleteMatchProjectService,deleteMatchCompanyService,_CompanyAddService,companySubComService,companySubEditService,deleteSubComService } = require('../service/ptt_company.js');
 const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService} = require('../service/ptt_project');
 const { GetAllDataProjectTypeService,projectTypeAddService,projectTypeEditService,deleteProjectTypeService} = require('../service/mas_project_type');
 const { GetAllDataIssueTypeService,deleteIssueTypeService,issueTypeAddService,issueTypeEditService } = require('../service/mas_issue_type');
@@ -39,10 +39,20 @@ exports.addCompany = async (req, res, next) => {
 
         if (model.id) {
             await CompanyEditService(model)
+            await _CompanyEditService(model)
+            if(model.subcontract){
+            await companySubEditService(model)
+            }
             result(res, req, 'แก้ไขข้อมูลบริษัท', true, 201)
+
         } else {
-            result(res, req, 'เพิ่มข้อมูลบริษัท', await CompanyAddService(model), 201)
-        }
+            const company =  await CompanyAddService(model)
+            const subcontract = await _CompanyAddService(company,model)
+            if(model.subcontract){
+                 await companySubComService(company,model.subcontract)
+                }
+            result(res, req, 'เพิ่มข้อมูลบริษัท', company , 201)
+        } 
 
     } catch (error) {
         next(error)
@@ -55,6 +65,9 @@ exports.deleteDataCompany = async (req, res, next) => {
         const user = decode.token
         const { id } = req.params
         await deleteMatchProjectService(id)
+        await deleteMatchCompanyService(id)
+        await deleteSubComService(id)
+        await deleteSubcontractService(id)
         await deleteCompanyService(id)
         result(res, req, 'ลบข้อมูลบริษัท', true)
 

@@ -5,27 +5,8 @@ const util = require('../util')
 
 
 exports.CompanyAddService = async (model, transaction) => {
-       const _model = {
-            id,
-            company_reg_id: model.company_reg_id,
-            company_name: model.company_name,
-            website: model.website,
-            address: model.address,
-            email: model.email,
-            tel_no: model.tel_no,
-            company_type: model.company_type,
-            active : model.active
-}
-if (model.subcontract_com) _model.subcontract_com = model.subcontract_com
-await models.ptt_company.create(_model, { transaction });
-return id
-}
-
-
-
-
-exports.CompanyEditService = async (model) => {
-    const _model = {
+    const id = uuid.v4()
+    await models.ptt_company.create({
         id,
         company_reg_id: model.company_reg_id,
         company_name: model.company_name,
@@ -34,14 +15,65 @@ exports.CompanyEditService = async (model) => {
         email: model.email,
         tel_no: model.tel_no,
         company_type: model.company_type,
-        active : model.active
+        created_by: model.created_by,
+        created_date: new Date()
+    },
+    transaction)
+    return id
 }
-if (model.subcontract_com) _model.subcontract_com = model.subcontract_com
-await models.ptt_company.update(_model,{ where: { id: model.id } }, { transaction });
-return id
+
+exports._CompanyAddService = async (company, model, transaction) => {
+    const id = uuid.v4()
+    await models.mas_subcontract.create({
+        id,
+        subcontract_name : model.company_name,
+        company_id : company
+    },
+    transaction)
 }
 
 
+exports.companySubComService = async (company,subcontract,transaction) => {
+    const id = uuid.v4()
+    await models.ptt_sub_company.create({
+        id,
+        company_id : company , 
+        subcontract_id : subcontract 
+    },
+    transaction)
+    return id
+}
+
+
+
+exports.CompanyEditService = async (model) => {
+    await models.ptt_company.update({
+        company_reg_id: model.company_reg_id,
+        company_name: model.company_name,
+        website: model.website,
+        address: model.address,
+        email: model.email,
+        tel_no: model.tel_no,
+        company_type: model.company_type,
+    }, { where: {id: model.id}})
+
+    return model.id
+}
+
+exports._CompanyEditService = async (model) => {
+    await models.mas_subcontract.update({
+        subcontract_name: model.company_name,
+    }, { where: {company_id: model.id}})
+
+    return model.id
+}
+
+exports.companySubEditService =async (model) => {
+    await models.ptt_sub_company.update({
+        subcontract_id: model.subcontract
+    }, { where: {company_id: model.id}})
+   
+}
 
 exports.CompanyMatchUserService = async (model) => {
     await models.macth_company.create({
@@ -51,10 +83,13 @@ exports.CompanyMatchUserService = async (model) => {
 }
 
 exports.GetAllDataCompanyService = async (search) => {
-    let sql = ` select * from ptt_data.ptt_company `
-    if (search) sql += ` WHERE company_name ILIKE :search_name
+    let sql = ` select a.id, a.company_reg_id, a.company_name, a.website, a.address, a.email, a.tel_no, a.company_type, a.active, c.subcontract_name , b.subcontract_id
+     from ptt_data.ptt_company as a 
+     LEFT JOIN ptt_data.ptt_sub_company as b ON  b.company_id = a.id
+     LEFT JOIN master.mas_subcontract as c ON  c.id = b.subcontract_id`
+    if (search) sql += ` WHERE a.company_name ILIKE :search_name
  `
-    sql += ` order by company_name asc `
+    sql += ` order by a.created_date asc `
     return util.sequelizeStringLike(sql, { search })
 }
 
@@ -63,4 +98,14 @@ exports.deleteCompanyService = async (id) => {
 };
 exports.deleteMatchProjectService = async (id) => {
     await models.match_projects.destroy({where: { company_id: id }})
+};
+exports.deleteMatchCompanyService = async (id) => {
+    await models.macth_company.destroy({where: { company_id: id }})
+};
+exports.deleteSubComService = async (id) => {
+    await models.ptt_sub_company.destroy({where: { subcontract_id : id }})
+};
+
+exports.deleteSubcontractService = async (id) => {
+    await models.mas_subcontract.destroy({where: { company_id : id }})
 };
