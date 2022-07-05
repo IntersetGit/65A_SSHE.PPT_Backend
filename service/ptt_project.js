@@ -12,6 +12,7 @@ exports.projectAddService = async (model, transaction) => {
         favorite_status: model.favorite_status?? 0 ,
         description: model.description,
         active: model.active?? 1,
+        favorite : model.favorite,
         project_type_id:model.project_type_id,
         created_by: model.created_by,
         created_date: new Date()
