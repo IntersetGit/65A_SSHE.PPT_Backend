@@ -1,40 +1,29 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('ptt_hazard_issue', {
+  return sequelize.define('mas_issue_type', {
     id: {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    hazard_name: {
+    issue_type_name: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      comment: "ชื่อ sshe issue"
     },
     active: {
       type: DataTypes.SMALLINT,
       allowNull: true,
-      comment: "1 active 0 non active"
+      comment: "1 ใช้งาน 0 ไม่ใช้งาน"
     },
-    hazard_id: {
+    issue_type_id: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    issue_type_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: 'mas_issue_type',
-        key: 'id'
-      }
-    },
     created_by: {
       type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: 'sysm_users',
-        key: 'id'
-      }
+      allowNull: true
     },
     created_date: {
       type: DataTypes.DATE,
@@ -42,11 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     updated_by: {
       type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: 'sysm_users',
-        key: 'id'
-      }
+      allowNull: true
     },
     updated_date: {
       type: DataTypes.DATE,
@@ -58,12 +43,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'ptt_hazard_issue',
-    schema: 'ptt_data',
+    tableName: 'mas_issue_type',
+    schema: 'master',
     timestamps: false,
     indexes: [
       {
-        name: "ptt_hazard_issue_pkey",
+        name: "mas_sshe_issue_pkey",
         unique: true,
         fields: [
           { name: "id" },

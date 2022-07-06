@@ -8,14 +8,15 @@ var _mas_incident_01 = require("./mas_incident_01");
 var _mas_incident_03 = require("./mas_incident_03");
 var _mas_incident_04 = require("./mas_incident_04");
 var _mas_incident_type = require("./mas_incident_type");
+var _mas_issue_type = require("./mas_issue_type");
 var _mas_mitigations = require("./mas_mitigations");
 var _mas_procedures = require("./mas_procedures");
 var _mas_project_type = require("./mas_project_type");
-var _mas_sshe_issue = require("./mas_sshe_issue");
 var _mas_subcontract = require("./mas_subcontract");
 var _match_assessment = require("./match_assessment");
 var _match_impact = require("./match_impact");
 var _match_mitigation = require("./match_mitigation");
+var _match_procedures = require("./match_procedures");
 var _match_projects = require("./match_projects");
 var _ptt_Incident_old = require("./ptt_Incident_old");
 var _ptt_company = require("./ptt_company");
@@ -37,14 +38,15 @@ function initModels(sequelize) {
   var mas_incident_03 = _mas_incident_03(sequelize, DataTypes);
   var mas_incident_04 = _mas_incident_04(sequelize, DataTypes);
   var mas_incident_type = _mas_incident_type(sequelize, DataTypes);
+  var mas_issue_type = _mas_issue_type(sequelize, DataTypes);
   var mas_mitigations = _mas_mitigations(sequelize, DataTypes);
   var mas_procedures = _mas_procedures(sequelize, DataTypes);
   var mas_project_type = _mas_project_type(sequelize, DataTypes);
-  var mas_sshe_issue = _mas_sshe_issue(sequelize, DataTypes);
   var mas_subcontract = _mas_subcontract(sequelize, DataTypes);
   var match_assessment = _match_assessment(sequelize, DataTypes);
   var match_impact = _match_impact(sequelize, DataTypes);
   var match_mitigation = _match_mitigation(sequelize, DataTypes);
+  var match_procedures = _match_procedures(sequelize, DataTypes);
   var match_projects = _match_projects(sequelize, DataTypes);
   var ptt_Incident_old = _ptt_Incident_old(sequelize, DataTypes);
   var ptt_company = _ptt_company(sequelize, DataTypes);
@@ -62,6 +64,8 @@ function initModels(sequelize) {
   sysm_users.belongsToMany(ptt_company, { through: macth_company, foreignKey: "user_id", otherKey: "company_id" });
   mas_mitigations.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
   mas_impacts.hasMany(mas_mitigations, { as: "mas_mitigations", foreignKey: "impact_id"});
+  mas_procedures.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
+  mas_impacts.hasMany(mas_procedures, { as: "mas_procedures", foreignKey: "impact_id"});
   mas_subcontract.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
   ptt_company.hasMany(mas_subcontract, { as: "mas_subcontracts", foreignKey: "company_id"});
   match_assessment.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
@@ -92,10 +96,14 @@ function initModels(sequelize) {
   mas_impacts.hasMany(match_impact, { as: "match_impacts", foreignKey: "impact_id"});
   match_mitigation.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
   mas_impacts.hasMany(match_mitigation, { as: "match_mitigations", foreignKey: "impact_id"});
+  match_procedures.belongsTo(mas_impacts, { as: "hazard", foreignKey: "hazard_id"});
+  mas_impacts.hasMany(match_procedures, { as: "match_procedures", foreignKey: "hazard_id"});
+  ptt_hazard_issue.belongsTo(mas_issue_type, { as: "issue_type", foreignKey: "issue_type_id"});
+  mas_issue_type.hasMany(ptt_hazard_issue, { as: "ptt_hazard_issues", foreignKey: "issue_type_id"});
   match_mitigation.belongsTo(mas_mitigations, { as: "mitigation", foreignKey: "mitigation_id"});
   mas_mitigations.hasMany(match_mitigation, { as: "match_mitigations", foreignKey: "mitigation_id"});
-  ptt_hazard_issue.belongsTo(mas_sshe_issue, { as: "issue_type", foreignKey: "issue_type_id"});
-  mas_sshe_issue.hasMany(ptt_hazard_issue, { as: "ptt_hazard_issues", foreignKey: "issue_type_id"});
+  match_procedures.belongsTo(mas_procedures, { as: "procedure", foreignKey: "procedures_id"});
+  mas_procedures.hasMany(match_procedures, { as: "match_procedures", foreignKey: "procedures_id"});
   ptt_sub_company.belongsTo(mas_subcontract, { as: "subcontract", foreignKey: "subcontract_id"});
   mas_subcontract.hasMany(ptt_sub_company, { as: "ptt_sub_companies", foreignKey: "subcontract_id"});
   match_mitigation.belongsTo(match_impact, { as: "match_impact", foreignKey: "match_impact_id"});
@@ -131,14 +139,15 @@ function initModels(sequelize) {
     mas_incident_03,
     mas_incident_04,
     mas_incident_type,
+    mas_issue_type,
     mas_mitigations,
     mas_procedures,
     mas_project_type,
-    mas_sshe_issue,
     mas_subcontract,
     match_assessment,
     match_impact,
     match_mitigation,
+    match_procedures,
     match_projects,
     ptt_Incident_old,
     ptt_company,
