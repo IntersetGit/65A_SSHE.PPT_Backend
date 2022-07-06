@@ -1,5 +1,5 @@
 const util = require('../util')
-const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService, _CompanyEditService,deleteSubcontractService,deleteMatchProjectService,deleteMatchCompanyService,_CompanyAddService,companySubComService,companySubEditService,deleteSubComService } = require('../service/ptt_company.js');
+const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService,GetAllDataSubCompanyService, _CompanyEditService,deleteSubcontractService,deleteMatchProjectService,deleteMatchCompanyService,_CompanyAddService,companySubComService,companySubEditService,deleteSubComService } = require('../service/ptt_company.js');
 const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService} = require('../service/ptt_project');
 const { GetAllDataProjectTypeService,projectTypeAddService,projectTypeEditService,deleteProjectTypeService} = require('../service/mas_project_type');
 const { GetAllDataIssueTypeService,deleteIssueTypeService,issueTypeAddService,issueTypeEditService } = require('../service/mas_issue_type');
@@ -30,6 +30,18 @@ exports.getDataCompany = async (req, res, next) => {
         next(error);
     }
 }
+
+exports.getDataSubCompany = async (req, res, next) => {
+    try {
+        result(res, req, ' เรียกข้อมูล subcontract ', await GetAllDataSubCompanyService())
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+
 
 exports.addCompany = async (req, res, next) => {
     try {
@@ -75,6 +87,8 @@ exports.deleteDataCompany = async (req, res, next) => {
         next(error);
     }
 }
+
+
 
 
 

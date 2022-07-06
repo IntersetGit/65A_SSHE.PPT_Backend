@@ -7,6 +7,7 @@ const { authenticateToken } = require('../middleware/authenticateToken')
 
 //-------------- company----------------------------- //
 router.get('/getCompany',  [authenticateToken], masterController.getDataCompany)
+router.get('/getSubCompany',  [authenticateToken], masterController.getDataSubCompany)
 router.post('/manageCompany', [authenticateToken], masterController.addCompany)
 router.delete('/updateCompany/:id',  [authenticateToken], masterController.deleteDataCompany)
 

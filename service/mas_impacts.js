@@ -19,7 +19,7 @@ exports.AddImpactService = async (model) => {
 }
 
 exports.GetDataImpactService = async () => {
-  return   await models.mas_impacts.findAll({ 
+  return await models.mas_impacts.findAll({ 
         order: [
         ['created_date', 'ASC'],
     ],})
