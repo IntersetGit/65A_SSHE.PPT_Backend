@@ -9,6 +9,7 @@ exports.AddActivityService = async (data) => {
         id,
         code_id: data.code_id,
         name: data.name,
+        name_thai : data.name_thai,
         description: data.description,
         isuse: 1,
         created_by: data.created_by,
@@ -18,10 +19,11 @@ exports.AddActivityService = async (data) => {
 }
 
 exports.GetDataActivityService = async () => {
-   return await models.mas_activities.findAll({ 
-    order: [
-    ['created_date', 'ASC'],
-],})  
+    return await models.mas_activities.findAll({ 
+        order: [
+        ['created_date', 'ASC'],
+    ],})
+
 }
 
 

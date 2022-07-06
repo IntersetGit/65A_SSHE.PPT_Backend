@@ -104,7 +104,6 @@ exports.GetAllDataSubCompanyService = async () => {
     ],})
 }
 
-
 exports.deleteCompanyService = async (id) => {
     await models.ptt_company.destroy({ where: { id} })
 };
