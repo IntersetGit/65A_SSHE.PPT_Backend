@@ -3,12 +3,36 @@ const models = require('../models')
 const messages = require('../messages/index')
 const result = require('../middleware/result')
 const { sequelize } = require('../models/index')
+const util = require('../util')
+
+exports.getActivityService = async (search) => {
+  let sql = ` SELECT * FROM master.mas_activities  `
+  if (search) sql += ` where name ILIKE :search_name `
+  sql += ` order by created_date  asc `
+  return await util.sequelizeStringLike (sql, {search})
+}
 
 
+exports.getImpactService = async (search) => {
+  let sql = ` SELECT * FROM master.mas_impacts  `
+  if (search) sql += ` where name ILIKE :search_name `
+  sql += ` order by created_date  asc `
+  return await util.sequelizeStringLike(sql, {search})
+}
 
+exports.getMitigationService = async (search) => {
+  let sql = ` SELECT * FROM master.mas_mitigations  `
+  if (search) sql += ` where name ILIKE :search_name `
+  sql += ` order by created_date  asc `
+  return await util.sequelizeStringLike(sql, {search})
+}
 
-
-
+exports.getProceduresService = async (search) => {
+  let sql = ` SELECT * FROM master.mas_procedures `
+  if (search) sql += ` where name ILIKE :search_name `
+  sql += ` order by created_date  asc `
+  return await util.sequelizeStringLike(sql, {search})
+}
 
 
 

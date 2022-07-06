@@ -14,11 +14,21 @@ const {
     deleteDataImpact,
     deleteDataMitigation,
     deleteDataProcedures,
-    addTemplate} = require("../controllers/riskController");
+    addTemplate,
+    getDataActivity,
+    getDataImpact,
+    getDataMitigation,
+    getDataProcedures} = require("../controllers/riskController");
 const { authenticateToken } = require('../middleware/authenticateToken');
 
 
-router.get('/getdata/risk', [authenticateToken], getriskIdentificationController);
+// router.get('/getdata/risk', [authenticateToken], getriskIdentificationController);
+router.get('/getActivitice', [authenticateToken], getDataActivity);
+router.get('/getImpact', [authenticateToken], getDataImpact);
+router.get('/getMitigation', [authenticateToken], getDataMitigation);
+router.get('/getProcedures', [authenticateToken], getDataProcedures);
+
+
 router.post('/addActivitice', [authenticateToken], addActivityController);
 router.post('/addImpact', [authenticateToken], addImpactController);
 router.post('/addMitigation', [authenticateToken], addMitigationController);

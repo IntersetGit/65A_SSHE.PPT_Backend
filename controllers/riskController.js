@@ -9,26 +9,66 @@ const masActivities = require('../service/mas_activities')
 const masImpacts = require('../service/mas_impacts')
 const masMitigations = require('../service/mas_mitigations')
 const masProcedures = require('../service/mas_procedures')
-const { addDataActivities, addDataImpact, addDataMitigation, addDataProcedures,deleteProceduresService,
+const { getActivityService,getImpactService,getMitigationService,getProceduresService,deleteProceduresService,
     deleteMitigationService,deleteImpactService,deleteActivityService,updateDataProcedures, updateDataActivities,
     updateDataImpact,updateDataMitigation } = require('../service/riskService')
 
-exports.getriskIdentificationController = async (req, res, next) => {
+// exports.getriskIdentificationController = async (req, res, next) => {
+//     try {
+//         const decode = await util.decodeToken(req.headers.authorization)
+//         const user = decode.token
+
+//         result(res, req, 'เรียกข้อมูล Master Risk Identification', {
+//             activity: await masActivities.GetDataActivityService() ?? [],
+//             impacts: await masImpacts.GetDataImpactService() ?? [],
+//             mitigations: await masMitigations.GetDataMitigationsService() ?? [],
+//             procedures: await masProcedures.GetDataProceduresService() ?? []
+//         })
+//     } catch (error) {
+//         next(error)
+//     }
+
+// }
+
+exports.getDataActivity = async (req, res, next) => {
     try {
-        const decode = await util.decodeToken(req.headers.authorization)
-        const user = decode.token
-
-        result(res, req, 'เรียกข้อมูล Master Risk Identification', {
-            activity: await masActivities.GetDataActivityService() ?? [],
-            impacts: await masImpacts.GetDataImpactService() ?? [],
-            mitigations: await masMitigations.GetDataMitigationsService() ?? [],
-            procedures: await masProcedures.GetDataProceduresService() ?? []
-        })
+      const { search } = req.query
+      result(res, req, ' เรียกและค้นหา activity ', await getActivityService(search))
     } catch (error) {
-        next(error)
+      next(error)
     }
+  }
 
-}
+exports.getDataImpact = async (req, res, next) => {
+    try {
+      const { search } = req.query
+      result(res, req, ' เรียกและค้นหา Impact ', await getImpactService(search))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+exports.getDataMitigation = async (req, res, next) => {
+    try {
+      const { search } = req.query
+      result(res, req, ' เรียกและค้นหา mitigation ', await getMitigationService(search))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+exports.getDataProcedures = async (req, res, next) => {
+    try {
+      const { search } = req.query
+      result(res, req, ' เรียกและค้นหา Procedures ', await getProceduresService(search))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+
+
+  
 
 exports.addActivityController = async (req, res, next) => {
     try {
