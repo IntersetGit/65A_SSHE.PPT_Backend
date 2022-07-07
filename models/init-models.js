@@ -24,6 +24,7 @@ var _ptt_hazard_issue = require("./ptt_hazard_issue");
 var _ptt_incidents = require("./ptt_incidents");
 var _ptt_profile_users = require("./ptt_profile_users");
 var _ptt_projects = require("./ptt_projects");
+var _ptt_sshe_issue = require("./ptt_sshe_issue");
 var _ptt_sub_company = require("./ptt_sub_company");
 var _sysm_roles = require("./sysm_roles");
 var _sysm_users = require("./sysm_users");
@@ -54,6 +55,7 @@ function initModels(sequelize) {
   var ptt_incidents = _ptt_incidents(sequelize, DataTypes);
   var ptt_profile_users = _ptt_profile_users(sequelize, DataTypes);
   var ptt_projects = _ptt_projects(sequelize, DataTypes);
+  var ptt_sshe_issue = _ptt_sshe_issue(sequelize, DataTypes);
   var ptt_sub_company = _ptt_sub_company(sequelize, DataTypes);
   var sysm_roles = _sysm_roles(sequelize, DataTypes);
   var sysm_users = _sysm_users(sequelize, DataTypes);
@@ -155,6 +157,7 @@ function initModels(sequelize) {
     ptt_incidents,
     ptt_profile_users,
     ptt_projects,
+    ptt_sshe_issue,
     ptt_sub_company,
     sysm_roles,
     sysm_users,
