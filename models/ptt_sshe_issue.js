@@ -15,7 +15,11 @@ module.exports = function(sequelize, DataTypes) {
     project_id: {
       type: DataTypes.UUID,
       allowNull: true,
-      comment: "รหัสประจำตาราง project"
+      comment: "รหัสประจำตาราง project",
+      references: {
+        model: 'ptt_projects',
+        key: 'id'
+      }
     },
     location: {
       type: DataTypes.STRING,
@@ -25,12 +29,20 @@ module.exports = function(sequelize, DataTypes) {
     issue_type_id: {
       type: DataTypes.UUID,
       allowNull: true,
-      comment: "รหัส issue_type"
+      comment: "รหัส issue_type",
+      references: {
+        model: 'mas_issue_type',
+        key: 'id'
+      }
     },
     hazard_id: {
       type: DataTypes.UUID,
       allowNull: true,
-      comment: "รหัสตาราง hazard"
+      comment: "รหัสตาราง hazard",
+      references: {
+        model: 'ptt_hazard_issue',
+        key: 'id'
+      }
     },
     description: {
       type: DataTypes.TEXT,
@@ -60,7 +72,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     created_by: {
       type: DataTypes.UUID,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'sysm_users',
+        key: 'id'
+      }
     },
     created_date: {
       type: DataTypes.DATE,
@@ -68,11 +84,24 @@ module.exports = function(sequelize, DataTypes) {
     },
     updated_by: {
       type: DataTypes.UUID,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'sysm_users',
+        key: 'id'
+      }
     },
     updated_date: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      comment: "sshe officer",
+      references: {
+        model: 'sysm_users',
+        key: 'id'
+      }
     }
   }, {
     sequelize,

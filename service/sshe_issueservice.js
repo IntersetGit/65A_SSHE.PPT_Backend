@@ -18,6 +18,7 @@ exports.AddSsheIssue = async ( user,model ) => {
         due_date:model.due_date,
         lat:model.lat,
         long:model.long,
+        user_id:model.user_id,
         created_by:user.sysm_id,
         created_date: new Date(),
     })
