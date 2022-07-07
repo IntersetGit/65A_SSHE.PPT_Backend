@@ -102,6 +102,11 @@ module.exports = function(sequelize, DataTypes) {
         model: 'sysm_users',
         key: 'id'
       }
+    },
+    close: {
+      type: DataTypes.SMALLINT,
+      allowNull: true,
+      comment: "0 = ยังไม่ปิด 1 = ปิดแล้ว"
     }
   }, {
     sequelize,
