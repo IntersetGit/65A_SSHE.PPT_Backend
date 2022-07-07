@@ -1,5 +1,5 @@
 const util = require('../util')
-const { AddSsheIssue,GetAllDataSsheIssueService,updateSsheIssue } = require('../service/sshe_issueservice');
+const { AddSsheIssue,GetAllDataSsheIssueService,updateSsheIssue,deleteSsheIssueService } = require('../service/sshe_issueservice');
 const result = require('../middleware/result');
 
 
@@ -27,13 +27,26 @@ exports.getDataSsheIssue = async (req, res, next) => {
 
 }
 
+
 exports.updateDataSsheIsue = async (req, res, next) => {
     try {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
         const model  = req.body
-        result(res, req, 'เพิ่มข้อมูลsshe issue', await updateSsheIssue( model,user ))
+        result(res, req, 'แก้ไขข้อมูลsshe issue', await updateSsheIssue( model,user ))
+    } catch (error) {
+        next(error);
+    }
+}
 
+
+
+
+exports.deleteDataSsueIssue = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        await deleteSsheIssueService(id)
+        result(res, req, 'ลบข้อมูลSshe Issue', true)
     } catch (error) {
         next(error);
     }

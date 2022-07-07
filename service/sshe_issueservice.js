@@ -85,6 +85,11 @@ exports.updateSsheIssue = async (  model , user ) => {
         user_id:model.user_id,
         updated_by:user.sysm_id,
         updated_date: new Date(),
-    },{where:{ id : model.id}})
-    return id
+
+    },{where: { id : model.id }})
+    return model.id
 }
+
+exports.deleteSsheIssueService = async (id) => {
+    await models.ptt_sshe_issue.destroy({where: { id : id }})
+};

@@ -5,7 +5,8 @@ const { authenticateToken } = require('../middleware/authenticateToken')
 
 router.post('/addssheissue',  [authenticateToken], ssheissueController.addDataSsheIsue)
 router.get('/getssheissue',  [authenticateToken], ssheissueController.getDataSsheIssue)
-router.get('/updatedssheissue',  [authenticateToken], ssheissueController.updateDataSsheIsue)
+router.put('/updatedssheissue',  [authenticateToken], ssheissueController.updateDataSsheIsue)
+router.delete('/deletessheissue/:id',  [authenticateToken], ssheissueController.deleteDataSsueIssue)
 
 
 
