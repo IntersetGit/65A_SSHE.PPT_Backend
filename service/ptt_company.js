@@ -85,13 +85,12 @@ exports.CompanyMatchUserService = async (model) => {
 
 exports.GetAllDataCompanyService = async (search) => {
     let sql = ` select a.id, a.company_reg_id, a.company_name, a.website, a.address, a.email, a.tel_no, a.company_type, a.active, c.subcontract_name , b.subcontract_id,
-    a.created_date  from ptt_data.ptt_company as a 
-    (select array(select json_build_object(
-        'project_id', ptt_data.match_projects.project_id,
+    a.created_date ,
+      (select array(select json_build_object(
+        'project_id', project_id,
         'project_name', ptt_data.ptt_projects.project_name
-    )  from ptt_data.ptt_projects  INNER JOIN ptt_data.match_projects ON  ptt_data.match_projects.project_id = ptt_data.ptt_projects.id
-        WHERE project_id = a.id  )) as project 
-        LEFT JOIN ptt_data.match_projects as e ON e.company_id = a.id
+    )  from ptt_data.match_projects  as b INNER JOIN  ptt_data.ptt_projects ON  ptt_data.ptt_projects.id = b.project_id
+        WHERE company_id = a.id  )) as project from ptt_data.ptt_company as a 
         LEFT JOIN ptt_data.ptt_sub_company as b ON  b.company_id = a.id
         LEFT JOIN master.mas_subcontract as c ON  c.id = b.subcontract_id `
         
