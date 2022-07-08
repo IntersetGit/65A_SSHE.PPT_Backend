@@ -33,7 +33,7 @@ exports.createUserAD = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
     const decode = await util.decodeToken(req.headers.authorization);
-    let { username, password, token, roles_id, first_name, last_name, e_mail, is_ad , company_id } = req.body;
+    let { username, password, token, roles_id, first_name, last_name, e_mail, is_ad , company_id, project_id } = req.body;
     const user = decode.token //มาจาก login
     const id = uuidv4.v4();
 
@@ -131,7 +131,8 @@ exports.editUser = async (req, res, next) => {
       last_name: model.last_name,
       user_id: model.id,
       e_mail: model.e_mail,
-      company_id: model.company_id
+      company_id: model.company_id,
+      project_id : model.project_id
     }
 
     if (model.id) {
