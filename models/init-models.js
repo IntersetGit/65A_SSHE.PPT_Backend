@@ -18,6 +18,7 @@ var _match_impact = require("./match_impact");
 var _match_mitigation = require("./match_mitigation");
 var _match_procedures = require("./match_procedures");
 var _match_projects = require("./match_projects");
+var _match_userPro = require("./match_userPro");
 var _ptt_Incident_old = require("./ptt_Incident_old");
 var _ptt_company = require("./ptt_company");
 var _ptt_hazard_issue = require("./ptt_hazard_issue");
@@ -49,6 +50,7 @@ function initModels(sequelize) {
   var match_mitigation = _match_mitigation(sequelize, DataTypes);
   var match_procedures = _match_procedures(sequelize, DataTypes);
   var match_projects = _match_projects(sequelize, DataTypes);
+  var match_userPro = _match_userPro(sequelize, DataTypes);
   var ptt_Incident_old = _ptt_Incident_old(sequelize, DataTypes);
   var ptt_company = _ptt_company(sequelize, DataTypes);
   var ptt_hazard_issue = _ptt_hazard_issue(sequelize, DataTypes);
@@ -122,10 +124,14 @@ function initModels(sequelize) {
   ptt_hazard_issue.hasMany(ptt_sshe_issue, { as: "ptt_sshe_issues", foreignKey: "hazard_id"});
   match_projects.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
   ptt_projects.hasMany(match_projects, { as: "match_projects", foreignKey: "project_id"});
+  match_userPro.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
+  ptt_projects.hasMany(match_userPro, { as: "match_userPros", foreignKey: "project_id"});
   ptt_sshe_issue.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
   ptt_projects.hasMany(ptt_sshe_issue, { as: "ptt_sshe_issues", foreignKey: "project_id"});
   macth_company.belongsTo(sysm_users, { as: "user", foreignKey: "user_id"});
   sysm_users.hasMany(macth_company, { as: "macth_companies", foreignKey: "user_id"});
+  match_userPro.belongsTo(sysm_users, { as: "user", foreignKey: "user_id"});
+  sysm_users.hasMany(match_userPro, { as: "match_userPros", foreignKey: "user_id"});
   ptt_hazard_issue.belongsTo(sysm_users, { as: "created_by_sysm_user", foreignKey: "created_by"});
   sysm_users.hasMany(ptt_hazard_issue, { as: "ptt_hazard_issues", foreignKey: "created_by"});
   ptt_hazard_issue.belongsTo(sysm_users, { as: "updated_by_sysm_user", foreignKey: "updated_by"});
@@ -163,6 +169,7 @@ function initModels(sequelize) {
     match_mitigation,
     match_procedures,
     match_projects,
+    match_userPro,
     ptt_Incident_old,
     ptt_company,
     ptt_hazard_issue,

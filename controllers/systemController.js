@@ -102,7 +102,7 @@ exports.createUserAD = async (req, res, next) => {
           company_id
         }, transaction);
         await matchProjectUser({
-          company_id,
+          user_id: id,
           project_id
         }, transaction);
       } else {

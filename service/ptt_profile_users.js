@@ -43,14 +43,15 @@ exports.matchCompanyUser = async (model, transaction) => {
 
 exports.matchProjectUser = async (model , transaction) => {
     const match = {
-        company_id : model.company_id,
+        user_id:  model.user_id,
         project_id : model.project_id
   }
 
-  await models.match_projects.create( match ,{ transaction });
+  await models.match_userPro.create( match ,{ transaction });
     return match 
 
 }
+
 
 /* แก้ไข ตารางข้อมูลส่วนตัวผู้ใช้งานระบบ */
 exports.updateDatProfileUsersService = async (model, transaction) => {
@@ -86,10 +87,10 @@ exports.editMatchCompanyUser = async (dataUser, transaction) => {
 
 exports.editMatchProjectUser = async (dataUser, transaction) => {
     const match = {
-          company_id : dataUser.company_id,
+          user_id : dataUser.user_id,
           project_id : dataUser.project_id
     }
-    await models.macth_company.update( match ,{ where: { user_id: dataUser.user_id }, transaction });
-    return dataUser.project_id;  
+    await models.match_userPro.update( match ,{ where: { user_id: dataUser.user_id }, transaction });
+    return dataUser.user_id;  
 }
 
