@@ -65,7 +65,9 @@ function initModels(sequelize) {
   ptt_company.belongsToMany(ptt_projects, { through: match_projects, foreignKey: "company_id", otherKey: "project_id" });
   ptt_company.belongsToMany(sysm_users, { through: macth_company, foreignKey: "company_id", otherKey: "user_id" });
   ptt_projects.belongsToMany(ptt_company, { through: match_projects, foreignKey: "project_id", otherKey: "company_id" });
+  ptt_projects.belongsToMany(sysm_users, { through: match_userPro, foreignKey: "project_id", otherKey: "user_id" });
   sysm_users.belongsToMany(ptt_company, { through: macth_company, foreignKey: "user_id", otherKey: "company_id" });
+  sysm_users.belongsToMany(ptt_projects, { through: match_userPro, foreignKey: "user_id", otherKey: "project_id" });
   mas_mitigations.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
   mas_impacts.hasMany(mas_mitigations, { as: "mas_mitigations", foreignKey: "impact_id"});
   mas_procedures.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
