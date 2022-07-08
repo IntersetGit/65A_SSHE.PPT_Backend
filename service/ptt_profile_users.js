@@ -43,7 +43,7 @@ exports.matchCompanyUser = async (model, transaction) => {
 
 exports.matchProjectUser = async (model , transaction) => {
     const match = {
-        user_id:  model.user_id,
+        user_id :  model.user_id,
         project_id : model.project_id
   }
 

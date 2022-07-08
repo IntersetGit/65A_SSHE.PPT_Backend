@@ -65,9 +65,7 @@ function initModels(sequelize) {
   ptt_company.belongsToMany(ptt_projects, { through: match_projects, foreignKey: "company_id", otherKey: "project_id" });
   ptt_company.belongsToMany(sysm_users, { through: macth_company, foreignKey: "company_id", otherKey: "user_id" });
   ptt_projects.belongsToMany(ptt_company, { through: match_projects, foreignKey: "project_id", otherKey: "company_id" });
-  ptt_projects.belongsToMany(sysm_users, { through: match_userPro, foreignKey: "project_id", otherKey: "user_id" });
   sysm_users.belongsToMany(ptt_company, { through: macth_company, foreignKey: "user_id", otherKey: "company_id" });
-  sysm_users.belongsToMany(ptt_projects, { through: match_userPro, foreignKey: "user_id", otherKey: "project_id" });
   mas_mitigations.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
   mas_impacts.hasMany(mas_mitigations, { as: "mas_mitigations", foreignKey: "impact_id"});
   mas_procedures.belongsTo(mas_impacts, { as: "impact", foreignKey: "impact_id"});
@@ -126,14 +124,10 @@ function initModels(sequelize) {
   ptt_hazard_issue.hasMany(ptt_sshe_issue, { as: "ptt_sshe_issues", foreignKey: "hazard_id"});
   match_projects.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
   ptt_projects.hasMany(match_projects, { as: "match_projects", foreignKey: "project_id"});
-  match_userPro.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
-  ptt_projects.hasMany(match_userPro, { as: "match_userPros", foreignKey: "project_id"});
   ptt_sshe_issue.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
   ptt_projects.hasMany(ptt_sshe_issue, { as: "ptt_sshe_issues", foreignKey: "project_id"});
   macth_company.belongsTo(sysm_users, { as: "user", foreignKey: "user_id"});
   sysm_users.hasMany(macth_company, { as: "macth_companies", foreignKey: "user_id"});
-  match_userPro.belongsTo(sysm_users, { as: "user", foreignKey: "user_id"});
-  sysm_users.hasMany(match_userPro, { as: "match_userPros", foreignKey: "user_id"});
   ptt_hazard_issue.belongsTo(sysm_users, { as: "created_by_sysm_user", foreignKey: "created_by"});
   sysm_users.hasMany(ptt_hazard_issue, { as: "ptt_hazard_issues", foreignKey: "created_by"});
   ptt_hazard_issue.belongsTo(sysm_users, { as: "updated_by_sysm_user", foreignKey: "updated_by"});
