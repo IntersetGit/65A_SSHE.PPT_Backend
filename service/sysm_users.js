@@ -107,11 +107,13 @@ exports.updateConfigAdService = async (model) => {
 
 exports.GetUserService = async (search) => {
     let sql = `select Suser.id,Suser.user_name,Suser.e_mail,roles.roles_name,Puser.first_name||' '||Puser.last_name firstLast , Suser.is_ad
-    ,Suser.roles_id as roles_id , Puser.first_name, Puser.last_name , Puser.company_id, com.company_name
+    ,Suser.roles_id as roles_id , Puser.first_name, Puser.last_name , Puser.company_id, com.company_name , pro.project_name , pro.id
     from system.sysm_users Suser
     inner join ptt_data.ptt_profile_users Puser on Suser.id=Puser.user_id
 	left join ptt_data.macth_company Matchcom on Matchcom.user_id = Suser.id
-	left join ptt_data.ptt_company com on com.id = Matchcom.company_id
+	left join ptt_data.ptt_company com on com.id = Matchcom.company_id 
+    left join ptt_data.match_projects matchpro on matchpro.company_id = com.id
+    left join ptt_data.ptt_projects pro on pro.id = matchpro.project_id
 	inner join system.sysm_roles roles on roles.id=Suser.roles_id  WHERE Suser.isuse = 1 `
 
     if (search) {

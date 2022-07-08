@@ -1,7 +1,7 @@
 const ActiveDirectory = require("activedirectory");
 const config = require("../config");
 const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService , createConfigAdService, createSysmUsersService, GetUserService, GetRolesService } = require("../service/sysm_users");
-const { createProfileUser , updateDatProfileUsersService,matchCompanyUser,editMatchCompanyUser } = require("../service/ptt_profile_users");
+const { createProfileUser , updateDatProfileUsersService,matchCompanyUser,matchProjectUser,editMatchCompanyUser,editMatchProjectUser } = require("../service/ptt_profile_users");
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
 const result = require("../middleware/result");
@@ -101,6 +101,10 @@ exports.createUserAD = async (req, res, next) => {
           user_id: id,
           company_id
         }, transaction);
+        await matchProjectUser({
+          company_id,
+          project_id
+        }, transaction);
       } else {
         const err = new Error(`มีผู้ใช้ ${username} ในฐานข้อมูล`);
         err.statusCode = 400;
@@ -134,6 +138,7 @@ exports.editUser = async (req, res, next) => {
       await updateSysmUsersService(model, transaction)
       await updateDatProfileUsersService(dataUser, transaction);
       await editMatchCompanyUser(dataUser,transaction);
+      await editMatchProjectUser(dataUser,transaction);
     }
 
     await transaction.commit();
