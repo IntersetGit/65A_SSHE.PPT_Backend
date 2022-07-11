@@ -4,11 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     user_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'sysm_users',
-        key: 'id'
-      }
+      primaryKey: true
     },
     project_id: {
       type: DataTypes.UUID,
