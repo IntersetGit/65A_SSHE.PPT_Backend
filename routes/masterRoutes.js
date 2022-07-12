@@ -32,6 +32,11 @@ router.delete('/deleteHazardIssue/:id',  [authenticateToken], masterController.d
 router.get('/getIncidentType',  [authenticateToken], masterController.getDataIncidentType)
 router.post('/manageIncidentType', [authenticateToken], masterController.addIncidentType)
 router.delete('/deleteIncidentType/:id',  [authenticateToken], masterController.deleteDataIncidentType)
+//-------------- consequence -------------------------------------------------------------//
+
+router.get('/getConsequence',  [authenticateToken], masterController.getDataConsequence)
+router.post('/manageConsequence', [authenticateToken], masterController.addConsequence)
+router.delete('/deleteConsqeuence/:id',  [authenticateToken], masterController.deleteDataConsqeuence)
 
 
 module.exports = router;

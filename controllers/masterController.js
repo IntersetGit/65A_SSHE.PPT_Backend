@@ -5,6 +5,8 @@ const { GetAllDataProjectTypeService,projectTypeAddService,projectTypeEditServic
 const { GetAllDataIssueTypeService,deleteIssueTypeService,issueTypeAddService,issueTypeEditService } = require('../service/mas_issue_type');
 const { GetAllDataHazardIssueService,deleteHazardIssueService,hazardIssueAddService,hazardIssueEditService } = require('../service/ptt_hazard_issue');
 const { GetAllDataIncidentTypeService,incidentTypeAddService,incidentTypeEditService,deleteIncidentTypeService } = require('../service/mas_incident_type');
+const {GetAllDataConsequenceService,consquenceAddService,consquenceEditService,deleteConsqeuenceService} = require('../service/consequence')
+
 const result = require('../middleware/result');
 
 // exports.AddActivityController = async (req, res, next) => {
@@ -323,6 +325,52 @@ exports.deleteDataIncidentType = async (req, res, next) => {
         const { id } = req.params
         await deleteIncidentTypeService(id)
         result(res, req, 'ลบข้อมูลissuetype', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+//-------------------- consequence ------------------------------------------------//
+
+exports.getDataConsequence = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { search } = req.query
+        result(res, req, 'ค้นหา Consequence กับ แสดง Consequence', await GetAllDataConsequenceService(search))
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.addConsequence = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const model = req.body
+
+        if (model.id ) {
+            await consquenceEditService( user ,model)
+            result(res, req, 'แก้ไขข้อมูล consquence ',true, 201)
+        } else {
+            result(res, req, 'เพิ่มข้อมูล consquence ',await consquenceAddService(user,model),  201)
+        } 
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+exports.deleteDataConsqeuence = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { id } = req.params
+        await deleteConsqeuenceService(id)
+        result(res, req, 'ลบข้อมูล consqeuence', true)
 
     } catch (error) {
         next(error);
