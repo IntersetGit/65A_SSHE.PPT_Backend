@@ -10,7 +10,7 @@ router.put('/updateRoleUser', [authenticateToken], systemControllers.updateRoleU
 // /* ค้นหาผู้ใชช้ ad */
 // router.get('/findUserAD', [authenticateToken], systemControllers.findUserAd);
 /* ลบผู้ใช้งาน */
-router.post('/delUserAD/:id', [authenticateToken], systemControllers.delUserAd);
+router.get('/delUserAD/:id', [authenticateToken], systemControllers.delUserAd);
 /* อัพข้อมูลการตั้งค่า ad */ 
 router.post('updateConfig', [authenticateToken], systemControllers.updateConfigAd);
 router.put('/editUser', [authenticateToken],systemControllers.editUser);
