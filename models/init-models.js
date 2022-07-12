@@ -3,12 +3,14 @@ var _logs = require("./logs");
 var _macth_company = require("./macth_company");
 var _mas_Incident_02 = require("./mas_Incident_02");
 var _mas_activities = require("./mas_activities");
+var _mas_consequence = require("./mas_consequence");
 var _mas_impacts = require("./mas_impacts");
 var _mas_incident_01 = require("./mas_incident_01");
 var _mas_incident_03 = require("./mas_incident_03");
 var _mas_incident_04 = require("./mas_incident_04");
 var _mas_incident_type = require("./mas_incident_type");
 var _mas_issue_type = require("./mas_issue_type");
+var _mas_likehood = require("./mas_likehood");
 var _mas_mitigations = require("./mas_mitigations");
 var _mas_procedures = require("./mas_procedures");
 var _mas_project_type = require("./mas_project_type");
@@ -35,12 +37,14 @@ function initModels(sequelize) {
   var macth_company = _macth_company(sequelize, DataTypes);
   var mas_Incident_02 = _mas_Incident_02(sequelize, DataTypes);
   var mas_activities = _mas_activities(sequelize, DataTypes);
+  var mas_consequence = _mas_consequence(sequelize, DataTypes);
   var mas_impacts = _mas_impacts(sequelize, DataTypes);
   var mas_incident_01 = _mas_incident_01(sequelize, DataTypes);
   var mas_incident_03 = _mas_incident_03(sequelize, DataTypes);
   var mas_incident_04 = _mas_incident_04(sequelize, DataTypes);
   var mas_incident_type = _mas_incident_type(sequelize, DataTypes);
   var mas_issue_type = _mas_issue_type(sequelize, DataTypes);
+  var mas_likehood = _mas_likehood(sequelize, DataTypes);
   var mas_mitigations = _mas_mitigations(sequelize, DataTypes);
   var mas_procedures = _mas_procedures(sequelize, DataTypes);
   var mas_project_type = _mas_project_type(sequelize, DataTypes);
@@ -152,12 +156,14 @@ function initModels(sequelize) {
     macth_company,
     mas_Incident_02,
     mas_activities,
+    mas_consequence,
     mas_impacts,
     mas_incident_01,
     mas_incident_03,
     mas_incident_04,
     mas_incident_type,
     mas_issue_type,
+    mas_likehood,
     mas_mitigations,
     mas_procedures,
     mas_project_type,
