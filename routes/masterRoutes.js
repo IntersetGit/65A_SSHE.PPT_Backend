@@ -38,5 +38,11 @@ router.get('/getConsequence',  [authenticateToken], masterController.getDataCons
 router.post('/manageConsequence', [authenticateToken], masterController.addConsequence)
 router.delete('/deleteConsqeuence/:id',  [authenticateToken], masterController.deleteDataConsqeuence)
 
+//-----------------------------likehood----------------------------------------------//
+
+router.get('/getlikeHood',  [authenticateToken], masterController.getDataLikeHood)
+router.post('/manageLikeHood', [authenticateToken], masterController.addLikeHood)
+router.delete('/deleteLikeHood/:id',  [authenticateToken], masterController.deleteDataLikeHood)
+
 
 module.exports = router;

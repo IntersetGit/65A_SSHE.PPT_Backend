@@ -6,7 +6,7 @@ const { GetAllDataIssueTypeService,deleteIssueTypeService,issueTypeAddService,is
 const { GetAllDataHazardIssueService,deleteHazardIssueService,hazardIssueAddService,hazardIssueEditService } = require('../service/ptt_hazard_issue');
 const { GetAllDataIncidentTypeService,incidentTypeAddService,incidentTypeEditService,deleteIncidentTypeService } = require('../service/mas_incident_type');
 const {GetAllDataConsequenceService,consquenceAddService,consquenceEditService,deleteConsqeuenceService} = require('../service/consequence')
-
+const {GetAllDataLikeHoodService,likeHoodAddService,likeHoodEditService,deleteLikeHoodService} = require('../service/Likehood')
 const result = require('../middleware/result');
 
 // exports.AddActivityController = async (req, res, next) => {
@@ -370,6 +370,53 @@ exports.deleteDataConsqeuence = async (req, res, next) => {
         const user = decode.token
         const { id } = req.params
         await deleteConsqeuenceService(id)
+        result(res, req, 'ลบข้อมูล consqeuence', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+//--------------------------- likehood ------------------------------------------//
+
+exports.getDataLikeHood = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { search } = req.query
+        result(res, req, 'ค้นหา likehood กับ แสดง Likehood ', await GetAllDataLikeHoodService(search))
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.addLikeHood = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const model = req.body
+
+        if (model.id ) {
+            await likeHoodEditService( user ,model)
+            result(res, req, 'แก้ไขข้อมูล consquence ',true, 201)
+        } else {
+            result(res, req, 'เพิ่มข้อมูล consquence ',await likeHoodAddService(user,model),  201)
+        } 
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+exports.deleteDataLikeHood = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { id } = req.params
+        await deleteLikeHoodService(id)
         result(res, req, 'ลบข้อมูล consqeuence', true)
 
     } catch (error) {
