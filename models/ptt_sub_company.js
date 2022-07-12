@@ -10,20 +10,12 @@ module.exports = function(sequelize, DataTypes) {
     company_id: {
       type: DataTypes.UUID,
       allowNull: true,
-      comment: "รหัสบริษัท",
-      references: {
-        model: 'ptt_company',
-        key: 'id'
-      }
+      comment: "รหัสบริษัท"
     },
     subcontract_id: {
       type: DataTypes.UUID,
       allowNull: true,
-      comment: "รหัสที่บริษัทกำหนดเป็น subcontract ",
-      references: {
-        model: 'mas_subcontract',
-        key: 'id'
-      }
+      comment: "รหัสที่บริษัทกำหนดเป็น subcontract "
     }
   }, {
     sequelize,

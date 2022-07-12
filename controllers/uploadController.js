@@ -13,8 +13,13 @@ exports.uploads = async (req, res, next) => {
     const uploadPath = `${projectPath}/public/uploads/${Path}/`;
 
     const File = [];
+
+    // for (let x = 0; x < Number(Length); x++) {
+    //   File.push(fileupload[`file${x}`]);
+    // }
+
     for (let x = 0; x < Number(Length); x++) {
-      File.push(fileupload[`file${x}`]);
+      File.push(fileupload.file);
     }
 
     //เช็ค path ว่ามีไหม ถ้าไม่มีจะสร้างขึ้นมา
@@ -36,12 +41,12 @@ exports.uploads = async (req, res, next) => {
       let model = {
         location: `${config.SERVICE_HOST}/uploads/${Path}/${name}`,
         path: `/uploads/${Path}/${name}`,
-        nameOld: e.name,
         nameNew: name,
         type: type,
       };
 
       UploadFile.push(model);
+
       e.mv(uploadPath + name, (err) => {
         if (err) {
           const error = new Error(err);
@@ -51,7 +56,7 @@ exports.uploads = async (req, res, next) => {
       });
     }
 
-    result(res, UploadFile);
+    result(res, req , 'upload', UploadFile);
   } catch (error) {
     next(error);
   }

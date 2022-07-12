@@ -110,19 +110,23 @@ exports.GetAllDataSubCompanyService = async () => {
     ],})
 }
 
-exports.deleteCompanyService = async (id) => {
-    await models.ptt_company.destroy({ where: { id} })
-};
 exports.deleteMatchProjectService = async (id) => {
     await models.match_projects.destroy({where: { company_id: id }})
 };
 exports.deleteMatchCompanyService = async (id) => {
     await models.macth_company.destroy({where: { company_id: id }})
 };
+;
+
 exports.deleteSubComService = async (id) => {
     await models.ptt_sub_company.destroy({where: { company_id : id }})
 };
 
 exports.deleteSubcontractService = async (id) => {
     await models.mas_subcontract.destroy({where: { company_id : id }})
+};
+
+
+exports.deleteCompanyService = async (id) => {
+    await models.ptt_company.destroy({ where: { id} })
 };

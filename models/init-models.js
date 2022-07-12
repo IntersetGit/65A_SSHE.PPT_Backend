@@ -114,16 +114,12 @@ function initModels(sequelize) {
   mas_mitigations.hasMany(match_mitigation, { as: "match_mitigations", foreignKey: "mitigation_id"});
   match_procedures.belongsTo(mas_procedures, { as: "procedure", foreignKey: "procedures_id"});
   mas_procedures.hasMany(match_procedures, { as: "match_procedures", foreignKey: "procedures_id"});
-  ptt_sub_company.belongsTo(mas_subcontract, { as: "subcontract", foreignKey: "subcontract_id"});
-  mas_subcontract.hasMany(ptt_sub_company, { as: "ptt_sub_companies", foreignKey: "subcontract_id"});
   match_mitigation.belongsTo(match_impact, { as: "match_impact", foreignKey: "match_impact_id"});
   match_impact.hasMany(match_mitigation, { as: "match_mitigations", foreignKey: "match_impact_id"});
   macth_company.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
   ptt_company.hasMany(macth_company, { as: "macth_companies", foreignKey: "company_id"});
   match_projects.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
   ptt_company.hasMany(match_projects, { as: "match_projects", foreignKey: "company_id"});
-  ptt_sub_company.belongsTo(ptt_company, { as: "company", foreignKey: "company_id"});
-  ptt_company.hasMany(ptt_sub_company, { as: "ptt_sub_companies", foreignKey: "company_id"});
   ptt_sshe_issue.belongsTo(ptt_hazard_issue, { as: "hazard", foreignKey: "hazard_id"});
   ptt_hazard_issue.hasMany(ptt_sshe_issue, { as: "ptt_sshe_issues", foreignKey: "hazard_id"});
   match_projects.belongsTo(ptt_projects, { as: "project", foreignKey: "project_id"});
