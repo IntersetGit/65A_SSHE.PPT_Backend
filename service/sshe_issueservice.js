@@ -10,7 +10,7 @@ exports.AddSsheIssue = async (  model , user ) => {
         date: model.date,
         project_id: model.project_id,
         location:model.location,
-        issue_type_id: model.issue_type_id,
+        primary_case: model.primary_case,
         hazard_id: model.hazard_id,
         description: model.description,
         suggestion: model.suggestion,
