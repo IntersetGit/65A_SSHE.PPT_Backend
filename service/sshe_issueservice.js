@@ -49,11 +49,11 @@ exports.GetAllDataSsheIssueService = async ( status , primary_case , start_date,
         AND a.date BETWEEN '${start_date}' AND '${end_date}' `
 
         if (primary_case && status && !start_date && !end_date   )
-         sql += ` WHERE a.primary_case_id = '${primary_case}' 
+         sql += ` WHERE a.primary_case = '${primary_case}' 
         AND  a.status = '${status}' `
 
         if (primary_case && !status && !start_date && !end_date  ) 
-        sql += ` WHERE a.primary_case_id = '${primary_case}'  `
+        sql += ` WHERE a.primary_case = '${primary_case}'  `
         if (status && !primary_case   && !start_date && !end_date)
          sql += ` WHERE a.status = '${status}'  `
         if (start_date && end_date && !status&& !primary_case) 

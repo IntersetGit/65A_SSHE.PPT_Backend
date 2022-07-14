@@ -1,5 +1,6 @@
 const util = require('../util')
 const { AddSsheIssue,GetAllDataSsheIssueService,updateSsheIssue,deleteSsheIssueService } = require('../service/sshe_issueservice');
+const {uploads} = require('../controllers/uploadController')
 const result = require('../middleware/result');
 
 
@@ -8,7 +9,9 @@ exports.addDataSsheIsue = async (req, res, next) => {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
         const model  = req.body
-        result(res, req, 'เพิ่มข้อมูลsshe issue', await AddSsheIssue( model,user ))
+        const id = await AddSsheIssue( model,user )
+        await uploads (id)
+        result(res, req, 'เพิ่มข้อมูลsshe issue')
 
     } catch (error) {
         next(error);
@@ -19,7 +22,20 @@ exports.addDataSsheIsue = async (req, res, next) => {
 exports.getDataSsheIssue = async (req, res, next) => {
     try {
         const { status , primary_case , date } = req.query
-        result(res, req, 'ค้นหาด้วยชื่อและเรียกข้อมูล Sshe Issue', await GetAllDataSsheIssueService( status , primary_case , date[0] ,date[1]))
+       
+        const start_date = undefined
+        const end_date = undefined
+
+        if (date) {
+            if (typeof(date) === 'array') {
+                start_date = date[0]
+                end_date = date[1]
+            }else{
+                start_date = date
+            }
+        }
+
+        result(res, req, 'ค้นหาด้วยชื่อและเรียกข้อมูล Sshe Issue', await GetAllDataSsheIssueService( status , primary_case , start_date , end_date ))
 
     } catch (error) {
         next(error);

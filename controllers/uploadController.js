@@ -8,9 +8,9 @@ const config = require("../config");
 exports.uploads = async (req, res, next) => {
   try {
     const fileupload = req.files;
-    const { Path = "all", Length = 1, Name, SetType } = req.query;
+    const { Path = "all", Length = 1, Name, SetType  } = req.query;
     const projectPath = path.resolve("./");
-    const uploadPath = `${projectPath}/public/uploads/${Path}/`;
+    const uploadPath = `${projectPath}/public/uploads/${Path}/${group}`;
 
     const File = [];
 
@@ -39,15 +39,15 @@ exports.uploads = async (req, res, next) => {
       let name = Name ? Name + type : uuidv4.v4() + type;
 
       let model = {
-        location: `${config.SERVICE_HOST}/uploads/${Path}/${name}`,
-        path: `/uploads/${Path}/${name}`,
+        location: `${config.SERVICE_HOST}/uploads/${Path}/${group}/${name}`,
+        path: `/uploads/${Path}/${group}/${name}`,
         nameNew: name,
         type: type,
       };
 
       UploadFile.push(model);
 
-      e.mv(uploadPath + name, (err) => {
+      e.mv(uploadPath + '/' + name, (err) => {
         if (err) {
           const error = new Error(err);
           error.statusCode = 402;
