@@ -8,7 +8,7 @@ const config = require("../config");
 exports.uploads = async (req, res, next) => {
   try {
     const fileupload = req.files;
-    const { Path = "all", Length = 1, Name, SetType  } = req.query;
+    const { Path = "all", Length = 1, Name, SetType ,group } = req.query;
     const projectPath = path.resolve("./");
     const uploadPath = `${projectPath}/public/uploads/${Path}/${group}`;
 

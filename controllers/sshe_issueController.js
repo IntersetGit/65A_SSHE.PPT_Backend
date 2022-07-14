@@ -9,9 +9,7 @@ exports.addDataSsheIsue = async (req, res, next) => {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
         const model  = req.body
-        const id = await AddSsheIssue( model,user )
-        await uploads (id)
-        result(res, req, 'เพิ่มข้อมูลsshe issue')
+        result(res, req, 'เพิ่มข้อมูลsshe issue',await AddSsheIssue( model,user ))
 
     } catch (error) {
         next(error);
