@@ -27,44 +27,43 @@ exports.AddSsheIssue = async (  model , user ) => {
 }
 
 
-exports.GetAllDataSsheIssueService = async ( status , issue_type , start_date, end_date) => {
-    let sql = ` select a.id, a.date, a.project_id, b.project_name, a.issue_type_id, a.location, c.issue_type_name, d.hazard_name, a.description,
+exports.GetAllDataSsheIssueService = async ( status , primary_case , start_date, end_date) => {
+    let sql = ` select a.id, a.date, a.project_id, b.project_name, a.primary_case , a.location, c.issue_type_name, d.hazard_name, a.description,
     a.suggestion, a.status, a.due_date, a.lat, a.long, a.created_by, e.user_name, a.user_id , a.created_date, a.updated_by, a.updated_date, a.hazard_id
     , a.close FROM ptt_data.ptt_sshe_issue as a
     LEFT JOIN ptt_data.ptt_projects as b ON b.id = a.project_id
-    LEFT JOIN master.mas_issue_type as c ON c.id = a.issue_type_id
+    LEFT JOIN master.mas_issue_type as c ON c.id = a.primary_case
     LEFT JOIN ptt_data.ptt_hazard_issue as d ON d.id = a.hazard_id
     LEFT JOIN system.sysm_users as e ON e.id = a.user_id`
 
-        if (issue_type && status && start_date && end_date) 
-        sql += ` WHERE a.issue_type_id = '${issue_type}' AND 
-         a.status = '${status}' AND a.date BETWEEN '%${start_date}%' AND '%${end_date}%' `
+        if (primary_case && status && start_date && end_date) 
+        sql += ` WHERE a.primary_case = '${primary_case}' AND 
+         a.status = '${status}' AND a.date BETWEEN '${start_date}' AND '${end_date}' `
 
-        if (issue_type  && start_date && end_date && !status  ) 
-        sql += ` WHERE a.issue_type_id = '${issue_type}' 
-         AND a.date BETWEEN '%${start_date}%' AND   '%${end_date}%' `
+        if (primary_case  && start_date && end_date && !status  ) 
+        sql += ` WHERE a.primary_case = '${primary_case}' 
+         AND a.date BETWEEN '${start_date}' AND   '${end_date}' `
 
-        if (status  && start_date && end_date && !issue_type ) 
+        if (status  && start_date && end_date && !primary_case ) 
         sql += ` WHERE a.status = '${status}'  
-        AND a.date BETWEEN '%${start_date}%' AND '%${end_date}%' `
+        AND a.date BETWEEN '${start_date}' AND '${end_date}' `
 
-        if (issue_type && status && !start_date && !end_date   )
-         sql += ` WHERE a.issue_type_id = '${issue_type}' 
+        if (primary_case && status && !start_date && !end_date   )
+         sql += ` WHERE a.primary_case_id = '${primary_case}' 
         AND  a.status = '${status}' `
 
-        if (issue_type && !status && !start_date && !end_date  ) 
-        sql += ` WHERE a.issue_type_id = '${issue_type}'  `
-        if (status && !issue_type   && !start_date && !end_date)
+        if (primary_case && !status && !start_date && !end_date  ) 
+        sql += ` WHERE a.primary_case_id = '${primary_case}'  `
+        if (status && !primary_case   && !start_date && !end_date)
          sql += ` WHERE a.status = '${status}'  `
-        if (start_date && end_date && !status&& !issue_type) 
-        sql += ` WHERE a.date BETWEEN '%${start_date}%' AND  '%${end_date}%' `
+        if (start_date && end_date && !status&& !primary_case) 
+        sql += ` WHERE a.date BETWEEN '${start_date}' AND  '${end_date}' `
         
     
     sql += ` order by a.created_date  asc `
 
-    console.log(sql);
-    console.log();
-    return util.sequelizeStringLike(sql,{ status , issue_type , start_date, end_date})
+    
+    return util.sequelizeStringLike(sql,{status , primary_case , start_date, end_date})
 }
 
 
@@ -73,7 +72,7 @@ exports.updateSsheIssue = async (  model , user ) => {
         date: model.date,
         project_id: model.project_id,
         location:model.location,
-        issue_type_id: model.issue_type_id,
+        primary_case: model.primary_case,
         hazard_id: model.hazard_id,
         description: model.description,
         suggestion: model.suggestion,

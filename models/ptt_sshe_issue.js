@@ -7,11 +7,6 @@ module.exports = function(sequelize, DataTypes) {
       comment: "รหัสประจำตาราง sshe issue",
       primaryKey: true
     },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-      comment: "วันที่ทำรายงาน"
-    },
     project_id: {
       type: DataTypes.UUID,
       allowNull: true,
@@ -26,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "ชื่อโลเคชั่น"
     },
-    issue_type_id: {
+    primary_case: {
       type: DataTypes.UUID,
       allowNull: true,
       comment: "รหัส issue_type",
@@ -107,6 +102,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.SMALLINT,
       allowNull: true,
       comment: "0 = ยังไม่ปิด 1 = ปิดแล้ว"
+    },
+    date: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
     }
   }, {
     sequelize,

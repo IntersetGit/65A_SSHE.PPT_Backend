@@ -18,8 +18,8 @@ exports.addDataSsheIsue = async (req, res, next) => {
 
 exports.getDataSsheIssue = async (req, res, next) => {
     try {
-        const { status , issue_type , start_date, end_date } = req.query
-        result(res, req, 'ค้นหาด้วยชื่อและเรียกข้อมูล Sshe Issue', await GetAllDataSsheIssueService( status , issue_type , start_date, end_date  ))
+        const { status , primary_case , date } = req.query
+        result(res, req, 'ค้นหาด้วยชื่อและเรียกข้อมูล Sshe Issue', await GetAllDataSsheIssueService( status , primary_case , date[0] ,date[1]))
 
     } catch (error) {
         next(error);

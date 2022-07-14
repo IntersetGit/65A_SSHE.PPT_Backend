@@ -108,8 +108,8 @@ function initModels(sequelize) {
   mas_impacts.hasMany(match_procedures, { as: "match_procedures", foreignKey: "hazard_id"});
   ptt_hazard_issue.belongsTo(mas_issue_type, { as: "issue_type", foreignKey: "issue_type_id"});
   mas_issue_type.hasMany(ptt_hazard_issue, { as: "ptt_hazard_issues", foreignKey: "issue_type_id"});
-  ptt_sshe_issue.belongsTo(mas_issue_type, { as: "issue_type", foreignKey: "issue_type_id"});
-  mas_issue_type.hasMany(ptt_sshe_issue, { as: "ptt_sshe_issues", foreignKey: "issue_type_id"});
+  ptt_sshe_issue.belongsTo(mas_issue_type, { as: "primary_case_mas_issue_type", foreignKey: "primary_case"});
+  mas_issue_type.hasMany(ptt_sshe_issue, { as: "ptt_sshe_issues", foreignKey: "primary_case"});
   match_mitigation.belongsTo(mas_mitigations, { as: "mitigation", foreignKey: "mitigation_id"});
   mas_mitigations.hasMany(match_mitigation, { as: "match_mitigations", foreignKey: "mitigation_id"});
   match_procedures.belongsTo(mas_procedures, { as: "procedure", foreignKey: "procedures_id"});
