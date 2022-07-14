@@ -1,7 +1,9 @@
 const models = require('../models/index');
 const uuid = require('uuid');
 const util = require('../util')
-
+const fs = require("fs");
+const config = require("../config");
+const _path = require('path')
 
 exports.AddSsheIssue = async (  model , user ) => {
     const id = uuid.v4();
@@ -64,6 +66,15 @@ exports.GetAllDataSsheIssueService = async ( status , primary_case , start_date,
 
     
     return util.sequelizeStringLike(sql,{status , primary_case , start_date, end_date})
+}
+
+exports.checkImgById = (group , path, type = ".jpg") => {
+    let img;
+    const projectPath = _path.resolve("./");
+    const uploadPath = `${projectPath}/public/uploads/${path}/${group}`;
+    if (fs.existsSync(uploadPath))
+        img = `${config.SERVICE_HOST}/uploads/${path}/${group}`
+    return img
 }
 
 

@@ -8,7 +8,7 @@ router.post('/addUserAD',[authenticateToken],systemControllers.createUserAD);
 /* แก้ไขสิทธิ์ ผู้ใช้งาน */
 router.put('/updateRoleUser', [authenticateToken], systemControllers.updateRoleUser);
 // /* ค้นหาผู้ใชช้ ad */
-// router.get('/findUserAD', [authenticateToken], systemControllers.findUserAd);
+router.get('/findUserAD', [authenticateToken], systemControllers.findUserAd);
 /* ลบผู้ใช้งาน */
 router.get('/delUserAD/:id', [authenticateToken], systemControllers.delUserAd);
 /* อัพข้อมูลการตั้งค่า ad */ 

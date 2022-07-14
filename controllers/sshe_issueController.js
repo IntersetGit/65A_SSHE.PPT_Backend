@@ -1,5 +1,5 @@
 const util = require('../util')
-const { AddSsheIssue,GetAllDataSsheIssueService,updateSsheIssue,deleteSsheIssueService } = require('../service/sshe_issueservice');
+const { AddSsheIssue,GetAllDataSsheIssueService,updateSsheIssue,deleteSsheIssueService,checkImgById } = require('../service/sshe_issueservice');
 const {uploads} = require('../controllers/uploadController')
 const result = require('../middleware/result');
 
@@ -32,8 +32,15 @@ exports.getDataSsheIssue = async (req, res, next) => {
                 start_date = date
             }
         }
+        const group =  await GetAllDataSsheIssueService( status , primary_case , start_date , end_date )
 
-        result(res, req, 'ค้นหาด้วยชื่อและเรียกข้อมูล Sshe Issue', await GetAllDataSsheIssueService( status , primary_case , start_date , end_date ))
+        for (let i = 0; i < group.length ; i++){
+             const img = await checkImgById( group[i].id ,'images_Before')
+             result(res, req, 'ค้นหาด้วยชื่อและเรียกข้อมูล Sshe Issue', img  )
+       } 
+
+
+        // result(res, req, 'ค้นหาด้วยชื่อและเรียกข้อมูล Sshe Issue',  )
 
     } catch (error) {
         next(error);
