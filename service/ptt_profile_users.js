@@ -41,6 +41,18 @@ exports.matchCompanyUser = async (model, transaction) => {
     return match  
 }
 
+exports.matchProjectUser = async (model , transaction) => {
+    const match = {
+        user_id :  model.user_id,
+        project_id : model.project_id
+  }
+
+  await models.match_userPro.create( match ,{ transaction });
+    return match 
+
+}
+ 
+
 
 /* แก้ไข ตารางข้อมูลส่วนตัวผู้ใช้งานระบบ */
 exports.updateDatProfileUsersService = async (model, transaction) => {
@@ -65,12 +77,21 @@ exports.updateDatProfileUsersService = async (model, transaction) => {
     return model.user_id;
 }
 
-exports.editMatchCompanyUser = async (model, transaction) => {
+exports.editMatchCompanyUser = async (dataUser, transaction) => {
     const match = {
-          company_id : model.company_id,
-          user_id : model.user_id
+          company_id : dataUser.company_id,
+          user_id : dataUser.user_id
     }
-    await models.macth_company.create( match ,{ where: { user_id: model.user_id }, transaction });
-    return model.user_id;  
+    await models.macth_company.update( match ,{ where: { user_id: dataUser.user_id }, transaction });
+    return dataUser.user_id;  
+}
+
+exports.editMatchProjectUser = async (dataUser, transaction) => {
+    const match = {
+          user_id : dataUser.user_id,
+          project_id : dataUser.project_id
+    }
+    await models.match_userPro.update( match ,{ where: { user_id: dataUser.user_id }, transaction });
+    return dataUser.user_id;  
 }
 

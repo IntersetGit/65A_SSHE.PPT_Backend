@@ -7,6 +7,7 @@ const util = require('../util')
 exports.GetAllDataIncidentTypeService = async (search) => {
     let sql = ` select * from master.mas_incident_type `
     if (search) sql += ` WHERE incident_type_name ILIKE :search_name `
+    sql += ` order by created_date  asc `
     return util.sequelizeStringLike(sql, { search })
 }
 
@@ -17,6 +18,7 @@ exports.incidentTypeAddService = async ( user , model, transaction) => {
         incident_type_name : model.incident_type_name ,
         active : model.active ?? 1 ,
         incident_type_id : model.incident_type_id,
+        description : model.description,
         created_by: user.sysm_id ,
         created_date: new Date()
     }, transaction)
@@ -29,6 +31,7 @@ exports.incidentTypeEditService = async (user,model) => {
         incident_type_name : model.incident_type_name ,
         active : model.active ?? 1 ,
         incident_type_id : model.incident_type_id,
+        description : model.description,
         updated_by: user.sysm_id ,
         updated_date: new Date()
     }, { where: {id: model.id}})

@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.UUID,
       allowNull: true,
       references: {
-        model: 'mas_sshe_issue',
+        model: 'mas_issue_type',
         key: 'id'
       }
     },
@@ -50,6 +50,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     updated_date: {
       type: DataTypes.DATE,
+      allowNull: true
+    },
+    description: {
+      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {

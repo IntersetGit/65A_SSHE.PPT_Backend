@@ -42,6 +42,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.SMALLINT,
       allowNull: true,
       comment: "ประเภทของบริษัท   สำนักงานใหญ่เป็น 1 สำนักงานสาขาเป็น 0"
+    },
+    active: {
+      type: DataTypes.SMALLINT,
+      allowNull: true,
+      comment: "0 = non active 1= active"
+    },
+    created_date: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     sequelize,

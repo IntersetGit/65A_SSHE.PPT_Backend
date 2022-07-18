@@ -60,7 +60,7 @@ exports.updateSysmUsersService = async (model) => {
         update_date: new Date(),
     }
     if (model.roles_id) _model.roles_id = model.roles_id
-    if (model.user_name) _model.user_name = model.user_name
+    if (model.username) _model.user_name = model.username
     if (model.password) _model.password = model.password
     if (model.isuse) _model.isuse = model.isuse
     if (model.e_mail) _model.e_mail = model.e_mail
@@ -106,12 +106,15 @@ exports.updateConfigAdService = async (model) => {
 }
 
 exports.GetUserService = async (search) => {
-    let sql = `select Suser.id,Suser.user_name,Suser.e_mail,roles.roles_name,Puser.first_name||' '||Puser.last_name firstLast , is_ad
-    ,Suser.roles_id as roles_id , Puser.first_name, Puser.last_name
+    let sql = `select Suser.id,Suser.user_name,Suser.e_mail,roles.roles_name,Puser.first_name||' '||Puser.last_name firstLast , Suser.is_ad
+    ,Suser.roles_id as roles_id , Puser.first_name, Puser.last_name , Puser.company_id, com.company_name , pro.project_name , match.project_id
     from system.sysm_users Suser
     inner join ptt_data.ptt_profile_users Puser on Suser.id=Puser.user_id
-    inner join system.sysm_roles roles on roles.id=Suser.roles_id 
-    WHERE Suser.isuse = 1 `
+	left join ptt_data.macth_company Matchcom on Matchcom.user_id = Suser.id
+	left join ptt_data.ptt_company com on com.id = Matchcom.company_id 
+    left join ptt_data."match_userPro" match on match.user_id = Suser.id
+    left join ptt_data.ptt_projects pro on pro.id = match.project_id
+	inner join system.sysm_roles roles on roles.id=Suser.roles_id  WHERE Suser.isuse = 1 `
 
     if (search) {
         sql += `

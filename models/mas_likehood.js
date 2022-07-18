@@ -1,19 +1,24 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('mas_project_type', {
+  return sequelize.define('mas_likehood', {
     id: {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    name: {
-      type: DataTypes.STRING,
+    name_eng: {
+      type: DataTypes.TEXT,
       allowNull: true
     },
-    active: {
-      type: DataTypes.SMALLINT,
+    name_thai: {
+      type: DataTypes.TEXT,
       allowNull: true
+    },
+    value: {
+      type: DataTypes.SMALLINT,
+      allowNull: true,
+      comment: "0 = insignificant\n1 = minor\n2 = moderate\n3 = major\n4 = critical"
     },
     created_by: {
       type: DataTypes.UUID,
@@ -27,22 +32,18 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.UUID,
       allowNull: true
     },
-    update_date: {
+    updated_date: {
       type: DataTypes.DATE,
-      allowNull: true
-    },
-    description: {
-      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'mas_project_type',
+    tableName: 'mas_likehood',
     schema: 'master',
     timestamps: false,
     indexes: [
       {
-        name: "mas_project_type_pkey",
+        name: "mas_likehood_pkey",
         unique: true,
         fields: [
           { name: "id" },

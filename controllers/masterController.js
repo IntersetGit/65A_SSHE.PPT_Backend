@@ -1,10 +1,12 @@
 const util = require('../util')
-const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService,deleteMatchProjectService } = require('../service/ptt_company');
+const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService,GetAllDataSubCompanyService, _CompanyEditService,deleteSubcontractService,deleteMatchProjectService,deleteMatchCompanyService,_CompanyAddService,companySubComService,companySubEditService,deleteSubComService } = require('../service/ptt_company.js');
 const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService} = require('../service/ptt_project');
 const { GetAllDataProjectTypeService,projectTypeAddService,projectTypeEditService,deleteProjectTypeService} = require('../service/mas_project_type');
 const { GetAllDataIssueTypeService,deleteIssueTypeService,issueTypeAddService,issueTypeEditService } = require('../service/mas_issue_type');
 const { GetAllDataHazardIssueService,deleteHazardIssueService,hazardIssueAddService,hazardIssueEditService } = require('../service/ptt_hazard_issue');
 const { GetAllDataIncidentTypeService,incidentTypeAddService,incidentTypeEditService,deleteIncidentTypeService } = require('../service/mas_incident_type');
+const {GetAllDataConsequenceService,consquenceAddService,consquenceEditService,deleteConsqeuenceService} = require('../service/consequence')
+const {GetAllDataLikeHoodService,likeHoodAddService,likeHoodEditService,deleteLikeHoodService} = require('../service/Likehood')
 const result = require('../middleware/result');
 
 // exports.AddActivityController = async (req, res, next) => {
@@ -31,6 +33,18 @@ exports.getDataCompany = async (req, res, next) => {
     }
 }
 
+exports.getDataSubCompany = async (req, res, next) => {
+    try {
+        result(res, req, ' เรียกข้อมูล subcontract ', await GetAllDataSubCompanyService())
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+
+
 exports.addCompany = async (req, res, next) => {
     try {
         const decode = await util.decodeToken(req.headers.authorization)
@@ -38,11 +52,21 @@ exports.addCompany = async (req, res, next) => {
         const model = req.body
 
         if (model.id) {
-            await CompanyEditService(model)
+            await CompanyEditService(model,user)
+            await _CompanyEditService(model)
+            if(model.subcontract){
+            await companySubEditService(model)
+            }
             result(res, req, 'แก้ไขข้อมูลบริษัท', true, 201)
+
         } else {
-            result(res, req, 'เพิ่มข้อมูลบริษัท', await CompanyAddService(model), 201)
-        }
+            const company =  await CompanyAddService(model)
+            const subcontract = await _CompanyAddService(company,model)
+            if(model.subcontract){
+                 await companySubComService(company,model.subcontract)
+                }
+            result(res, req, 'เพิ่มข้อมูลบริษัท', company , 201)
+        } 
 
     } catch (error) {
         next(error)
@@ -55,6 +79,9 @@ exports.deleteDataCompany = async (req, res, next) => {
         const user = decode.token
         const { id } = req.params
         await deleteMatchProjectService(id)
+        await deleteMatchCompanyService(id)
+        await deleteSubComService(id)
+        await deleteSubcontractService(id)
         await deleteCompanyService(id)
         result(res, req, 'ลบข้อมูลบริษัท', true)
 
@@ -62,6 +89,8 @@ exports.deleteDataCompany = async (req, res, next) => {
         next(error);
     }
 }
+
+
 
 
 
@@ -90,8 +119,9 @@ exports.addProject = async (req, res, next) => {
         if (model.id) {
             await projectEditService(model)
             if (model.company_id){
+            await projecctMatchUserDeleteService(model.id)
             for (let i = 0; i < model.company_id.length; i++ ) {
-                    await projecctMatchUserEditService(model.id,model.company_id[i])
+                await projecctMatchUserEditService (model.id,model.company_id[i])
                 }}
             
             result(res, req, 'แก้ไขข้อมูลโครงการ',true, 201)
@@ -295,6 +325,99 @@ exports.deleteDataIncidentType = async (req, res, next) => {
         const { id } = req.params
         await deleteIncidentTypeService(id)
         result(res, req, 'ลบข้อมูลissuetype', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+//-------------------- consequence ------------------------------------------------//
+
+exports.getDataConsequence = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { search } = req.query
+        result(res, req, 'ค้นหา Consequence กับ แสดง Consequence', await GetAllDataConsequenceService(search))
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.addConsequence = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const model = req.body
+
+        if (model.id ) {
+            await consquenceEditService( user ,model)
+            result(res, req, 'แก้ไขข้อมูล consquence ',true, 201)
+        } else {
+            result(res, req, 'เพิ่มข้อมูล consquence ',await consquenceAddService(user,model),  201)
+        } 
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+exports.deleteDataConsqeuence = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { id } = req.params
+        await deleteConsqeuenceService(id)
+        result(res, req, 'ลบข้อมูล consqeuence', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+//--------------------------- likehood ------------------------------------------//
+
+exports.getDataLikeHood = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { search } = req.query
+        result(res, req, 'ค้นหา likehood กับ แสดง Likehood ', await GetAllDataLikeHoodService(search))
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.addLikeHood = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const model = req.body
+
+        if (model.id ) {
+            await likeHoodEditService( user ,model)
+            result(res, req, 'แก้ไขข้อมูล consquence ',true, 201)
+        } else {
+            result(res, req, 'เพิ่มข้อมูล consquence ',await likeHoodAddService(user,model),  201)
+        } 
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+exports.deleteDataLikeHood = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { id } = req.params
+        await deleteLikeHoodService(id)
+        result(res, req, 'ลบข้อมูล consqeuence', true)
 
     } catch (error) {
         next(error);

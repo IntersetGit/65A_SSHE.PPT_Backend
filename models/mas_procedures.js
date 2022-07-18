@@ -28,15 +28,14 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       comment: "สถานะข้อมูล 0 = ไม่ใช้งาน 1 = ใช้งาน"
     },
-    mitigation_id: {
+    impact_id: {
       type: DataTypes.UUID,
       allowNull: true,
-      comment: "รหัสจากผลกระทบที่ได้"
-    },
-    mitigation_code: {
-      type: DataTypes.STRING(5),
-      allowNull: true,
-      comment: "รหัสกลุ่มจากผลกระทบที่ได้"
+      comment: "รหัสจากผลกระทบที่ได้",
+      references: {
+        model: 'mas_impacts',
+        key: 'id'
+      }
     },
     created_by: {
       type: DataTypes.UUID,
@@ -65,6 +64,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true,
       comment: "ปรับปรุงข้อมูลวันที่"
+    },
+    name_thai: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     sequelize,
@@ -81,7 +84,7 @@ module.exports = function(sequelize, DataTypes) {
       {
         name: "fki_fk_pocd_mitigation_id",
         fields: [
-          { name: "mitigation_id" },
+          { name: "impact_id" },
         ]
       },
       {

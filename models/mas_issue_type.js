@@ -1,18 +1,24 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('mas_project_type', {
+  return sequelize.define('mas_issue_type', {
     id: {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    name: {
+    issue_type_name: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      comment: "ชื่อ sshe issue"
     },
     active: {
       type: DataTypes.SMALLINT,
+      allowNull: true,
+      comment: "1 ใช้งาน 0 ไม่ใช้งาน"
+    },
+    issue_type_id: {
+      type: DataTypes.STRING,
       allowNull: true
     },
     created_by: {
@@ -27,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.UUID,
       allowNull: true
     },
-    update_date: {
+    updated_date: {
       type: DataTypes.DATE,
       allowNull: true
     },
@@ -37,12 +43,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'mas_project_type',
+    tableName: 'mas_issue_type',
     schema: 'master',
     timestamps: false,
     indexes: [
       {
-        name: "mas_project_type_pkey",
+        name: "mas_sshe_issue_pkey",
         unique: true,
         fields: [
           { name: "id" },

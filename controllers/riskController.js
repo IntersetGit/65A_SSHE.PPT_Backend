@@ -9,36 +9,77 @@ const masActivities = require('../service/mas_activities')
 const masImpacts = require('../service/mas_impacts')
 const masMitigations = require('../service/mas_mitigations')
 const masProcedures = require('../service/mas_procedures')
-const { risksearch, addDataActivities, addDataImpact, addDataMitigation, addDataProcedures,deleteProceduresService,
+const { getActivityService,getImpactService,getMitigationService,getProceduresService,deleteProceduresService,
     deleteMitigationService,deleteImpactService,deleteActivityService,updateDataProcedures, updateDataActivities,
     updateDataImpact,updateDataMitigation } = require('../service/riskService')
 
-exports.getriskIdentificationController = async (req, res, next) => {
+// exports.getriskIdentificationController = async (req, res, next) => {
+//     try {
+//         const decode = await util.decodeToken(req.headers.authorization)
+//         const user = decode.token
+
+//         result(res, req, 'เรียกข้อมูล Master Risk Identification', {
+//             activity: await masActivities.GetDataActivityService() ?? [],
+//             impacts: await masImpacts.GetDataImpactService() ?? [],
+//             mitigations: await masMitigations.GetDataMitigationsService() ?? [],
+//             procedures: await masProcedures.GetDataProceduresService() ?? []
+//         })
+//     } catch (error) {
+//         next(error)
+//     }
+
+// }
+
+exports.getDataActivity = async (req, res, next) => {
     try {
-        const decode = await util.decodeToken(req.headers.authorization)
-        const user = decode.token
-
-        result(res, req, 'เรียกข้อมูล Master Risk Identification', {
-            activity: await masActivities.GetDataActivityService() ?? [],
-            impacts: await masImpacts.GetDataImpactService() ?? [],
-            mitigations: await masMitigations.GetDataMitigationsService() ?? [],
-            procedures: await masProcedures.GetDataProceduresService() ?? []
-        })
+      const { search } = req.query
+      result(res, req, ' เรียกและค้นหา activity ', await getActivityService(search))
     } catch (error) {
-        next(error)
+      next(error)
     }
+  }
 
-}
+exports.getDataImpact = async (req, res, next) => {
+    try {
+      const { search } = req.query
+      result(res, req, ' เรียกและค้นหา Impact ', await getImpactService(search))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+exports.getDataMitigation = async (req, res, next) => {
+    try {
+      const { search } = req.query
+      result(res, req, ' เรียกและค้นหา mitigation ', await getMitigationService(search))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+exports.getDataProcedures = async (req, res, next) => {
+    try {
+      const { search } = req.query
+      result(res, req, ' เรียกและค้นหา Procedures ', await getProceduresService(search))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+
+
+  
 
 exports.addActivityController = async (req, res, next) => {
     try {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
-        const { name, description, code_id } = req.body;
+        const { name, description, code_id, name_thai } = req.body;
 
         result(res, req, 'เพิ่มข้อมูลกิจกรรมของงาน', await masActivities.AddActivityService({
             code_id,
             name,
+            name_thai,
             description,
             created_by: user.sysm_id
         }), 201)
@@ -53,12 +94,13 @@ exports.addImpactController = async (req, res, next) => {
     try {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
-        const { name, description, code_id, activity_id, activity_code } = req.body;
+        const { name, description, code_id, activity_id, activity_code, name_thai} = req.body;
 
         result(res, req, 'เพิ่มข้อมูลผลกระทบกิจกรรมงาน', await masImpacts.AddImpactService({
             name,
             description,
             code_id,
+            name_thai,
             // activity_id,
             // activity_code,
             created_by: user.sysm_id
@@ -74,14 +116,14 @@ exports.addMitigationController = async (req, res, next) => {
     try {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
-        const { code_id, name, description, impact_id, impact_code } = req.body;
+        const { code_id, name, description, impact_id, impact_code, name_thai } = req.body;
 
         result(res, req, 'เพิ่มข้อมูลผลกระทบที่ได้', await masMitigations.AddMitigationsService({
             code_id,
             name,
             description,
-            // impact_id,
-            // impact_code,
+            impact_id,
+            name_thai,
             created_by: user.sysm_id
         }), 201)
 
@@ -95,10 +137,10 @@ exports.addProceduresController = async (req, res, next) => {
     try {
         const decode = await util.decodeToken(req.headers.authorization)
         const user = decode.token
-        const { code_id, name, description } = req.body;
+        const { code_id, name, description, name_thai ,impact_id } = req.body;
 
         result(res, req, 'เพิ่มข้อมูลการปฏิบัติงาน', await masProcedures.AddProceduresService({
-            code_id, name, description,  created_by: user.sysm_id
+            code_id, name, description,  created_by: user.sysm_id , impact_id, name_thai
         }), 201)
 
     } catch (error) {
@@ -273,3 +315,16 @@ exports.deleteDataProcedures = async (req, res, next) => {
         next(error);
     }
 }
+//-------- ทำ template โดยเฉพาะ ลงตาราง match ทั้งสองตาราง---------//
+
+exports.addTemplate = async (req, res, next) => {
+    try {
+        const data  = req.body
+        await deleteProceduresService(data)
+        result(res, req, '-', true)
+
+    } catch (error) {
+        next(error);
+    }
+}
+

@@ -55,6 +55,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true,
       comment: "ปรับปรุงข้อมูลวันที่"
+    },
+    name_thai: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      comment: "activity ภาษาไทย"
     }
   }, {
     sequelize,

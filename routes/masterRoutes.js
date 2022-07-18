@@ -7,6 +7,7 @@ const { authenticateToken } = require('../middleware/authenticateToken')
 
 //-------------- company----------------------------- //
 router.get('/getCompany',  [authenticateToken], masterController.getDataCompany)
+router.get('/getSubCompany',  [authenticateToken], masterController.getDataSubCompany)
 router.post('/manageCompany', [authenticateToken], masterController.addCompany)
 router.delete('/updateCompany/:id',  [authenticateToken], masterController.deleteDataCompany)
 
@@ -31,6 +32,17 @@ router.delete('/deleteHazardIssue/:id',  [authenticateToken], masterController.d
 router.get('/getIncidentType',  [authenticateToken], masterController.getDataIncidentType)
 router.post('/manageIncidentType', [authenticateToken], masterController.addIncidentType)
 router.delete('/deleteIncidentType/:id',  [authenticateToken], masterController.deleteDataIncidentType)
+//-------------- consequence -------------------------------------------------------------//
+
+router.get('/getConsequence',  [authenticateToken], masterController.getDataConsequence)
+router.post('/manageConsequence', [authenticateToken], masterController.addConsequence)
+router.delete('/deleteConsqeuence/:id',  [authenticateToken], masterController.deleteDataConsqeuence)
+
+//-----------------------------likehood----------------------------------------------//
+
+router.get('/getlikeHood',  [authenticateToken], masterController.getDataLikeHood)
+router.post('/manageLikeHood', [authenticateToken], masterController.addLikeHood)
+router.delete('/deleteLikeHood/:id',  [authenticateToken], masterController.deleteDataLikeHood)
 
 
 module.exports = router;

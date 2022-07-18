@@ -7,13 +7,13 @@ const router = require('express').Router();
 router.post('/addUserAD',[authenticateToken],systemControllers.createUserAD);
 /* แก้ไขสิทธิ์ ผู้ใช้งาน */
 router.put('/updateRoleUser', [authenticateToken], systemControllers.updateRoleUser);
-/* ค้นหาผู้ใชช้ ad */
+// /* ค้นหาผู้ใชช้ ad */
 router.get('/findUserAD', [authenticateToken], systemControllers.findUserAd);
 /* ลบผู้ใช้งาน */
-router.post('/delUserAD/:id', [authenticateToken], systemControllers.delUserAd);
+router.get('/delUserAD/:id', [authenticateToken], systemControllers.delUserAd);
 /* อัพข้อมูลการตั้งค่า ad */ 
 router.post('updateConfig', [authenticateToken], systemControllers.updateConfigAd);
-router.put('/editUser', systemControllers.editUser);
+router.put('/editUser', [authenticateToken],systemControllers.editUser);
 
 
 

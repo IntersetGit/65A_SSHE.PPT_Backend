@@ -1,7 +1,7 @@
 const ActiveDirectory = require("activedirectory");
 const config = require("../config");
 const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService , createConfigAdService, createSysmUsersService, GetUserService, GetRolesService } = require("../service/sysm_users");
-const { createProfileUser , updateDatProfileUsersService,matchCompanyUser,editMatchCompanyUser } = require("../service/ptt_profile_users");
+const { createProfileUser , updateDatProfileUsersService,matchCompanyUser,matchProjectUser,editMatchCompanyUser,editMatchProjectUser } = require("../service/ptt_profile_users");
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
 const result = require("../middleware/result");
@@ -33,7 +33,7 @@ exports.createUserAD = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
     const decode = await util.decodeToken(req.headers.authorization);
-    let { username, password, token, roles_id, first_name, last_name, e_mail, is_ad , company_id } = req.body;
+    let { username, password, token, roles_id, first_name, last_name, e_mail, is_ad , company_id, project_id } = req.body;
     const user = decode.token //มาจาก login
     const id = uuidv4.v4();
 
@@ -101,6 +101,10 @@ exports.createUserAD = async (req, res, next) => {
           user_id: id,
           company_id
         }, transaction);
+        await matchProjectUser({
+          user_id: id,
+          project_id
+        }, transaction);
       } else {
         const err = new Error(`มีผู้ใช้ ${username} ในฐานข้อมูล`);
         err.statusCode = 400;
@@ -120,20 +124,22 @@ exports.editUser = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
     const model = req.body;
-
+   
     const dataUser = {
       user_name: model.username,
       first_name: model.first_name,
       last_name: model.last_name,
       user_id: model.id,
       e_mail: model.e_mail,
-      company_id: model.company_id
+      company_id: model.company_id,
+      project_id : model.project_id
     }
 
     if (model.id) {
       await updateSysmUsersService(model, transaction)
       await updateDatProfileUsersService(dataUser, transaction);
-      await editMatchCompanyUser(model, transaction);
+      await editMatchCompanyUser(dataUser,transaction);
+      await editMatchProjectUser(dataUser,transaction);
     }
 
     await transaction.commit();
@@ -204,12 +210,6 @@ exports.findUserAd = async (req, res, next) => {
 exports.delUserAd = async (req, res, next) => {
   try {
     const { id } = req.params
-
-    if (req.user.roles_id != '8a97ac7b-01dc-4e06-81c2-8422dffa0ca2') {
-      const err = new Error('คุณไม่ใช่ Administrator ไม่สามารถเพิ่มข้อมูลได้')
-      err.statusCode = 403
-      throw err
-    }
 
     await updateSysmUsersService({ id, isuse: 2 })
 
