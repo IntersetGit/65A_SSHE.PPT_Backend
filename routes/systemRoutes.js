@@ -19,7 +19,7 @@ router.put('/editUser', [authenticateToken],systemControllers.editUser);
 
 router.get('/roles', [authenticateToken], systemControllers.GetRolesController);
 router.get('/users/info', [authenticateToken], systemControllers.GetUserController);
-
+router.get('/users/info/:id', [authenticateToken], systemControllers.GetUserProjectController);
 
 
 

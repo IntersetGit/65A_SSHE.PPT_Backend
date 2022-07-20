@@ -130,6 +130,18 @@ exports.GetUserService = async (search) => {
     return await sequelizeStringLike(sql, {search});
 }
 
+
+exports.GetUserProjectService = async (id) => {
+    let sql = `select Suser.id,Suser.user_name from system.sysm_users Suser
+    inner JOIN ptt_data."match_userPro" as a on a.user_id = Suser.id
+    WHERE Suser.isuse = 1 AND a.project_id = '${id}'`
+
+    sql += ` order by Suser.user_name asc `
+
+    return await sequelizeStringLike(sql, {id});
+}
+
+
 exports.GetRolesService = async () => {
     return await models.sysm_roles.findAll({ 
         order: [

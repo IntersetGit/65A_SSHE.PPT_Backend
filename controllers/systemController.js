@@ -1,6 +1,6 @@
 const ActiveDirectory = require("activedirectory");
 const config = require("../config");
-const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService , createConfigAdService, createSysmUsersService, GetUserService, GetRolesService } = require("../service/sysm_users");
+const { filterUsernameSysmUsersService, updateSysmUsersService, updateConfigAdService , createConfigAdService, createSysmUsersService, GetUserService, GetRolesService, GetUserProjectService } = require("../service/sysm_users");
 const { createProfileUser , updateDatProfileUsersService,matchCompanyUser,matchProjectUser,editMatchCompanyUser,editMatchProjectUser } = require("../service/ptt_profile_users");
 const sequelize = require("../config/dbConfig"); //connect db  query string
 const uuidv4 = require("uuid");
@@ -233,17 +233,33 @@ exports.updateConfigAd = async (req, res, next) => {
   }
 }
 
+
+
 exports.GetUserController = async (req, res, next) => {
   try {
     const decode = await util.decodeToken(req.headers.authorization);
     const { search } = req.query;
     const user = decode.token
 
-    result(res, req, 'ค้นหาผู้ใช้งานและเรียกชื่อผู้ใช้งาน', {users: await GetUserService(search)});
+    result(res, req, 'ค้นหาผู้ใช้งานและเรียกชื่อผู้ใช้งาน', {users: await GetUserService( search, user)});
   } catch (error) {
     next(error);
   }
 }
+
+
+exports.GetUserProjectController = async (req, res, next) => {
+  try {
+    const decode = await util.decodeToken(req.headers.authorization);
+    const { id } = req.params
+    const user = decode.token
+
+    result(res, req, 'ค้นหาผู้ใช้งานที่อยูใน project นั้นๆ', {users: await GetUserProjectService( id )});
+  } catch (error) {
+    next(error);
+  }
+}
+
 
 exports.GetRolesController = async (req, res, next) => {
   try {
