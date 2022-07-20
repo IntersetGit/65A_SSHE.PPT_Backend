@@ -103,6 +103,9 @@ exports.GetAllDataCompanyService = async (search) => {
 }
 
 
+
+
+
 exports.GetAllDataSubCompanyService = async () => {
    return  await models.mas_subcontract.findAll({ 
         order: [

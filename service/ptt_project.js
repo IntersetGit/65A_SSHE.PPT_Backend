@@ -68,6 +68,20 @@ exports.GetAllDataProjectService = async (search) => {
     return util.sequelizeStringLike(sql, { search })
 }
 
+
+exports.GetAllDataProjectByIdService = async (search , user ) => {
+    let sql = ` select b.id, b.project_name from ptt_data.ptt_projects as b
+    inner JOIN ptt_data."match_userPro" as a on  a.project_id = b.id
+    where a.user_id = '${user}'
+     `
+    if (search) sql += ` WHERE project_name ILIKE :search_name `
+    sql += ` order by  b.project_name asc `
+    
+    return util.sequelizeStringLike(sql, { search })
+}
+
+
+
 exports.deleteProjectService = async (id) => {
     await models.ptt_projects.destroy({ where: { id} })
 };

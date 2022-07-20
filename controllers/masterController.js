@@ -1,6 +1,6 @@
 const util = require('../util')
 const { CompanyEditService, CompanyAddService, deleteCompanyService, GetAllDataCompanyService,GetAllDataSubCompanyService, _CompanyEditService,deleteSubcontractService,deleteMatchProjectService,deleteMatchCompanyService,_CompanyAddService,companySubComService,companySubEditService,deleteSubComService } = require('../service/ptt_company.js');
-const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService} = require('../service/ptt_project');
+const { GetAllDataProjectService,projectAddService,projectEditService,deleteProjectService,projecctMatchUserEditService,projecctMatchUserService,projecctMatchUserDeleteService,GetAllDataProjectByIdService} = require('../service/ptt_project');
 const { GetAllDataProjectTypeService,projectTypeAddService,projectTypeEditService,deleteProjectTypeService} = require('../service/mas_project_type');
 const { GetAllDataIssueTypeService,deleteIssueTypeService,issueTypeAddService,issueTypeEditService } = require('../service/mas_issue_type');
 const { GetAllDataHazardIssueService,deleteHazardIssueService,hazardIssueAddService,hazardIssueEditService } = require('../service/ptt_hazard_issue');
@@ -32,6 +32,7 @@ exports.getDataCompany = async (req, res, next) => {
         next(error);
     }
 }
+
 
 exports.getDataSubCompany = async (req, res, next) => {
     try {
@@ -109,6 +110,20 @@ exports.getDataProject = async (req, res, next) => {
         next(error);
     }
 }
+
+
+exports.getDataProjectById = async (req, res, next) => {
+    try {
+        const decode = await util.decodeToken(req.headers.authorization)
+        const user = decode.token
+        const { search } = req.query
+        result(res, req, 'ค้นหาด้วยชื่อโครงการและเรียกข้อมูลโครงการด้วย user_id ของตัวเอง ', await GetAllDataProjectByIdService(search, user.sysm_id))
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 exports.addProject = async (req, res, next) => {
     try {

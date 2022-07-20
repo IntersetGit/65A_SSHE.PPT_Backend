@@ -15,7 +15,7 @@ router.delete('/updateCompany/:id',  [authenticateToken], masterController.delet
 router.get('/getProject',  [authenticateToken], masterController.getDataProject)
 router.post('/manageProject', [authenticateToken], masterController.addProject)
 router.delete('/deleteProject/:id',  [authenticateToken], masterController.deleteDataproject)
-
+router.get('/getProjectbyid',  [authenticateToken], masterController.getDataProjectById)
 //--------------- project type ------------------------------------//
 router.get('/getProjecttype',  [authenticateToken], masterController.getDataProjecttype)
 router.post('/manageProjecttype', [authenticateToken], masterController.addProjectType)
