@@ -71,7 +71,7 @@ exports.GetAllDataSsheIssueService = async ( status , primary_case , start_date,
 exports.checkImgById = (group , path, type = ".jpg") => {
     let img;
     const projectPath = _path.resolve("./");
-    const uploadPath = `${projectPath}/public/uploads/${path}/${group}`;
+    const uploadPath = `${projectPath}/public/uploads/${group}/${path}`;
     if (fs.existsSync(uploadPath))
         img = `${config.SERVICE_HOST}/uploads/${path}/${group}`
     return img

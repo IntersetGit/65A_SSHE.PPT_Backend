@@ -8,9 +8,9 @@ const config = require("../config");
 exports.uploads = async (req, res, next) => {
   try {
     const fileupload = req.files;
-    const { Path = "all", Length = 1, Name, SetType ,group } = req.query;
+    const { group, Path = "all", Length = 1, Name, SetType  } = req.query;
     const projectPath = path.resolve("./");
-    const uploadPath = `${projectPath}/public/uploads/${Path}/${group}`;
+    const uploadPath = `${projectPath}/public/uploads/${group}/${Path}`;
 
     const File = [];
 
@@ -19,12 +19,12 @@ exports.uploads = async (req, res, next) => {
     // }
 
     for (let x = 0; x < Number(Length); x++) {
-      File.push(fileupload.file);
+      File.push(fileupload.files);
     }
 
     //เช็ค path ว่ามีไหม ถ้าไม่มีจะสร้างขึ้นมา
     if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath);
+      fs.mkdirSync(uploadPath,{recursive: true});
     }
 
     const UploadFile = [];
@@ -39,8 +39,8 @@ exports.uploads = async (req, res, next) => {
       let name = Name ? Name + type : uuidv4.v4() + type;
 
       let model = {
-        location: `${config.SERVICE_HOST}/uploads/${Path}/${group}/${name}`,
-        path: `/uploads/${Path}/${group}/${name}`,
+        location: `${config.SERVICE_HOST}/uploads/${group}/${Path}/${name}`,
+        path: `/uploads/${group}/${Path}/${name}`,
         nameNew: name,
         type: type,
       };
