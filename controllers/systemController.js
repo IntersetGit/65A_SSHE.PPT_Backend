@@ -172,10 +172,12 @@ exports.updateRoleUser = async (req, res, next) => {
 };
 
 /** ค้นหา AD  */
-exports.findUserAd = async (req, res, next) => {
+exports.SearchAd = async (req, res, next) => {
   try {
+    const decode = await util.decodeToken(req.headers.authorization);
+    const user = decode.token
     const { username } = req.query
-    const setUser = await filterUsernameSysmUsersService(req.user['user_name']);
+    const setUser = await filterUsernameSysmUsersService(user['user_name']);
 
     if (!username) {
       const err = new Error('กรอกข้อมูล username');
@@ -185,8 +187,8 @@ exports.findUserAd = async (req, res, next) => {
     
     const _res = await connectPttAD({
       username,
-      password: setUser['user_name'] == 'superadmin' ? config.PASSWORD_AD : await DecryptCryptoJS(setUser['password']) ,
-      usernameDB: setUser['user_name'] == 'superadmin' ? config.USER_NAME_AD : setUser['user_name'],
+      password: setUser['user_name'] == 'superadmin' ? config.KEY_PASSWORD_AD : await DecryptCryptoJS(setUser['password']) ,
+      usernameDB: setUser['user_name'] == 'superadmin' ? config.KEY_USER_AD : setUser['user_name'],
       isDB: true
     })
 
@@ -200,7 +202,7 @@ exports.findUserAd = async (req, res, next) => {
       displayName: _res.displayName,
       isUsers: true
     }
-    result(res, req, '-', _model);
+    result(res, req, 'ค้นหาผู้ใช้งานในระบบ ad', _model);
 
   } catch (error) {
     next(error);

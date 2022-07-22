@@ -69,18 +69,18 @@ exports.connectPttAD = async ({ username, password, usernameDB, isDB }) => {
             baseDN: `${search}`,
             username: `${_username}@${host}`,
             password,
-            logging: {
-                name: 'ActiveDirectory',
-                streams: [
-                    {
-                        level: 'error',
-                        stream: process.stdout
-                    }
-                ]
-            }
+            // logging: {
+            //     name: 'ActiveDirectory',
+            //     streams: [
+            //         {
+            //             level: 'error',
+            //             stream: process.stdout
+            //         }
+            //     ]
+            // }
         }
 
-        const ad = new ActiveDirectory(config_ad);
+        const ad = new ActiveDirectory();
         ad.findUser(username, (err, user) => {
             if (err) {
                 const _err = { message: 'เชื่อมต่อผิดพลาด' }

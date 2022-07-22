@@ -40,4 +40,6 @@ module.exports = {
     LDAP_HOST_PROD: process.env.LDAP_HOST_PROD,
     LDAP_URL_PROD: process.env.LDAP_URL_PROD,
     LDAP_SEARCH_PROD: process.env.LDAP_SEARCH_PROD,
+    KEY_USER_AD: process.env.KEY_USER_AD,
+    KEY_PASSWORD_AD: process.env.KEY_PASSWORD_AD
 };
